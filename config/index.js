@@ -23,11 +23,20 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 8080,
+    port: 8082,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/apis': {
+        // 测试环境
+        target: process.env.VUE_APP_SECRET + 'consumertest/', // target host
+        changeOrigin: true,  //是否跨域
+        pathRewrite: {
+            '^/apis': ''   //需要rewrite重写的,
+        }              
+      }
+    },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)

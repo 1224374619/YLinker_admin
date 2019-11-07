@@ -5,7 +5,7 @@
       <div class="asp-form">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="轮播状态">
-            <el-select placeholder="轮播状态">
+            <el-select placeholder="轮播状态" v-model="state">
               <el-option label="全部" value="全部"></el-option>
               <el-option label="已下架" value="已下架"></el-option>
               <el-option label="已上架" value="已上架"></el-option>
@@ -160,6 +160,7 @@ export default {
         company: "",
         link: ""
       },
+      state:'',
       position: "",
       company: "",
       link: "",

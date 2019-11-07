@@ -373,7 +373,7 @@ export default {
   flex-wrap: wrap;
 }
 .card-first {
-  width: 48%;
+  width: 790px;
   height: 150px;
   margin: 30px 0 0 1%;
   background: #d8d8d8;
@@ -387,7 +387,7 @@ export default {
   font-size: 25px;
 }
 .card-second {
-  width: 48%;
+  width: 790px;
   margin: 30px 0 0 1%;
   background: #d8d8d8;
   display: flex;
@@ -407,7 +407,7 @@ export default {
   flex-direction: row;
 }
 .card-third {
-  width: 48%;
+  width: 790px;
   margin: 30px 0 0 1%;
   background: #d8d8d8;
   display: flex;

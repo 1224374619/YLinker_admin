@@ -1,6 +1,6 @@
 <template>
   <div class="asp">
-    <!-- <div class="asp-nav">C端用户管理</div>
+    <div class="asp-nav">C端用户管理</div>
     <div class="asp-content">
       <div class="asp-form">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -112,8 +112,7 @@
           </div>
         </div>
       </div>
-    </div> -->
-    <router-view/>
+    </div>
   </div>
 </template>
 <script>
