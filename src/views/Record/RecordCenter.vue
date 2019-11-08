@@ -5,7 +5,7 @@
       <div class="article-card">
         <div class="card-first">
           <img
-            src=""
+            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
             class="image"
           />
           <div style="margin:0 0 0 100px">
