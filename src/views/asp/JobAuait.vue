@@ -5,17 +5,17 @@
       <div class="asp-form">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="职位名称">
-            <el-input placeholder="职位名称"></el-input>
-          </el-form-item>
+            <el-input v-model="formInline.PositionName" placeholder="职位名称"></el-input>
+          </el-form-item> 
           <el-form-item label="所属公司">
-            <el-input placeholder="所属公司"></el-input>
+            <el-input v-model="formInline.Company" placeholder="所属公司"></el-input>
           </el-form-item>
           <el-form-item label="职位ID">
-            <el-input placeholder="职位ID"></el-input>
+            <el-input v-model="formInline.CompanyId" placeholder="职位ID"></el-input>
           </el-form-item>
           <el-form-item style="float:right;margin:0 90px 0 0">
-            <el-button @click="resetForm('ruleForm')">重置</el-button>
-            <el-button type="primary" @click="submitForm('ruleForm')">查询</el-button>
+            <el-button @click="Ressetting()">重置</el-button>
+            <el-button type="primary" @click="Inquiry()">查询</el-button>
           </el-form-item>
         </el-form>
         <div class="asp-table">
@@ -148,6 +148,11 @@
 export default {
   data() {
     return {
+      formInline:{
+        PositionName:'',
+        Company:'',
+        CompanyId:''
+      },
       checkList: ["复选框 A"],
       dialogVisible: false,
       activeName: "first",
@@ -193,6 +198,27 @@ export default {
     };
   },
   methods: {
+    //重置
+    Ressetting() {
+      this.formInline.PositionName = "";
+      this.formInline.Company = "";
+      this.formInline.CompanyId = "";
+    },
+    //查询
+    Inquiry() {
+      this.$http
+        .post("", {
+          
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+          } else {
+          }
+        })
+        .catch(error => {
+          this.$message(error.response.data.message);
+        });
+    },
     keep() {
       this.dialogVisible = true;
     },

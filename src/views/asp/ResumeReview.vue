@@ -5,17 +5,17 @@
       <div class="asp-form">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="用户姓名">
-            <el-input placeholder="用户姓名"></el-input>
+            <el-input v-model="formInline.UserName" placeholder="用户姓名"></el-input>
           </el-form-item>
           <el-form-item label="手机号码">
-            <el-input placeholder="手机号码"></el-input>
+            <el-input v-model="formInline.Phone" placeholder="手机号码"></el-input>
           </el-form-item>
           <el-form-item label="简历ID">
-            <el-input placeholder="简历ID"></el-input>
+            <el-input v-model="formInline.ResumeID" placeholder="简历ID"></el-input>
           </el-form-item>
           <el-form-item style="float:right;margin:0 90px 0 0">
-            <el-button @click="resetForm('ruleForm')">重置</el-button>
-            <el-button type="primary" @click="submitForm('ruleForm')">查询</el-button>
+            <el-button @click="Ressetting()">重置</el-button>
+            <el-button type="primary" @click="Inquiry()">查询</el-button>
           </el-form-item>
         </el-form>
         <div class="asp-table">
@@ -152,6 +152,11 @@
 export default {
   data() {
     return {
+      formInline:{
+        UserName:'',
+        Phone:'',
+        ResumeID:''
+      },
       checkList: ["复选框 A"],
       dialogVisible: false,
       activeName: "first",
@@ -197,6 +202,27 @@ export default {
     };
   },
   methods: {
+     //重置
+    Ressetting() {
+      this.formInline.UserName = "";
+      this.formInline.Phone = "";
+      this.formInline.ResumeID = "";
+    },
+    //查询
+    Inquiry() {
+      this.$http
+        .post("", {
+          
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+          } else {
+          }
+        })
+        .catch(error => {
+          this.$message(error.response.data.message);
+        });
+    },
     keep() {
       this.dialogVisible = true;
     },

@@ -13,7 +13,7 @@
         <el-divider style="margin:0 0 0 0"></el-divider>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+          <el-button type="primary" @click="DialogAffirm()">确 定</el-button>
         </span>
       </div>
     </el-dialog>
@@ -21,14 +21,14 @@
       <div class="asp-form">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="企业名称">
-            <el-input placeholder="企业名称"></el-input>
+            <el-input v-model="formInline.CompanyName" placeholder="企业名称"></el-input>
           </el-form-item>
           <el-form-item label="统一社会信用代码">
-            <el-input placeholder="统一社会信用代码"></el-input>
+            <el-input v-model="formInline.CreditCode" placeholder="统一社会信用代码"></el-input>
           </el-form-item>
           <el-form-item style="float:right;margin:0 90px 0 0">
-            <el-button @click="resetForm('ruleForm')">重置</el-button>
-            <el-button type="primary" @click="submitForm('ruleForm')">查询</el-button>
+            <el-button @click="Ressetting()">重置</el-button>
+            <el-button type="primary" @click="Inquiry()">查询</el-button>
           </el-form-item>
         </el-form>
         <div class="asp-table">
@@ -166,10 +166,15 @@
 export default {
   data() {
     return {
+      formInline: {
+        CompanyName: "",
+        CreditCode: ""
+      },
       checkList: ["复选框 A"],
       dialogVisible: false,
       activeName: "first",
       currentPage: 4,
+      textarea:'',
       tableData: [
         {
           date: "2016-05-03",
@@ -211,6 +216,42 @@ export default {
     };
   },
   methods: {
+    //重置
+    Ressetting() {
+      this.formInline.CompanyName = "";
+      this.formInline.CreditCode = "";
+    },
+    //查询
+    Inquiry() {
+      this.$http
+        .post("", {
+          
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+          } else {
+          }
+        })
+        .catch(error => {
+          this.$message(error.response.data.message);
+        });
+    },
+    //弹框确认
+    DialogAffirm() {
+      this.$http
+        .post("", {
+          
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.dialogVisible = false
+          } else {
+          }
+        })
+        .catch(error => {
+          this.$message(error.response.data.message);
+        });
+    },
     keep() {
       this.dialogVisible = true;
     },

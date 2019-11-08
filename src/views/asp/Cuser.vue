@@ -3,75 +3,75 @@
     <div class="asp-nav">C端用户管理</div>
     <div class="asp-content">
       <div class="asp-form">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="用户姓名">
-            <el-input placeholder="用户姓名"></el-input>
+            <el-input v-model="formInline.UserName" placeholder="用户姓名"></el-input>
           </el-form-item>
           <el-form-item label="手机账号">
-            <el-input placeholder="手机账号"></el-input>
+            <el-input v-model="formInline.Phone" placeholder="手机账号"></el-input>
           </el-form-item>
           <el-form-item label="最高学历">
-            <el-select placeholder="最高学历">
+            <el-select v-model="formInline.Record" placeholder="最高学历">
               <el-option label="区域一" value="shanghai"></el-option>
               <el-option label="区域二" value="beijing"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="政治面貌">
-            <el-select placeholder="政治面貌">
+            <el-select v-model="formInline.Politic" placeholder="政治面貌">
               <el-option label="区域一" value="shanghai"></el-option>
               <el-option label="区域二" value="beijing"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="用户ID">
-            <el-input placeholder="用户ID"></el-input>
+            <el-input v-model="formInline.UserID" placeholder="用户ID"></el-input>
           </el-form-item>
           <el-form-item label="工作经验">
-            <el-select placeholder="工作经验">
+            <el-select v-model="formInline.WorkExperience" placeholder="工作经验">
               <el-option label="区域一" value="shanghai"></el-option>
               <el-option label="区域二" value="beijing"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="意向城市">
-            <el-select placeholder="意向城市">
+            <el-select v-model="formInline.City" placeholder="意向城市">
               <el-option label="区域一" value="shanghai"></el-option>
               <el-option label="区域二" value="beijing"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="简历完整度">
-            <el-select placeholder="简历完整度">
+            <el-select v-model="formInline.ResumeWhole" placeholder="简历完整度">
               <el-option label="区域一" value="shanghai"></el-option>
               <el-option label="区域二" value="beijing"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="求职状态">
-            <el-select placeholder="求职状态">
+            <el-select v-model="formInline.JobWantedState" placeholder="求职状态">
               <el-option label="区域一" value="shanghai"></el-option>
               <el-option label="区域二" value="beijing"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="简历ID">
-            <el-input placeholder="简历ID"></el-input>
+            <el-input v-model="formInline.ResumeID" placeholder="简历ID"></el-input>
           </el-form-item>
           <el-form-item label="海外工作经验">
-            <el-select placeholder="海外工作经验">
+            <el-select v-model="formInline.OverSeas" placeholder="海外工作经验">
               <el-option label="区域一" value="shanghai"></el-option>
               <el-option label="区域二" value="beijing"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="求职意向岗位">
-            <el-select placeholder="求职意向岗位">
+            <el-select v-model="formInline.JobWantedPosition" placeholder="求职意向岗位">
               <el-option label="区域一" value="shanghai"></el-option>
               <el-option label="区域二" value="beijing"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item style="float:right;margin:0 90px 0 0">
-            <el-button @click="resetForm('ruleForm')">重置</el-button>
-            <el-button type="primary" @click="submitForm('ruleForm')">查询</el-button>
+            <el-button @click="resetForm()">重置</el-button>
+            <el-button type="primary" @click="submitForm()">查询</el-button>
           </el-form-item>
         </el-form>
         <div class="asp-table">
           <div style="margin:10px 0 0 0">
-            <el-button>批量下载简历</el-button>
+            <el-button @click="toggleSelection()">批量下载简历</el-button>
           </div>
           <div style="margin:20px 0 0 0">
             <el-table
@@ -119,6 +119,21 @@
 export default {
   data() {
     return {
+      formInline:{
+        UserName:'',
+        Phone:'',
+        Record:'',
+        Politic:'',
+        UserID:'',
+        WorkExperience:'',
+        City:'',
+        ResumeWhole:'',
+        JobWantedState:'',
+        ResumeID:'',
+        OverSeas:'',
+        JobWantedPosition:'',
+
+      },
       currentPage: 4,
       tableData: [
         {
@@ -161,20 +176,54 @@ export default {
     };
   },
   methods: {
-    toggleSelection(rows) {
-      if (rows) {
-        rows.forEach(row => {
-          this.$refs.multipleTable.toggleRowSelection(row);
+    //重置
+     resetForm() {
+        this.formInline.UserName = "";
+        this.formInline.Phone = "";
+        this.formInline.Record = "";
+        this.formInline.Politic = "";
+        this.formInline.UserID = "";
+        this.formInline.OverSeas = "";
+        this.formInline.WorkExperience = "";
+        this.formInline.City = "";
+        this.formInline.ResumeWhole = "";
+        this.formInline.JobWantedState = "";
+        this.formInline.ResumeID = "";
+        this.formInline.JobWantedPosition = "";
+      },
+    //查询
+    submitForm() {
+      this.$http
+        .post("", {
+          
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+          } else {
+          }
+        })
+        .catch(error => {
+          this.$message(error.response.data.message);
         });
-      } else {
-        this.$refs.multipleTable.clearSelection();
-      }
+    },
+    toggleSelection() {
+      this.$refs.multipleTable.toggleAllSelection();
+      // if (rows) {
+      //   rows.forEach(row => {
+      //     alert(1121)
+      //     this.$refs.multipleTable.toggleAllSelection(row);
+      //   });
+      // } else {
+      //   alert(11211)
+      //   this.$refs.multipleTable.clearSelection();
+      // }
     },
     handleClick(tab, event) {
       console.log(tab, event);
      this.$router.push({path:'/Cteam/Resume'})
     },
     handleSelectionChange(val) {
+      console.log(val)
       this.multipleSelection = val;
     },
     handleSizeChange(val) {
