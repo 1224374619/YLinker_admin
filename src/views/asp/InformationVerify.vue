@@ -9,6 +9,10 @@
             企业名称：
             <span>上海市xx有限公司</span>
           </div>
+           <div>
+            企业状态：
+            <span>续存/在业/迁出/迁入/吊销/注销/停业/清算</span>
+          </div>
           <div>
             企业简称：
             <span>上海徐汇</span>
@@ -27,11 +31,16 @@
           </div>
           <div>
             企业地点：
-            <span>事业单位</span>
+            <span style="color:red">上海徐汇</span>
+            <span>
+              <el-tooltip class="item" effect="dark" content="不合适" placement="right">
+                <img src="../../assets/wen.svg" style="height:15px;">
+              </el-tooltip>
+            </span>
           </div>
-          <div>
-            企业LOGO：
-            <span>事业单位</span>
+          <div class="flrx">
+           企业LOGO:
+            <div><img src="../../assets/wen.svg" style="height:65px;width:65px;margin:-25px 0 0 -85px"></div>
           </div>
         </div>
         <el-divider content-position="left"></el-divider>
@@ -106,6 +115,10 @@ export default {
   width: 98%;
   margin: 20px 1% 0 1%;
   background: #ffffff;
+}
+.flrx{
+  display: flex;
+  flex-direction: row;
 }
 h3 {
   margin: 0 0 0 100px;

@@ -11,11 +11,16 @@
           </div>
           <div>
             企业注册地：
-            <span>上海徐汇</span>
+            <span style="color:red">上海徐汇</span>
+            <span>
+              <el-tooltip class="item" effect="dark" content="不合适" placement="right">
+                <img src="../../assets/wen.svg" style="height:15px;">
+              </el-tooltip>
+            </span>
           </div>
           <div>
             统一社会信用代码：
-            <span>1111111111</span>
+            <span>123456789</span>
           </div>
           <div>
             企业类别：
@@ -67,7 +72,7 @@
 export default {
   data() {
     return {
-        checkList: ["复选框 A"],
+      checkList: ["复选框 A"]
     };
   },
   methods: {
@@ -120,9 +125,8 @@ h3 {
 }
 .verify-button {
   padding: 70px 0 0 200px;
- 
 }
-.el-checkbox{
+.el-checkbox {
   margin: 10px 0 0 0;
 }
 </style>
