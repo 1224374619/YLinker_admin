@@ -9,7 +9,7 @@
           <el-button type="primary" >存为标签</el-button>
         </div>
       </el-dialog>
-      <div>
+      <!-- <div>
         <el-form
           :model="form"
           :rules="rulesOne"
@@ -230,7 +230,7 @@
           <el-button style="margin:0 0 0 700px" @click="dialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="innerVisible = true">确定</el-button>
         </div>
-      </div>
+      </div> -->
     </el-dialog>
     <div class="asp-content">
       <div class="asp-form">
@@ -250,9 +250,9 @@
               <el-option label="C端用户" value="C端用户"></el-option>
               <el-option label="企业用户" value="企业用户"></el-option>
             </el-select>
-            <span>
+            <!-- <span>
               <el-button type="primary" @click="dialogVisible = true">批 量 添 加</el-button>
-            </span>
+            </span> -->
           </el-form-item>
           <el-form-item label="提醒方式" prop="type">
             <el-checkbox-group v-model="ruleForm.type" style="margin:-10px 20px 0 0">
@@ -261,12 +261,22 @@
               <el-checkbox label="邮件" name="type"></el-checkbox>
             </el-checkbox-group>
           </el-form-item>
+           <el-form-item label="有效期" prop="ValidityTime">
+             <el-date-picker
+                v-model="Validity"
+                style="width:315px"
+                type="daterange"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期">
+             </el-date-picker>
+          </el-form-item>
           <el-form-item label="消息内容" prop="desc">
             <el-input type="textarea" style="width:315px" v-model="ruleForm.desc"></el-input>
           </el-form-item>
           <el-form-item style="padding:0 0 20px 20px">
             <el-button @click="resetForm('ruleForm')">重置</el-button>
-            <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
+            <!-- <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button> -->
             <el-button type="primary" @click="submitForm('ruleForm')">发布</el-button>
           </el-form-item>
         </el-form>
@@ -315,7 +325,8 @@ export default {
         region: "",
         delivery: false,
         type: [],
-        desc: ""
+        desc: "",
+        Validity:''
       },
       form: {},
       rules: {
@@ -325,6 +336,9 @@ export default {
         ],
         region: [
           { required: true, message: "请选择接受对象", trigger: "change" }
+        ],
+        ValidityTime: [
+          { required: true, message: "请选择有效时间", trigger: "change" }
         ],
         type: [
           {

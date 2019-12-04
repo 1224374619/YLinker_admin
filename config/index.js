@@ -30,7 +30,7 @@ module.exports = {
     proxyTable: {
       '/apis': {
         // 测试环境
-        target: process.env.VUE_APP_SECRET + 'consumertest/', // target host
+        target: 'http://47.102.145.186' + '/consumertest/', // target host
         changeOrigin: true,  //是否跨域
         pathRewrite: {
             '^/apis': ''   //需要rewrite重写的,

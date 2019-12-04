@@ -47,9 +47,7 @@
         </el-form>
         <div style="margin:0 0 0 1305px"><el-button type="primary" @click="newsInfor">新建消息</el-button></div>
         <div class="asp-table">
-          <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-            <el-tab-pane label="未发布" name="first">
-              <el-table
+          <el-table
                 ref="multipleTable"
                 :data="tableData"
                 tooltip-effect="dark"
@@ -62,7 +60,7 @@
                 <el-table-column prop="address" label="操作时间" show-overflow-tooltip></el-table-column>
                 <el-table-column label="操作">
                   <template slot-scope="scope">
-                    <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                    <el-button @click="CheckhandleClick(scope.row)" type="text" size="small">查看</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -75,36 +73,6 @@
                 layout="total, sizes, prev, pager, next, jumper"
                 :total="400"
               ></el-pagination>
-            </el-tab-pane>
-            <el-tab-pane label="已发布" name="second">
-              <el-table
-                ref="multipleTable"
-                :data="tableData"
-                tooltip-effect="dark"
-                style="width: 100%"
-                @selection-change="handleSelectionChange">
-                <el-table-column type="selection" width="100px"></el-table-column>
-                <el-table-column prop="name" label="消息ID"></el-table-column>
-                <el-table-column prop="name" label="消息标题"></el-table-column>
-                <el-table-column prop="address" label="操作员" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="address" label="操作时间" show-overflow-tooltip></el-table-column>
-                <el-table-column label="操作">
-                  <template slot-scope="scope">
-                    <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                  </template>
-                </el-table-column>
-              </el-table>
-              <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="currentPage"
-                :page-sizes="[100, 200, 300, 400]"
-                :page-size="100"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="400"
-              ></el-pagination>
-            </el-tab-pane>
-          </el-tabs>
         </div>
       </div>
     </div>
@@ -159,6 +127,19 @@ export default {
     };
   },
   methods: {
+    //初始化列表数据
+    tidings() {
+      this.$http.get('/submitted/position').then(res => {
+        alert(13)
+          if (res.data.code == 200) {
+          }
+        }).catch(error =>{
+          this.$message({
+                message:error.response.data.message,
+                type: 'error'
+              })
+        });
+    },
     newsInfor() {
       this.$router.push({path:'/NewsMessage'})
     },
@@ -167,6 +148,10 @@ export default {
     },
     handleClick(tab, event) {
       console.log(tab, event);
+    },
+    //查看
+    CheckhandleClick() {
+      this.$router.push({path:'/MessageDetail'})
     },
     toggleSelection(rows) {
       if (rows) {
@@ -188,7 +173,10 @@ export default {
     }
   },
   mounted: function() {},
-  updated: function() {}
+  updated: function() {},
+  created() {
+    this.tidings()
+  }
 };
 </script>
 <style>

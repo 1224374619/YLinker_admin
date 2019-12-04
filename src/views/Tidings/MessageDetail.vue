@@ -6,6 +6,7 @@
         <div>消息标题：服务暂停通知</div>
         <div>接受对象：所以用户</div>
         <div>提醒方式：站内信</div>
+        <div>有效期：</div>
         <div style="width:700px">
           消息内容：
           <span>
@@ -16,8 +17,8 @@
           </span>
         </div>
         <div v-if="isshow">
-            <el-button style="margin:0 0 0 550px" type="primary">编辑</el-button>
-            <el-button type="primary">发布</el-button>
+            <!-- <el-button style="margin:0 0 0 550px" type="primary">返回</el-button> -->
+            <el-button type="primary" @click="Back()">返回</el-button>
         </div>
       </div>
     </div>
@@ -31,7 +32,12 @@ export default {
         message:'1'
     };
   },
-  methods: {},
+  methods: {
+    //返回
+    Back() {
+      this.$router.go(-1)
+    },
+  },
   mounted: function() {},
   updated: function() {},
   created() {
