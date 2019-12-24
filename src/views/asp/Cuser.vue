@@ -237,7 +237,7 @@ export default {
   updated: function() {}
 };
 </script>
-<style>
+<style scoped>
 .asp {
   width: 100%;
 }

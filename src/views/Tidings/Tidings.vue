@@ -40,12 +40,12 @@
               <el-option label="区域二" value="beijing"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item style="float:right;margin:0 200px 0 0">
+          <el-form-item style="float:right;margin:0 5% 0 0">
             <el-button @click="resetForm('ruleForm')">重置</el-button>
             <el-button type="primary" @click="submitForm('ruleForm')">查询</el-button>
           </el-form-item>
         </el-form>
-        <div style="margin:0 0 0 1305px"><el-button type="primary" @click="newsInfor">新建消息</el-button></div>
+        <div style="float:right;margin:0 5% 0 0"><el-button type="primary" @click="newsInfor">新建消息</el-button></div>
         <div class="asp-table">
           <el-table
                 ref="multipleTable"
@@ -129,16 +129,7 @@ export default {
   methods: {
     //初始化列表数据
     tidings() {
-      this.$http.get('/submitted/position').then(res => {
-        alert(13)
-          if (res.data.code == 200) {
-          }
-        }).catch(error =>{
-          this.$message({
-                message:error.response.data.message,
-                type: 'error'
-              })
-        });
+     
     },
     newsInfor() {
       this.$router.push({path:'/NewsMessage'})
@@ -175,11 +166,19 @@ export default {
   mounted: function() {},
   updated: function() {},
   created() {
-    this.tidings()
+    this.$axios.get('/sysmsg').then(res => {
+          if (res.data.code == 200) {
+          }
+        }).catch(error =>{
+          this.$message({
+                message:error.response.data.message,
+                type: 'error'
+              })
+        });
   }
 };
 </script>
-<style>
+<style scoped>
 .asp {
   width: 100%;
 }
@@ -205,14 +204,15 @@ export default {
 .el-select {
   width: 203px;
 }
+.el-pagination {
+  width: 525px;
+  margin:10px auto;
+  padding: 0 0 10px 0
+}
 .asp-table {
   width: 98%;
   background: #ffffff;
   margin: 10px 0 0 1%;
-}
-.el-pagination {
-  margin: 20px 0 0 400px;
-  padding: 0 0 20px 0;
 }
 .el-checkbox__label {
   font-size: 10px;

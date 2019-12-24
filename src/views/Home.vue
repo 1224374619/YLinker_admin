@@ -131,7 +131,7 @@
         </ul>
       </aside>
       <section class="content-container">
-        <div class="grid-content bg-purple-light">
+        <div class="grid-content bg-purple-light" >
           <el-col :span="24" class="breadcrumb-container">
             <!-- <strong class="title">{{$route.name}}</strong> -->
             <el-breadcrumb separator="/" class="breadcrumb-inner">
