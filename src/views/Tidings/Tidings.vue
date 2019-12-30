@@ -26,18 +26,15 @@
       <div class="asp-form">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="消息ID">
-            <el-input placeholder="消息ID"></el-input>
+            <el-input v-model="formInline.InforID" placeholder="消息ID"></el-input>
           </el-form-item>
           <el-form-item label="消息标题">
-            <el-select placeholder="消息标题" filterable>
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
+            <el-input v-model="formInline.Infortitle" placeholder="消息标题"></el-input>
           </el-form-item>
           <el-form-item label="操作员">
-            <el-select placeholder="操作员">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+            <el-select v-model="formInline.person" placeholder="操作员">
+              <el-option label="管理员" value="0"></el-option>
+              <!-- <el-option label="区域二" value="1"></el-option> -->
             </el-select>
           </el-form-item>
           <el-form-item style="float:right;margin:0 5% 0 0">
@@ -82,47 +79,16 @@
 export default {
   data() {
     return {
+      formInline: {
+        InforID:'',
+        Infortitle:'',
+        person:''
+      },
       checkList: ["复选框 A"],
       dialogVisible: false,
       activeName: "first",
       currentPage: 4,
-      tableData: [
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-08",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-06",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-07",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ],
+      tableData: [],
       multipleSelection: []
     };
   },
