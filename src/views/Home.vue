@@ -153,7 +153,7 @@
 export default {
   data() {
     return {
-      sysName: "VUEADMIN",
+      sysName: "Yinlinkrc",
       collapsed: false,
       sysUserName: "",
       sysUserAvatar: "",
@@ -245,10 +245,10 @@ export default {
     .logo {
       //width:230px;
       height: 60px;
-      font-size: 22px;
-      padding-left: 20px;
+      font-size: 32px;
+      padding-left: 50px;
       padding-right: 20px;
-      border-color: rgba(238, 241, 146, 0.3);
+      border-color: rgba(171, 172, 164, 0.3);
       border-right-width: 1px;
       border-right-style: solid;
       img {

@@ -197,6 +197,7 @@ export default {
   width: 98%;
   background: #ffffff;
   margin: 10px 0 0 1%;
+  border: 1px solid #efeff3
 }
 .el-form-item {
   padding: 10px 0 0 20px;
@@ -206,8 +207,7 @@ export default {
 }
 .el-pagination {
   width: 525px;
-  margin:10px auto;
-  padding: 0 0 10px 0
+  margin: 20px auto;
 }
 .asp-table {
   width: 98%;

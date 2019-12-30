@@ -246,9 +246,9 @@
           </el-form-item>
           <el-form-item label="接收对象" prop="region">
             <el-select v-model="ruleForm.region" placeholder="请选择接收对象">
-              <el-option label="所有用户" value="所有用户"></el-option>
-              <el-option label="C端用户" value="C端用户"></el-option>
-              <el-option label="企业用户" value="企业用户"></el-option>
+              <el-option label="企业用户" value="1"></el-option>
+              <el-option label="C端用户"  value="2"></el-option>
+              <el-option label="所有用户" value="3"></el-option>
             </el-select>
             <!-- <span>
               <el-button type="primary" @click="dialogVisible = true">批 量 添 加</el-button>
@@ -256,9 +256,9 @@
           </el-form-item>
           <el-form-item label="提醒方式" prop="type">
             <el-checkbox-group v-model="ruleForm.type" style="margin:-10px 20px 0 0">
-              <el-checkbox label="站内信" name="type" style="margin:0 0 0 0"></el-checkbox>
-              <el-checkbox label="短信" name="type"></el-checkbox>
-              <el-checkbox label="邮件" name="type"></el-checkbox>
+              <el-checkbox label="站内信" name="type" style="margin-left:0px"></el-checkbox>
+              <!-- <el-checkbox label="短信" name="type"></el-checkbox>
+              <el-checkbox label="邮件" name="type"></el-checkbox> -->
             </el-checkbox-group>
           </el-form-item>
            <el-form-item label="有效期" prop="ValidityTime">

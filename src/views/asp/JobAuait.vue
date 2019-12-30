@@ -13,7 +13,7 @@
           <el-form-item label="职位ID">
             <el-input v-model="formInline.CompanyId" placeholder="职位ID"></el-input>
           </el-form-item>
-          <el-form-item style="float:right;margin:0 90px 0 0">
+          <el-form-item style="float:right;margin:0 5% 0 0">
             <el-button @click="Ressetting()">重置</el-button>
             <el-button type="primary" @click="Inquiry()">查询</el-button>
           </el-form-item>
@@ -285,8 +285,8 @@ export default {
   margin: 10px 0 0 1%;
 }
 .el-pagination {
-  margin: 20px 0 0 400px;
-  padding: 0 0 20px 0;
+  width: 525px;
+  margin:20px auto;
 }
 .el-checkbox__label {
   font-size: 10px;
