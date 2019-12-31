@@ -24,22 +24,20 @@
     </el-dialog>
     <div class="asp-content">
       <div class="asp-form">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="消息ID">
-            <el-input v-model="formInline.InforID" placeholder="消息ID"></el-input>
-          </el-form-item>
-          <el-form-item label="消息标题">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline" ref="formInline">
+          <el-form-item label="消息标题" prop="Infortitle">
             <el-input v-model="formInline.Infortitle" placeholder="消息标题"></el-input>
           </el-form-item>
-          <el-form-item label="操作员">
-            <el-select v-model="formInline.person" placeholder="操作员">
-              <el-option label="管理员" value="0"></el-option>
-              <!-- <el-option label="区域二" value="1"></el-option> -->
+          <el-form-item label="接受对象" prop="person">
+            <el-select v-model="formInline.person" placeholder="接受对象">
+             <el-option label="企业用户" value="1"></el-option>
+             <el-option label="C端用户"  value="2"></el-option>
+             <el-option label="所有用户" value="3"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item style="float:right;margin:0 5% 0 0">
-            <el-button @click="resetForm('ruleForm')">重置</el-button>
-            <el-button type="primary" @click="submitForm('ruleForm')">查询</el-button>
+            <el-button @click="resetForm('formInline')">重置</el-button>
+            <el-button type="primary" @click="submitForm('formInline')">查询</el-button>
           </el-form-item>
         </el-form>
         <div style="float:right;margin:0 5% 0 0"><el-button type="primary" @click="newsInfor">新建消息</el-button></div>
@@ -51,25 +49,25 @@
                 style="width: 100%"
                 @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="100px"></el-table-column>
-                <el-table-column prop="name" label="消息ID"></el-table-column>
-                <el-table-column prop="name" label="消息标题"></el-table-column>
-                <el-table-column prop="address" label="操作员" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="address" label="操作时间" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="id" label="消息ID"></el-table-column>
+                <el-table-column prop="title" label="消息标题"></el-table-column>
+                <el-table-column prop="issuer" label="操作员" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="indateTime" label="操作时间" show-overflow-tooltip><template slot-scope="scope">{{ scope.row.indateTime | formatDate}}</template></el-table-column>
                 <el-table-column label="操作">
                   <template slot-scope="scope">
                     <el-button @click="CheckhandleClick(scope.row)" type="text" size="small">查看</el-button>
                   </template>
                 </el-table-column>
               </el-table>
-              <el-pagination
+               <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
-                :current-page="currentPage"
-                :page-sizes="[100, 200, 300, 400]"
-                :page-size="100"
+                :current-page="page.current"
+                :page-sizes="page.pageSizeOpts"
+                :page-size="page.pageSize"
                 layout="total, sizes, prev, pager, next, jumper"
-                :total="400"
-              ></el-pagination>
+                :total="page.total">
+              </el-pagination>
         </div>
       </div>
     </div>
@@ -80,23 +78,24 @@ export default {
   data() {
     return {
       formInline: {
-        InforID:'',
         Infortitle:'',
         person:''
       },
+      page: {
+        total: 0,
+        pageSize: 10,
+        current: 1,
+        pageSizeOpts: [10,20,30]
+            },
       checkList: ["复选框 A"],
       dialogVisible: false,
       activeName: "first",
       currentPage: 4,
       tableData: [],
-      multipleSelection: []
+      multipleSelection: [],
     };
   },
   methods: {
-    //初始化列表数据
-    tidings() {
-     
-    },
     newsInfor() {
       this.$router.push({path:'/NewsMessage'})
     },
@@ -107,8 +106,24 @@ export default {
       console.log(tab, event);
     },
     //查看
-    CheckhandleClick() {
-      this.$router.push({path:'/MessageDetail'})
+    CheckhandleClick(e) {
+       this.$router.push({path:'/MessageDetail', query: {
+              thisId:e.id,
+            }})
+    },
+    //全部
+    Message() {
+      this.$http.get('/sysmsg').then(res => {
+          if (res.data.code == 200) {
+            this.tableData = res.data.data.list
+            this.page.total = res.data.data.total
+          }
+        }).catch(error =>{
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
     },
     toggleSelection(rows) {
       if (rows) {
@@ -127,20 +142,52 @@ export default {
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
+      this.page.current = val
+       let params = {
+        pageNum:this.page.current,
+        pageSize:this.page.pageSize
+      }
+      this.$http.get('/sysmsg',{params:params}).then(res => {
+          if (res.data.code == 200) {
+            this.tableData = res.data.data.list
+            this.page.total = res.data.data.total
+          }
+        }).catch(error =>{
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
+      positionlist(this.companId,params).then(res => {
+          if (res.data.code == 200) {
+            this.tableData = res.data.data.list;
+            this.page.total = res.data.data.total
+            var time = this.tableData[0].publishedTime
+            this.changeTime(time)
+          }
+      });
+    },
+    submitForm() {
+         this.$http.get('/sysmsg',{params:{title:this.formInline.Infortitle === ''?null:this.formInline.Infortitle,accept:this.formInline.person === ''?null:this.formInline.person}}).then(res => {
+          if (res.data.code == 200) {
+            this.tableData = res.data.data.list
+            this.page.total = res.data.data.total
+          }
+        }).catch(error =>{
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
+      },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
     }
   },
   mounted: function() {},
   updated: function() {},
   created() {
-    this.$axios.get('/sysmsg').then(res => {
-          if (res.data.code == 200) {
-          }
-        }).catch(error =>{
-          this.$message({
-                message:error.response.data.message,
-                type: 'error'
-              })
-        });
+    this.Message()
   }
 };
 </script>

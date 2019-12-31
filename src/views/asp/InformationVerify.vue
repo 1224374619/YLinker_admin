@@ -7,31 +7,31 @@
         <div class="verify-nav">
           <div>
             企业名称：
-            <span>上海市xx有限公司</span>
+            <span>{{this.companyName}}</span>
           </div>
            <div>
             企业状态：
-            <span>续存/在业/迁出/迁入/吊销/注销/停业/清算</span>
+            <span>{{this.state}}</span>
           </div>
           <div>
             企业简称：
-            <span>上海徐汇</span>
+            <span>{{this.shortName}}</span>
           </div>
           <div>
             企业规模：
-            <span>1111111111</span>
+            <span>{{this.size | size}}</span>
           </div>
           <div>
             企业性质：
-            <span>事业单位</span>
+            <span>{{this.nature | level}}</span>
           </div>
           <div>
             所属行业：
-            <span>事业单位</span>
+            <span>{{this.industry}}</span>
           </div>
           <div>
             企业地点：
-            <span style="color:red">上海徐汇</span>
+            <span>{{this.address}}</span>
             <span>
               <el-tooltip class="item" effect="dark" content="不合适" placement="right">
                 <img src="../../assets/wen.svg" style="height:15px;">
@@ -69,12 +69,13 @@
                 <el-button
                   style="width:50px;height:20px;font-size:10px;padding:0 0"
                   type="primary"
+                  @click="Define"
                 >确认</el-button>
               </div>
             </div>
-            <el-button type="primary">不通过</el-button>
+            <el-button v-if="this.reviewedState === 3?false:true" style="margin: 0 0 20px 10px" type="primary">不通过</el-button>
           </el-tooltip>
-          <el-button type="primary" style="margin: 0 0 20px 10px">通过</el-button>
+          <el-button type="primary" v-if="this.reviewedState === 2?false:true" @click="DefineFirst" style="margin: 0 0 20px 10px">通过</el-button>
         </div>
       </div>
     </div>
@@ -84,16 +85,86 @@
 export default {
   data() {
     return {
-        checkList: ["复选框 A"],
+        checkList: [],
+        companyName:'',
+        state:'',
+        shortName:'',
+        size:'',
+        nature:'',
+        industry:'',
+        logoUrl:'',
+        reviewedState:''
     };
   },
   methods: {
     back() {
       this.$router.go(-1);
-    }
+    },
+    //详细信息
+    Detail() {
+      this.$http.get(`/reviewed/company/${this.thisId}/info/${this.companId}`).then(res => {
+          if (res.data.code == 200) {
+            let NewContent = res.data.data
+            this.companyName = NewContent.fullName
+            this.state = NewContent.state
+            this.shortName = NewContent.shortName
+            this.size = NewContent.size
+            this.nature = NewContent.nature
+            this.industry = NewContent.industry
+            this.logoUrl = NewContent.logoUrl
+            this.reviewedState = NewContent.reviewedState
+          }
+        }).catch(error =>{
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
+    },
+    //未审核未通过
+    Define() {
+      this.$http.put(`/reviewed/company/${this.thisId}/info/${this.companId}/notPass`,{reason:this.checkList[0]}).then(res => {
+          if (res.data.code == 200) {
+            this.ReviewCompany()
+          }
+        }).catch(error =>{
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
+    },
+    //未审核通过
+    DefineFirst() {
+      this.$http.put(`/reviewed/company/${this.thisId}/info/${this.companId}/rePass`).then(res => {
+          if (res.data.code == 200) {
+            this.ReviewCompany()
+          }
+        }).catch(error =>{
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
+    },
   },
   mounted: function() {},
-  updated: function() {}
+  updated: function() {},
+  created() {
+    this.companId = this.$route.query.thisId
+    this.thisId = this.$route.query.thatId
+    this.Detail()
+  },
+  filters: {
+    size(size) {
+      const map = ["小于10人", "10-100人", "100-500人", "500人以上"];
+      return map[size];
+    },
+    level(level){
+      const map=["国有企业","外资企业","合资企业","民营企业",'事业单位']
+      return map[level]
+    },
+  },
 };
 </script>
 <style scoped>

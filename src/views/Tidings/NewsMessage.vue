@@ -6,7 +6,7 @@
         <el-input v-model="input" placeholder="请输入标签名称"></el-input>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false,innerVisible = false">忽略</el-button>
-          <el-button type="primary" >存为标签</el-button>
+          <el-button type="primary">存为标签</el-button>
         </div>
       </el-dialog>
       <!-- <div>
@@ -230,46 +230,39 @@
           <el-button style="margin:0 0 0 700px" @click="dialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="innerVisible = true">确定</el-button>
         </div>
-      </div> -->
+      </div>-->
     </el-dialog>
     <div class="asp-content">
       <div class="asp-form">
         <el-form
           :model="ruleForm"
-          :rules="rules"
+          :rules="rules" 
           ref="ruleForm"
           label-width="100px"
           class="demo-ruleForm"
         >
-          <el-form-item label="消息标题：" prop="name">
+          <el-form-item label="消息标题" prop="name" style="padding-top:20px">
             <el-input v-model="ruleForm.name" style="width:315px"></el-input>
           </el-form-item>
           <el-form-item label="接收对象" prop="region">
             <el-select v-model="ruleForm.region" placeholder="请选择接收对象">
               <el-option label="企业用户" value="1"></el-option>
-              <el-option label="C端用户"  value="2"></el-option>
+              <el-option label="C端用户" value="2"></el-option>
               <el-option label="所有用户" value="3"></el-option>
             </el-select>
             <!-- <span>
               <el-button type="primary" @click="dialogVisible = true">批 量 添 加</el-button>
-            </span> -->
+            </span>-->
           </el-form-item>
-          <el-form-item label="提醒方式" prop="type">
-            <el-checkbox-group v-model="ruleForm.type" style="margin:-10px 20px 0 0">
-              <el-checkbox label="站内信" name="type" style="margin-left:0px"></el-checkbox>
+          <el-form-item label="提醒方式" prop="types">
+            <el-checkbox-group v-model="ruleForm.types" style="margin:-10px 20px 0 0">
+              <el-checkbox label="1" style="margin-left:0px">站内信</el-checkbox>
               <!-- <el-checkbox label="短信" name="type"></el-checkbox>
-              <el-checkbox label="邮件" name="type"></el-checkbox> -->
+              <el-checkbox label="邮件" name="type"></el-checkbox>-->
             </el-checkbox-group>
           </el-form-item>
-           <el-form-item label="有效期" prop="ValidityTime">
-             <el-date-picker
-                v-model="Validity"
-                style="width:315px"
-                type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期">
-             </el-date-picker>
+          <el-form-item label="有效期" prop="Validity">
+            <el-time-picker v-model="ruleForm.Validity" placeholder="任意时间点"></el-time-picker>
           </el-form-item>
           <el-form-item label="消息内容" prop="desc">
             <el-input type="textarea" style="width:315px" v-model="ruleForm.desc"></el-input>
@@ -322,11 +315,11 @@ export default {
       dialogVisible: false,
       ruleForm: {
         name: "",
-        region: "",
+        region: [],
         delivery: false,
-        type: [],
+        types: ['1'],
         desc: "",
-        Validity:''
+        Validity: ""
       },
       form: {},
       rules: {
@@ -335,12 +328,12 @@ export default {
           { min: 0, max: 60, message: "长度在 0 到 60 个字符", trigger: "blur" }
         ],
         region: [
-          { required: true, message: "请选择接受对象", trigger: "change" }
+          { required: true, message: "请选择接受对象", trigger: "blur" }
         ],
-        ValidityTime: [
+        Validity: [
           { required: true, message: "请选择有效时间", trigger: "change" }
         ],
-        type: [
+        types: [
           {
             type: "array",
             required: true,
@@ -359,7 +352,30 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert("submit!");
+          this.$http
+            .post("/sysmsg", {
+                title:
+                  this.ruleForm.name,
+                accept:
+                  parseInt(this.ruleForm.region),
+                indateTime:
+                  this.ruleForm.Validity.getTime(),
+                remindway:
+                  parseInt(this.ruleForm.types[0]),
+                content:
+                  this.ruleForm.desc,
+            })
+            .then(res => {
+              if (res.data.code == 200) {
+               console.log(res)
+              }
+            })
+            .catch(error => {
+              // this.$message({
+              //       message:error.response.data.message,
+              //       type: 'error'
+              //     })
+            });
         } else {
           console.log("error submit!!");
           return false;

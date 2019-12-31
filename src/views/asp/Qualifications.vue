@@ -5,7 +5,6 @@
       title="请填写通过理由"
       :visible.sync="dialogVisible"
       width="30%"
-      :before-close="handleClose"
     >
       <div>
         <div style="margin:-40px 0 0 0"></div>
@@ -33,7 +32,7 @@
           </el-form-item>
         </el-form>
         <div class="asp-table">
-          <el-tabs v-model="activeName" type="card">
+          <el-tabs v-model="activeName" type="card" @tab-click="handleClicktab">
             <el-tab-pane label="待审核" name="first">
               <el-table
                 ref="multipleTable"
@@ -43,16 +42,16 @@
                 @selection-change="handleSelectionChange"
               >
                 <el-table-column type="selection" width="100"></el-table-column>
-                <el-table-column prop="name" label="企业ID"></el-table-column>
-                <el-table-column prop="name" label="企业名称"></el-table-column>
-                <el-table-column prop="address" label="注册地" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="address" sortable label="所属行业" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="address" label="统一社会信用代码" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="address" sortable label="提交时间" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="companyId" label="企业ID"></el-table-column>
+                <el-table-column prop="companyName" label="企业名称"></el-table-column>
+                <el-table-column prop="registeredAddress" label="注册地" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="enterpriseForm" sortable label="所属行业" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="uniformSocialCreditCode" label="统一社会信用代码" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="updatedTime" sortable label="提交时间" show-overflow-tooltip><template slot-scope="scope">{{ scope.row.updatedTime | formatDate}}</template></el-table-column>
                 <el-table-column label="操作">
                   <template slot-scope="scope">
                     <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                    <el-button type="text" size="small">通过</el-button>
+                    <el-button @click="DefineFirst(scope.row)" type="text" size="small">通过</el-button>
                     <el-tooltip class="item" effect="light" placement="bottom-start">
                       <div slot="content">
                         <span>
@@ -76,6 +75,7 @@
                           <el-button
                             style="width:50px;height:20px;font-size:10px;padding:0 0"
                             type="primary"
+                            @click="Define(scope.row)"
                           >确认</el-button>
                         </div>
                       </div>
@@ -87,12 +87,12 @@
               <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
-                :current-page="currentPage"
-                :page-sizes="[100, 200, 300, 400]"
-                :page-size="100"
+                :current-page="page.current"
+                :page-sizes="page.pageSizeOpts"
+                :page-size="page.pageSize"
                 layout="total, sizes, prev, pager, next, jumper"
-                :total="400"
-              ></el-pagination>
+                :total="page.total">
+              </el-pagination>
             </el-tab-pane>
             <el-tab-pane label="通过" name="second">
               <el-table
@@ -103,12 +103,12 @@
                 @selection-change="handleSelectionChange"
               >
                 <el-table-column type="selection" width="100"></el-table-column>
-                <el-table-column prop="name" label="企业ID"></el-table-column>
-                <el-table-column prop="name" label="企业名称"></el-table-column>
-                <el-table-column prop="address" label="注册地" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="address" sortable label="所属行业" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="address" label="统一社会信用代码" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="address" sortable label="提交时间" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="companyId" label="企业ID"></el-table-column>
+                <el-table-column prop="companyName" label="企业名称"></el-table-column>
+                <el-table-column prop="registeredAddress" label="注册地" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="enterpriseForm" sortable label="所属行业" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="uniformSocialCreditCode" label="统一社会信用代码" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="updatedTime" sortable label="提交时间" show-overflow-tooltip><template slot-scope="scope">{{ scope.row.updatedTime | formatDate}}</template></el-table-column>
                 <el-table-column label="操作">
                   <template slot-scope="scope">
                     <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
@@ -118,12 +118,12 @@
               <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
-                :current-page="currentPage"
-                :page-sizes="[100, 200, 300, 400]"
-                :page-size="100"
+                :current-page="page.current"
+                :page-sizes="page.pageSizeOpts"
+                :page-size="page.pageSize"
                 layout="total, sizes, prev, pager, next, jumper"
-                :total="400"
-              ></el-pagination>
+                :total="page.total">
+              </el-pagination>
             </el-tab-pane>
             <el-tab-pane label="不通过" name="third">
               <el-table
@@ -134,28 +134,28 @@
                 @selection-change="handleSelectionChange"
               >
                 <el-table-column type="selection" width="100"></el-table-column>
-                <el-table-column prop="name" label="企业ID"></el-table-column>
-                <el-table-column prop="name" label="企业名称"></el-table-column>
-                <el-table-column prop="address" label="注册地" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="address" sortable label="所属行业" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="address" label="统一社会信用代码" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="address" sortable label="提交时间" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="companyId" label="企业ID"></el-table-column>
+                <el-table-column prop="companyName" label="企业名称"></el-table-column>
+                <el-table-column prop="registeredAddress" label="注册地" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="enterpriseForm" sortable label="所属行业" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="uniformSocialCreditCode" label="统一社会信用代码" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="updatedTime" sortable label="提交时间" show-overflow-tooltip><template slot-scope="scope">{{ scope.row.updatedTime | formatDate}}</template></el-table-column>
                 <el-table-column label="操作">
                   <template slot-scope="scope">
                     <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                    <el-button type="text" @click="keep" size="small">通过</el-button>
+                    <el-button type="text" @click="keep(scope.row)" size="small">通过</el-button>
                   </template>
                 </el-table-column>
               </el-table>
-              <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="currentPage"
-                :page-sizes="[100, 200, 300, 400]"
-                :page-size="100"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="400"
-              ></el-pagination>
+                <el-pagination
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                  :current-page="page.current"
+                  :page-sizes="page.pageSizeOpts"
+                  :page-size="page.pageSize"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="page.total">
+                </el-pagination> 
             </el-tab-pane>
           </el-tabs>
         </div>
@@ -167,56 +167,123 @@
 export default {
   data() {
     return {
+      page: {
+        total: 0,
+        pageSize: 10,
+        current: 1,
+        pageSizeOpts: [10,20,30]
+            },
       formInline: {
         CompanyName: "",
         CreditCode: ""
       },
       textarea:'',
-      checkList: ["复选框 A"],
+      industryList:[],
+      checkList: [],
       dialogVisible: false,
       activeName: "first",
       currentPage: 4,
-      tableData: [
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-08",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-06",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-07",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ],
-      multipleSelection: []
+      tableData: [],
+      multipleSelection: [],
+      companyId:'',
+      id:''
     };
   },
   methods: {
+    //未审核未通过
+    Define(tab, event) {
+      this.$http.put(`/reviewed/company/${tab.companyId}/cert/${tab.id}/notPass`,{reason:this.checkList[0]}).then(res => {
+          if (res.data.code == 200) {
+            this.ReviewCompany()
+          }
+        }).catch(error =>{
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
+    },
+    //未审核通过
+    DefineFirst(tab,event) {
+      this.$http.put(`/reviewed/company/${tab.companyId}/cert/${tab.id}/pass`).then(res => {
+          if (res.data.code == 200) {
+            this.ReviewCompany()
+          }
+        }).catch(error =>{
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
+    },
+    //企业基本信息审核
+    ReviewCompany() {
+      this.$http.get('/reviewed/company/cert',{params:{reviewedState:1}}).then(res => {
+          if (res.data.code == 200) {
+            this.tableData = res.data.data.list
+            this.page.total = res.data.data.total
+          }
+        }).catch(error =>{
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
+    },
+    //获取所有企业行业
+    // allposition() {
+    //   this.$http.get('/constant/industry').then(res => {
+    //       if (res.data.code == 200) {
+    //         this.industryList = res.data.data;
+    //       }
+    //     }).catch(error =>{
+    //       // this.$message({
+    //       //       message:error.response.data.message,
+    //       //       type: 'error'
+    //       //     })
+    //     });
+    // },
+    //tabs 查看
+    handleClicktab (tab, event) {
+      let tabValue =  tab.name
+      if(tabValue === 'first') {
+        this.$http.get('/reviewed/company/cert',{params:{reviewedState:1}}).then(res => {
+          if (res.data.code == 200) {
+            this.tableData = res.data.data.list
+            this.page.total = res.data.data.total
+          }
+        }).catch(error =>{
+          this.$message({
+                message:error.response.data.message,
+                type: 'error'
+              })
+        });
+      }else if(tabValue === 'second') {
+        this.$http.get('/reviewed/company/cert',{params:{reviewedState:2}}).then(res => {
+          if (res.data.code == 200) {
+            this.tableData = res.data.data.list
+            this.page.total = res.data.data.total
+          }
+        }).catch(error =>{
+          this.$message({
+                message:error.response.data.message,
+                type: 'error'
+              })
+        });
+      }else {
+        this.$http.get('/reviewed/company/cert',{params:{reviewedState:3}}).then(res => {
+          if (res.data.code == 200) {
+            this.tableData = res.data.data.list
+            this.page.total = res.data.data.total
+          }
+        }).catch(error =>{
+          this.$message({
+                message:error.response.data.message,
+                type: 'error'
+              })
+        });
+      }
+    },
     //重置
     Ressetting() {
       this.formInline.CompanyName = "";
@@ -240,12 +307,22 @@ export default {
     //弹框确认
     DialogAffirm() {
       this.$http
-        .post("", {
-          
+        .put(`/reviewed/company/${this.companyId}/cert/${this.id}/rePass`, {reason:this.textarea
         })
         .then(res => {
           if (res.data.code == 200) {
             this.dialogVisible = false
+            this.$http.get('/reviewed/company/cert',{params:{reviewedState:3}}).then(res => {
+                if (res.data.code == 200) {
+                  this.tableData = res.data.data.list
+                  this.page.total = res.data.data.total
+                }
+              }).catch(error =>{
+                // this.$message({
+                //       message:error.response.data.message,
+                //       type: 'error'
+                //     })
+              });
           } else {
           }
         })
@@ -253,12 +330,16 @@ export default {
           this.$message(error.response.data.message);
         });
     },
-    keep() {
+    keep(tab, event) {
+      this.companyId = tab.companyId
+      this.id = tab.id
       this.dialogVisible = true;
     },
     handleClick(tab, event) {
-      console.log(tab, event);
-      this.$router.push({ path: "/CompanyInformation/Verify" });
+      this.$router.push({ path: "/CompanyInformation/Verify",query: {
+              thisId:tab.id,
+              thatId:tab.companyId
+            } });
     },
     handle(tab, event) {
       console.log(tab, event);
@@ -284,7 +365,11 @@ export default {
     }
   },
   mounted: function() {},
-  updated: function() {}
+  updated: function() {},
+  created() {
+    this.ReviewCompany()
+    // this.allposition();
+  },
 };
 </script>
 <style scoped>
@@ -319,7 +404,7 @@ export default {
   margin: 10px 0 0 1%;
 }
 .el-pagination {
-  width: 525px;
+  text-align: center; 
   margin:20px auto
 }
 .el-checkbox__label {

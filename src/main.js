@@ -8,6 +8,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 import VueRouter from 'vue-router'
 import store from './vuex/store'
 import Vuex from 'vuex'
+import Moment from 'moment'
+import {CodeToTag} from './cookie';
 // import './utils/http'
 //import NProgress from 'nprogress'
 //import 'nprogress/nprogress.css'
@@ -19,15 +21,31 @@ import 'font-awesome/css/font-awesome.min.css'
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
+Vue.prototype.$CodeToTag = {
+  CodeToTag
+}
 Vue.config.productionTip = false
 
-Vue.prototype.$axios = axios //将axios挂载在Vue实例原型上
+Vue.prototype.$http = axios //将axios挂载在Vue实例原型上
 
 axios.defaults.baseURL = '/api'
 // axios.defaults.headers.common['Authorization'] = 'f4c902c9ae5a2a9d8f84868ad064e706';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-
+// 定义全局时间戳过滤器
+Vue.filter('formatDate', function(value) {
+  var timestamp = (new Date()).getTime()-24*60*60*1000
+  var timestampOne = (new Date()).getTime()-48*60*60*1000
+  if(value > timestamp) {
+    return Moment(value).format('今天'+'HH:mm');
+  }
+  else if(value > timestampOne && value < timestamp) {
+    return Moment(value).format('昨天'+'HH:mm');
+  }
+  else{
+    return Moment(value).format('YYYY-MM-DD');
+  }
+});
 //NProgress.configure({ showSpinner: false });
 
 const router = new VueRouter({

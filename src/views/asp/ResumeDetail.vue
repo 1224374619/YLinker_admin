@@ -1,7 +1,7 @@
 <template>
   <div class="enterdetail">
     <div class="resume-article">
-      <div style="width:70%;">
+      <div style="width:80%;">
         <div class="resume-footer">
           <div class="section-nav">
             <span>简历审核详情页</span>
@@ -109,7 +109,7 @@
             <div class="train-content">
               <div>技能名称</div>
               <div>熟练</div>
-              <div>证书附件，点击查看大图</div>
+              <div><i class="el-icon-message"></i></div>
             </div>
             <div class="train-content">
               <div>证书名称</div>
@@ -121,7 +121,7 @@
             <div class="train-content">
               <div>获奖名称</div>
               <div>熟练</div>
-              <div>证书附件，点击查看大图</div>
+              <div><i class="el-icon-message"></i></div>
             </div>
           </div>
           <div class="jotension">
@@ -137,7 +137,7 @@
           </div>
         </div>
       </div>
-      <div class="aside">
+      <div class="aside" style="width:20%;">
         <!-- <div class="asp-nav">后台操作日志</div>
         <div class="resume-line" style="margin:20px 0 0 0"></div>
         <div class="block">
@@ -151,7 +151,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 <script>
 export default {

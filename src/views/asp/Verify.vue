@@ -7,24 +7,24 @@
         <div class="verify-nav">
           <div>
             企业名称：
-            <span>上海市xx有限公司</span>
+            <span>{{this.companyName}}</span>
           </div>
           <div>
             企业注册地：
-            <span style="color:red">上海徐汇</span>
-            <span>
+            <span>{{this.registeredAddress}}</span>
+            <!-- <span>
               <el-tooltip class="item" effect="dark" content="不合适" placement="right">
                 <img src="../../assets/wen.svg" style="height:15px;">
               </el-tooltip>
-            </span>
+            </span> -->
           </div>
           <div>
             统一社会信用代码：
-            <span>123456789</span>
+            <span>{{this.uniformSocialCreditCode}}</span>
           </div>
           <div>
             企业类别：
-            <span>事业单位</span>
+            <span>{{this.enterpriseForm}}</span>
           </div>
           <div>
             证件原件照片：
@@ -55,14 +55,15 @@
                 <br />
                 <el-button style="width:50px;height:20px;font-size:10px;padding:0 0">取消</el-button>
                 <el-button
+                  @click="Define"
                   style="width:50px;height:20px;font-size:10px;padding:0 0"
                   type="primary"
                 >确认</el-button>
               </div>
             </div>
-            <el-button type="primary">不通过</el-button>
+            <el-button v-if="this.reviewedState === 3?false:true" type="primary" style="margin: 0 0 20px 10px">不通过</el-button>
           </el-tooltip>
-          <el-button type="primary" style="margin: 0 0 20px 10px">通过</el-button>
+          <el-button type="primary" v-if="this.reviewedState === 2?false:true" @click="DefineFirst" style="margin: 0 0 20px 10px">通过</el-button>
         </div>
       </div>
     </div>
@@ -72,16 +73,68 @@
 export default {
   data() {
     return {
-      checkList: ["复选框 A"]
+      checkList: [],
+      companyName:'',
+      registeredAddress:'',
+      uniformSocialCreditCode:'',
+      enterpriseForm:'',
+      reviewedState:''
     };
   },
   methods: {
     back() {
       this.$router.go(-1);
-    }
+    },
+    //详细信息
+    Detail() {
+      this.$http.get(`/reviewed/company/${this.thisId}/cert/${this.companId}`).then(res => {
+          if (res.data.code == 200) {
+            let NewContent = res.data.data
+            this.companyName = NewContent.companyName
+            this.registeredAddress = NewContent.registeredAddress
+            this.uniformSocialCreditCode = NewContent.uniformSocialCreditCode
+            this.enterpriseForm = NewContent.enterpriseForm
+            this.reviewedState = NewContent.reviewedState
+          }
+        }).catch(error =>{
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
+    },
+    //未审核未通过
+    Define() {
+      this.$http.put(`/reviewed/company/${this.thisId}/cert/${this.companId}/notPass`,{reason:this.checkList[0]}).then(res => {
+          if (res.data.code == 200) {
+          }
+        }).catch(error =>{
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
+    },
+    //未审核通过
+    DefineFirst() {
+      this.$http.put(`/reviewed/company/${this.thisId}/cert/${this.companId}/rePass`).then(res => {
+          if (res.data.code == 200) {
+          }
+        }).catch(error =>{
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
+    },
   },
   mounted: function() {},
-  updated: function() {}
+  updated: function() {},
+  created() {
+    this.companId = this.$route.query.thisId
+    this.thisId = this.$route.query.thatId
+    this.Detail()
+  }
 };
 </script>
 <style scoped>

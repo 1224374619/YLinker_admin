@@ -3,17 +3,14 @@
     <div class="asp-nav">消息详情</div>
     <div class="asp-content">
       <div class="asp-form">
-        <div>消息标题：服务暂停通知</div>
-        <div>接受对象：所以用户</div>
-        <div>提醒方式：站内信</div>
-        <div>有效期：</div>
+        <div>消息标题：{{this.title}}</div>
+        <div>接受对象：{{this.accept | size}}</div>
+        <div>提醒方式：{{this.remindWay | level}}</div>
+        <div>有效期：{{this.indateTime | formatDate}}</div>
         <div style="width:700px">
           消息内容：
           <span>
-            文案文案文案文案文文案文案文案文案文案文文案文文案文文
-            案文案文案文案文案文文案文案文案文案文文案文案文案文案文案文文案文案文案文文文案文文案文案
-            文案文案文案文文案文案文案文案文文案文案文案文案文案文文案文案文案文文案文案文案文文案文案
-            文案文案文案文文案文案文案文文案文案文案文案文案文文案文案文案文案文案文文案
+            {{this.content}}
           </span>
         </div>
         <div v-if="isshow">
@@ -29,7 +26,12 @@ export default {
   data() {
     return {
         isshow:true,
-        message:'1'
+        message:'1',
+        title:'',
+        accept:'',
+        remindWay:'',
+        indateTime:'',
+        content:''
     };
   },
   methods: {
@@ -37,16 +39,46 @@ export default {
     Back() {
       this.$router.go(-1)
     },
+    //详细信息
+    Detail() {
+      this.$http.get(`/sysmsg/${this.companId}`).then(res => {
+          if (res.data.code == 200) {
+            let NewContent = res.data.data
+            this.title = NewContent.title
+            this.content = NewContent.content
+            this.accept = NewContent.accept
+            this.indateTime = NewContent.indateTime
+            this.remindWay = NewContent.remindWay
+          }
+        }).catch(error =>{
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
+    }
   },
   mounted: function() {},
   updated: function() {},
   created() {
+      this.companId = this.$route.query.thisId
+      this.Detail()
       if(this.message == '1') {
           this.isshow = true
       }else{
           this.isshow = false
       }
-  }
+  },
+  filters: {
+    level(level) {
+      const map = ["", "站内信"];
+      return map[level];
+    },
+    size(size) {
+      const map = ["", "企业用户", "C端用户", "全部用户"];
+      return map[size];
+    },
+  }, 
 };
 </script>
 <style scoped>
