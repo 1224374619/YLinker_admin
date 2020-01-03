@@ -285,7 +285,7 @@ export default {
   margin: 10px 0 0 1%;
 }
 .el-pagination {
-  width: 525px;
+  text-align: center; 
   margin:20px auto;
 }
 .el-checkbox__label {

@@ -219,7 +219,7 @@ export default {
   width: 203px;
 }
 .el-pagination {
-  width: 525px;
+  text-align: center; 
   margin: 20px auto;
 }
 .asp-table {

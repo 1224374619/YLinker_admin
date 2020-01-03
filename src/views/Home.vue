@@ -26,17 +26,15 @@
       </el-col>
     </el-col>
     <el-col :span="24" class="main">
-      <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
+      <aside :class="isCollapse?'menu-collapsed':'menu-expanded'">
         <!--导航菜单-->
         <el-menu
           :default-active="$route.path"
           class="el-menu-vertical-demo"
-          @open="handleopen"
-          @close="handleclose"
-          @select="handleselect"
           unique-opened
+          v-if="!isCollapse"
           router
-          v-show="!collapsed"
+          :collapse="isCollapse"
         >
           <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
             <el-submenu :index="index+''" v-if="!item.leaf">
@@ -76,14 +74,10 @@
 
               <!-- <el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.name}}</el-menu-item> -->
             </el-submenu>
-            <el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path">
-              <i :class="item.iconCls"></i>
-              {{item.children[0].name}}
-            </el-menu-item>
           </template>
         </el-menu>
         <!--导航菜单-折叠后-->
-        <ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
+        <ul class="el-menu el-menu-vertical-demo collapsed" v-if="isCollapse" ref="menuCollapsed">
           <li
             v-for="(item,index) in $router.options.routes"
             v-if="!item.hidden"
@@ -131,7 +125,7 @@
         </ul>
       </aside>
       <section class="content-container">
-        <div class="grid-content bg-purple-light" >
+        <div class="grid-content bg-purple-light">
           <el-col :span="24" class="breadcrumb-container">
             <!-- <strong class="title">{{$route.name}}</strong> -->
             <el-breadcrumb separator="/" class="breadcrumb-inner">
@@ -154,9 +148,9 @@ export default {
   data() {
     return {
       sysName: "Yinlinkrc",
-      collapsed: false,
-      sysUserName: "",
-      sysUserAvatar: "",
+      isCollapse: false,
+      sysUserName: "管理员",
+      sysUserAvatar: "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg",
       form: {
         name: "",
         region: "",
@@ -194,7 +188,7 @@ export default {
     },
     //折叠导航栏
     collapse: function() {
-      this.collapsed = !this.collapsed;
+      this.isCollapse = !this.isCollapse;
     },
     showMenu(i, status) {
       this.$refs.menuCollapsed.getElementsByClassName(
@@ -340,5 +334,11 @@ export default {
       }
     }
   }
+}
+</style>
+<style>
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 230px;
+  min-height: 400px;
 }
 </style>
