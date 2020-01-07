@@ -47,7 +47,7 @@ let routes = [
         path: '/',
         component: Home,
         name: '数据概览',
-        hidden: true,
+        // hidden: true,
         iconCls: 'fa fa-id-card-o',
         children: [
             { path: '/RecordCenter',iconCls: 'fa fa-id-card-o', component: RecordCenter, name: '数据中心' },
@@ -57,7 +57,7 @@ let routes = [
         path: '/',
         component: Home,
         name: '用户管理',
-        hidden: true,
+        // hidden: true,
         iconCls: 'fa fa-id-card-o',
         children: [
             { path: '/Cteam',
@@ -91,7 +91,7 @@ let routes = [
         component: Home,
         name: 'C端内容管理',
         iconCls: 'fa fa-id-card-o',
-        hidden: true,
+        // hidden: true,
         children: [
             { path: '/Hotwords',iconCls: 'fa fa-id-card-o', component: Hotwords, name: '热搜词管理' },
             { path: '/Carousel',iconCls: 'fa fa-id-card-o', component: Carousel, name: '首页轮播管理' },
@@ -125,7 +125,7 @@ let routes = [
         component: Home,
         name: '用户反馈管理',
         iconCls: 'fa fa-id-card-o',
-        hidden: true,
+        // hidden: true,
         children: [
             { path: '/Suggestion',iconCls: 'fa fa-id-card-o', component: Suggestion, name: '投诉建议管理' },
         ]
