@@ -31,7 +31,7 @@ module.exports = {
       '/api': {
         // 测试环境
         // target: 'http://47.102.145.186' + '/consumertest/', // target host
-        target: 'http://192.168.1.121:8080', // target host
+        target: 'http://192.168.1.102:8080', // target host
         changeOrigin: true,  //是否跨域
         pathRewrite: {
             '^/api': ''   //需要rewrite重写的,

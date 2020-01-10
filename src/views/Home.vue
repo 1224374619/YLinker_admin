@@ -13,8 +13,8 @@
       </el-col>
       <el-col :span="4" class="userinfo">
         <el-dropdown trigger="hover">
-          <span class="el-dropdown-link userinfo-inner">
-            <img :src="this.sysUserAvatar" />
+          <span class="el-dropdown-link userinfo-inner" style="color:#373737">
+            <img style="margin-left:20px" :src="this.sysUserAvatar" />
             {{sysUserName}}
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -25,7 +25,7 @@
         </el-dropdown>
       </el-col>
     </el-col>
-    <el-col :span="24" class="main">
+    <div :span="24" class="main">
       <aside :class="isCollapse?'menu-collapsed':'menu-expanded'">
         <!--导航菜单-->
         <el-menu
@@ -126,20 +126,20 @@
       </aside>
       <section class="content-container">
         <div class="grid-content bg-purple-light">
-          <el-col :span="24" class="breadcrumb-container">
+          <div class="breadcrumb-container">
             <!-- <strong class="title">{{$route.name}}</strong> -->
-            <el-breadcrumb separator="/" class="breadcrumb-inner">
+            <el-breadcrumb separator=">" class="breadcrumb-inner">
               <el-breadcrumb-item v-for="item in $route.matched" :key="item.path">{{ item.name }}</el-breadcrumb-item>
             </el-breadcrumb>
-          </el-col>
-          <el-col :span="24" class="content-wrapper">
+          </div>
+          <div  class="content-wrapper">
             <transition name="fade" mode="out-in">
               <router-view></router-view>
             </transition>
-          </el-col>
+          </div>
         </div>
       </section>
-    </el-col>
+    </div>
   </el-row>
 </template>
 
@@ -215,15 +215,18 @@ export default {
   top: 0px;
   bottom: 0px;
   width: 100%;
+  height:100%;
   .header {
     height: 60px;
     line-height: 60px;
-    background: $color-primary;
+    background: #ffffff;
     color: #fff;
     .userinfo {
       text-align: right;
       padding-right: 35px;
       float: right;
+      background: #ffffff;
+      margin:0 200px 0 0;
       .userinfo-inner {
         cursor: pointer;
         color: #fff;
@@ -242,9 +245,11 @@ export default {
       font-size: 32px;
       padding-left: 50px;
       padding-right: 20px;
+      background: #20A0FF;
       border-color: rgba(171, 172, 164, 0.3);
       border-right-width: 1px;
       border-right-style: solid;
+      margin: 0 0 0 233px;
       img {
         width: 40px;
         float: left;
@@ -266,15 +271,18 @@ export default {
       height: 60px;
       line-height: 60px;
       cursor: pointer;
+      background: #ffffff;
     }
   }
   .main {
     display: flex;
     // background: #324057;
-    position: absolute;
+    // position: absolute;
     top: 60px;
     bottom: 0px;
     overflow: hidden;
+    width: 1440px;
+    margin:0 auto 0;
     aside {
       flex: 0 0 230px;
       width: 230px;
@@ -315,8 +323,9 @@ export default {
       // top: 0px;
       // bottom: 0px;
       // left: 230px;
-      overflow-y: scroll;
+      overflow-y: hidden;
       padding: 20px;
+      background: #F8F8F8;
       .breadcrumb-container {
         //margin-bottom: 15px;
         .title {
@@ -326,6 +335,7 @@ export default {
         }
         .breadcrumb-inner {
           float: left;
+          margin:20px 0 0 20px;
         }
       }
       .content-wrapper {

@@ -1,6 +1,19 @@
 <template>
   <div class="asp">
     <div class="asp-nav">审核详情页</div>
+    <el-dialog
+      title="请填写通过理由"
+      :visible.sync="dialogVisible"
+      width="30%"
+    >
+      <div>
+        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
+        <span slot="footer" class="dialog-footer" >
+          <el-button style="margin:40px 0 0 0" @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click='DialogAffirm()'>确 定</el-button>
+        </span>
+      </div>
+    </el-dialog>
     <div class="asp-content">
       <div class="verify">
         <h3>企业资质审核</h3>
@@ -78,12 +91,28 @@ export default {
       registeredAddress:'',
       uniformSocialCreditCode:'',
       enterpriseForm:'',
-      reviewedState:''
+      reviewedState:'',
+      textarea:'',
+      dialogVisible:false
     };
   },
   methods: {
     back() {
       this.$router.go(-1);
+    },
+    //弹框确认
+    DialogAffirm() {
+      this.$http.put(`/reviewed/company/${this.thisId}/cert/${this.companId}/rePass`,{reason:this.textarea
+        }).then(res => {
+          if (res.data.code == 200) {
+            this.dialogVisible = false;
+          }
+        }).catch(error =>{
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
     },
     //详细信息
     Detail() {
@@ -117,15 +146,7 @@ export default {
     },
     //未审核通过
     DefineFirst() {
-      this.$http.put(`/reviewed/company/${this.thisId}/cert/${this.companId}/rePass`).then(res => {
-          if (res.data.code == 200) {
-          }
-        }).catch(error =>{
-          // this.$message({
-          //       message:error.response.data.message,
-          //       type: 'error'
-          //     })
-        });
+      this.dialogVisible = true;
     },
   },
   mounted: function() {},

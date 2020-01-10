@@ -5,28 +5,28 @@
       <div class="article-card">
         <div class="card-first">
           <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            :src="require('../../assets/tou.png')"
             class="image"
           />
-          <div style="margin:0 0 0 100px">
-            <span>123456</span>
-            <span style="font-size:18px">C端用户数</span>
+          <div>
+            <span style="color:#373737;margin:0 0 0 20px;font-size:26px">123456</span>
+            <span style="font-size:16px;margin:0 0 0 10px;">C端用户数</span>
           </div>
-          <div style="margin:0 0 0 100px">
+          <div style="margin:0 0 0 40px">
             <span style="font-size:18px;">今日</span>
             <span>+123</span>
           </div>
         </div>
-        <div class="card-second">
+        <div class="card-second" style="margin: 20px 0 0 40px;">
           <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            :src="require('../../assets/zhi.png')"
             class="image"
           />
           <div class="reums">
             <div class="reums-first">
-              <div style="margin:0 0 0 100px">
-                <span>123456</span>
-                <span style="font-size:18px">
+              <div>
+                <span style="color:#373737;margin:0 0 0 20px;font-size:26px">123456</span>
+                <span style="font-size:16px;margin:0 0 0 10px;">
                   在线简历
                   <el-tooltip
                     style="font-size:14px;color:#909090"
@@ -41,17 +41,17 @@
                   </el-tooltip>
                 </span>
               </div>
-              <div style="margin:0 0 0 100px">
+              <div style="margin:0 0 0 20px">
                 <span style="font-size:18px;">今日</span>
                 <span>+123</span>
               </div>
             </div>
-            <div class="reums-first">
-              <div style="margin:0 0 0 100px">
-                <span>123456</span>
-                <span style="font-size:18px">附件简历</span>
+            <div class="reums-first" style="margin:-35px 0 0 0">
+              <div>
+                <span style="color:#373737;margin:0 0 0 20px;font-size:26px">123456</span>
+                <span style="font-size:16px;margin:0 0 0 10px;">附件简历</span>
               </div>
-              <div style="margin:0 0 0 135px">
+              <div style="margin:0 0 0 55px">
                 <span style="font-size:18px;">今日</span>
                 <span>+123</span>
               </div>
@@ -60,26 +60,26 @@
         </div>
         <div class="card-second">
           <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            :src="require('../../assets/a.png')"
             class="image"
           />
           <div class="reums">
             <div class="reums-first">
-              <div style="margin:0 0 0 100px">
-                <span>123456</span>
-                <span style="font-size:18px">已审核企业</span>
+              <div>
+                <span style="color:#373737;margin:0 0 0 20px;font-size:26px">123456</span>
+                <span style="font-size:16px;margin:0 0 0 10px;">已审核企业</span>
               </div>
-              <div style="margin:0 0 0 100px">
+              <div style="margin:0 0 0 40px">
                 <span style="font-size:18px;">今日</span>
                 <span>+123</span>
               </div>
             </div>
-            <div class="reums-first">
-              <div style="margin:0 0 0 100px">
-                <span>123456</span>
-                <span style="font-size:18px">待审核企业</span>
+            <div class="reums-first" style="margin:-35px 0 0 0">
+              <div>
+                <span style="color:#373737;margin:0 0 0 20px;font-size:26px">123456</span>
+                <span style="font-size:16px;margin:0 0 0 10px;">待审核企业</span>
               </div>
-              <div style="margin:0 0 0 100px">
+              <div style="margin:0 0 0 40px">
                 <span style="font-size:18px;">今日</span>
                 <span>+123</span>
               </div>
@@ -88,14 +88,14 @@
         </div>
         <div class="card-third">
           <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            :src="require('../../assets/b.png')"
             class="image"
           />
           <div class="reums">
-            <div class="reums-first">
-              <div style="margin:0 0 0 100px">
-                <span>123456</span>
-                <span style="font-size:18px">
+            <div class="reums-first" style="margin:10px 0 0 0">
+              <div>
+                <span style="color:#373737;margin:0 0 0 20px;font-size:26px">123456</span>
+                <span style="font-size:16px;margin:0 0 0 10px;">
                   在职职位
                   <el-tooltip
                     style="font-size:14px;color:#909090"
@@ -110,27 +110,27 @@
                   </el-tooltip>
                 </span>
               </div>
-              <div style="margin:0 0 0 100px">
+              <div style="margin:0 0 0 20px">
                 <span style="font-size:18px;">今日</span>
                 <span>+123</span>
               </div>
             </div>
-            <div class="reums-first">
-              <div style="margin:0 0 0 100px">
-                <span>123456</span>
-                <span style="font-size:18px">待审核职位</span>
+            <div class="reums-first" style="margin:-15px 0 0 0">
+              <div>
+                <span style="color:#373737;margin:0 0 0 20px;font-size:26px">123456</span>
+                <span style="font-size:16px;margin:0 0 0 10px;">待审核职位</span>
               </div>
-              <div style="margin:0 0 0 120px">
+              <div style="margin:0 0 0 40px">
                 <span style="font-size:18px;">今日</span>
                 <span>+123</span>
               </div>
             </div>
-            <div class="reums-first">
-              <div style="margin:0 0 0 100px">
-                <span>123456</span>
-                <span style="font-size:18px">已下线职位</span>
+            <div class="reums-first" style="margin:-15px 0 0 0">
+              <div>
+                <span style="color:#373737;margin:0 0 0 20px;font-size:26px">123456</span>
+                <span style="font-size:16px;margin:0 0 0 10px;">已下线职位</span>
               </div>
-              <div style="margin:0 0 0 120px">
+              <div style="margin:0 0 0 40px">
                 <span style="font-size:18px;">今日</span>
                 <span>+123</span>
               </div>
@@ -139,10 +139,10 @@
         </div>
       </div>
       <div class="article-echarts">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tabs v-model="activeName" @tab-click="handleClick" class='tabs-echarts'>
           <el-tab-pane :lazy=true label="登录用户数" name="first">
-            <div id="chartLine" style="width:100%; height:400px;"></div>
-            <div style="float:right;margin:0 10px 30px 0">
+            <div id="chartLine" style="width:96%;height:400px;"></div>
+            <div style="float:right;margin:0 50px 30px 0">
               <el-button type="primary">过去7天</el-button>
               <el-button type="primary">过去30天</el-button>
               <el-button type="primary">过去90天</el-button>
@@ -150,8 +150,8 @@
             </div>
           </el-tab-pane>
           <el-tab-pane :lazy=true label="登录企业数" name="second">
-            <div id="chartLineOne" style="width:100%; height:400px;"></div>
-            <div style="float:right;margin:0 10px 30px 0">
+            <div id="chartLineOne" style="width:96%; height:400px;"></div>
+            <div style="float:right;margin:0 50px 30px 0">
               <el-button type="primary">过去7天</el-button>
               <el-button type="primary">过去30天</el-button>
               <el-button type="primary">过去90天</el-button>
@@ -159,8 +159,8 @@
             </div>
           </el-tab-pane>
           <el-tab-pane :lazy=true label="投递简历数" name="third">
-            <div id="chartLineTwo" style="width:100%; height:400px;"></div>
-            <div style="float:right;margin:0 10px 30px 0">
+            <div id="chartLineTwo" style="width:96%; height:400px;"></div>
+            <div style="float:right;margin:0 50px 30px 0">
               <el-button type="primary">过去7天</el-button>
               <el-button type="primary">过去30天</el-button>
               <el-button type="primary">过去90天</el-button>
@@ -168,8 +168,8 @@
             </div>
           </el-tab-pane>
           <el-tab-pane :lazy=true label="岗位发布数" name="fourth">
-            <div id="chartLineThree" style="width:100%; height:400px;"></div>
-            <div style="float:right;margin:0 10px 30px 0">
+            <div id="chartLineThree" style="width:96%; height:400px;"></div>
+            <div style="float:right;margin:0 50px 30px 0">
               <el-button type="primary">过去7天</el-button>
               <el-button type="primary">过去30天</el-button>
               <el-button type="primary">过去90天</el-button>
@@ -204,6 +204,10 @@ export default {
       this.chartLine = echarts.init(document.getElementById("chartLine"));
       this.chartLine.setOption({
         title: {
+          textStyle: {//主标题文本样式{"fontSize": 18,"fontWeight": "bolder","color": "#333"}
+                fontSize: 15,
+            },
+          top:20,
           text: "登录用户数"
         },
         tooltip: {
@@ -356,15 +360,19 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss"> 
+.record-center {
+  background: #F8F8F8;
+  border:1px solid #F8F8F8;
+}
 .record-nav {
-  margin: 10px 0 0 0;
-  font-size: 17px;
-  font-weight: 550;
+  margin: 40px 0 0 20px;
+  font-size: 18px;
+  color:#2A2A2A;
+  text-align: left;
 }
 .record-article {
   width: 100%;
-  background: #c0c4cc;
   margin: 10px 0 0 0;
 }
 .article-card {
@@ -373,10 +381,11 @@ export default {
   flex-wrap: wrap;
 }
 .card-first {
-  width: 790px;
+  width: 542px;
   height: 150px;
-  margin: 30px 0 0 1%;
-  background: #d8d8d8;
+  margin: 20px 0 0 20px;
+  background: #FFFFFF;
+  box-shadow: 0px 3px 10px 0px rgba(208,208,208,0.50);
   display: flex;
   flex-direction: row;
   line-height: 150px;
@@ -387,9 +396,11 @@ export default {
   font-size: 25px;
 }
 .card-second {
-  width: 790px;
-  margin: 30px 0 0 1%;
-  background: #d8d8d8;
+  width: 542px;
+  height: 150px;
+  margin: 20px 0 0 20px;
+  background: #FFFFFF;
+  box-shadow: 0px 3px 10px 0px rgba(208,208,208,0.50);
   display: flex;
   flex-direction: row;
   line-height: 71.5px;
@@ -405,11 +416,13 @@ export default {
 .reums-first {
   display: flex;
   flex-direction: row;
+  margin:17px 0 0 0;
 }
 .card-third {
-  width: 790px;
-  margin: 30px 0 0 1%;
-  background: #d8d8d8;
+  width: 542px;
+  height: 150px;
+  margin: 20px 0 0 40px;
+  background: #FFFFFF;
   display: flex;
   flex-direction: row;
   line-height: 50px;
@@ -419,21 +432,27 @@ export default {
   font-size: 25px;
 }
 .image {
-  width: 100px;
-  height: 100px;
-  margin: 25px 0 0 50px;
+  width: 63px;
+  height: 63px;
+  margin: 43px 0 0 49px;
 }
 .article-echarts {
-  margin: 30px 0 0 0;
-  background: #c0c4cc;
+  margin: 40px 0 0 20px;
+  border:1px solid #ffffff;
+  background: #ffffff;
+  width:1124px;
+  .tabs-echarts {
+    margin: 20px 0 0 40px;
+    .el-tabs {
+      background: white;
+    }
+    .el-tabs__item {
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
 }
-.el-tabs {
-  background: white;
-}
-.el-tabs__item {
-  font-size: 15px;
-  font-weight: 600;
-}
+
 .demo-block .source {
   padding: 0 0 0 10px;
 }

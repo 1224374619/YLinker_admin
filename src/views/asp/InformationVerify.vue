@@ -1,6 +1,19 @@
 <template>
   <div class="asp">
     <div class="asp-nav">企业基本信息审核详情页</div>
+    <el-dialog
+      title="请填写通过理由"
+      :visible.sync="dialogVisible"
+      width="30%"
+    >
+      <div>
+        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
+        <span slot="footer" class="dialog-footer" >
+          <el-button style="margin:40px 0 0 0" @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click='DialogAffirm()'>确 定</el-button>
+        </span>
+      </div>
+    </el-dialog>
     <div class="asp-content">
       <div class="verify">
         <h3>企业基本信息审核</h3>
@@ -93,7 +106,9 @@ export default {
         nature:'',
         industry:'',
         logoUrl:'',
-        reviewedState:''
+        reviewedState:'',
+        dialogVisible: false,
+        textarea:''
     };
   },
   methods: {
@@ -134,11 +149,16 @@ export default {
           //     })
         });
     },
-    //未审核通过
+    //通过
     DefineFirst() {
-      this.$http.put(`/reviewed/company/${this.thisId}/info/${this.companId}/rePass`).then(res => {
+      this.dialogVisible = true;
+    },
+    //弹框确认
+    DialogAffirm() {
+      this.$http.put(`/reviewed/company/${this.thisId}/info/${this.companId}/rePass`,{reason:'132121212'
+        }).then(res => {
           if (res.data.code == 200) {
-            this.ReviewCompany()
+            this.dialogVisible = false;
           }
         }).catch(error =>{
           // this.$message({

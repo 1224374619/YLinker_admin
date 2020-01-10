@@ -1,56 +1,69 @@
 <template>
   <div class="asp">
     <div class="asp-nav">职位审核详情页</div>
+    <el-dialog
+      title="请填写通过理由"
+      :visible.sync="dialogVisible"
+      width="30%"
+    >
+      <div>
+        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
+        <span slot="footer" class="dialog-footer" >
+          <el-button style="margin:40px 0 0 0" @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click='DialogAffirm()'>确 定</el-button>
+        </span>
+      </div>
+    </el-dialog>
     <div class="asp-content">
       <div class="verify">
         <div class="verify-nav">
           <div>
             职位ID：
-            <span>上海市xx有限公司</span>
+            <span>{{detailinfo.positionId}}</span>
           </div>
           <div>
             职位名称：
-            <span>上海徐汇</span>
+            <span>{{detailinfo.positionName}}</span>
           </div>
           <div>
             工作性质：
-            <span>1111111111</span>
+            <span>{{detailinfo.jobType|jobType}}</span>
           </div>
           <div>
             职位分类：
-            <span>事业单位</span>
+            <span>{{detailinfo.positionCatalog}}</span>
           </div>
           <div>
             月薪范围：
-            <span>事业单位</span>
+            <span>{{detailinfo.salaryMin}}-{{detailinfo.salaryMax}}k</span>
           </div>
           <div>
             最低学历：
-            <span>事业单位</span>
+            <span>{{detailinfo.degreeMin}}</span>
           </div>
           <div>
             工作年限：
-            <span>事业单位</span>
+            <span>{{detailinfo.workAgeMax}}-{{detailinfo.workAgeMin}}年</span>
           </div>
           <div>
             工作地址：
-            <span>事业单位</span>
+            <span>{{detailinfo.addressId}}</span>
           </div>
           <div>
             职位描述：
-            <span>事业单位</span>
+            <span>{{detailinfo.description}}</span>
           </div>
           <div>
             任职要求：
-            <span>事业单位</span>
+            <span style="white-space pre-line">{{detailinfo.requirement}}</span>
           </div>
           <div>
             负责HR：
-            <span>事业单位</span>
+            <span>{{detailinfo.managerUid}}</span>
           </div>
           <div>
             投递邮箱：
-            <span>事业单位</span>
+            <span>{{detailinfo.addedEmailList}}</span>
           </div>
         </div>
         <el-divider content-position="left"></el-divider>
@@ -79,12 +92,13 @@
                 <el-button
                   style="width:50px;height:20px;font-size:10px;padding:0 0"
                   type="primary"
+                  @click="Define"
                 >确认</el-button>
               </div>
             </div>
-            <el-button type="primary">不通过</el-button>
+            <el-button v-if="this.reviewedState === 3?false:true" type="primary">不通过</el-button>
           </el-tooltip>
-          <el-button type="primary" style="margin: 0 0 20px 10px">通过</el-button>
+          <el-button type="primary" v-if="this.reviewedState === 2?false:true" @click="DefineFirst" style="margin: 0 0 20px 10px">通过</el-button>
         </div>
       </div>
     </div>
@@ -94,16 +108,92 @@
 export default {
   data() {
     return {
-        checkList: ["复选框 A"],
+        checkList: [],
+        detailinfo: {
+          positionId:'',
+          positionName:'',
+          jobType:'',
+          positionCatalog:'',
+          salaryMin:'',
+          salaryMax:'',
+          degreeMin:'',
+          workAgeMin:'',
+          workAgeMax:'',
+          addressId:'',
+          description:'',
+          requirement:'',
+          managerUid:'',
+          addedEmailList:''
+        },
+        reviewedState:'',
+        dialogVisible: false,
+        textarea:''
     };
   },
   methods: {
     back() {
       this.$router.go(-1);
-    }
+    },
+    //未通过
+    Define() {
+      this.$http.put(`/reviewed/position/${this.thisId}/position/${this.companId}/notPass`,{reason:this.checkList[0]}).then(res => {
+          if (res.data.code == 200) {
+            this.ReviewCompany()
+          }
+        }).catch(error =>{
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
+    },
+    //详细信息
+    Detail() {
+      this.$http.get(`/reviewed/position/${this.thisId}/info/${this.companId}`).then(res => {
+          if (res.data.code == 200) {
+            let NewContent = res.data.data
+            this.detailinfo = NewContent
+            this.reviewedState = NewContent.reviewedState
+          }
+        }).catch(error =>{
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
+    },
+    //通过
+    DefineFirst() {
+      this.dialogVisible = true;
+    },
+    //弹框确认
+    DialogAffirm() {
+      this.$http.put(`/reviewed/position/${this.thisId}/position/${this.companId}/rePass`,{reason:this.textarea
+        }).then(res => {
+          if (res.data.code == 200) {
+            this.dialogVisible = false;
+          }
+        }).catch(error =>{
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
+    },
   },
   mounted: function() {},
-  updated: function() {}
+  updated: function() {},
+  filters: {
+    jobType(jobType) {
+      const map = ["全职", "兼职", "实习"];
+      return map[jobType];
+    },
+  },
+  created() {
+    this.companId = this.$route.query.thisId
+    this.thisId = this.$route.query.thatId
+    this.Detail()
+  },
 };
 </script>
 <style scoped>
