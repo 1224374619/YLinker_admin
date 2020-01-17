@@ -24,7 +24,8 @@
     </el-dialog>
     <div class="asp-content">
       <div class="asp-form">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline" ref="formInline">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline" ref="formInline" style="background:#ffffff;width:98%;margin:0 0 0 13px">
+          <div style="height:15px"></div>
           <el-form-item label="消息标题" prop="Infortitle">
             <el-input v-model="formInline.Infortitle" placeholder="消息标题"></el-input>
           </el-form-item>
@@ -35,18 +36,20 @@
              <el-option label="所有用户" value="3"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item style="float:right;margin:0 5% 0 0">
+          <el-form-item style="margin:0 5% 0 0">
             <el-button @click="resetForm('formInline')">重置</el-button>
             <el-button type="primary" @click="submitForm('formInline')">查询</el-button>
+          </el-form-item><br>
+          <el-form-item style="display: flex;justify-content:flex-end;margin:0 0 30px 0">
+            <el-button style="margin:0 90px 30px 0" type="primary" @click="newsInfor">新建消息</el-button>
           </el-form-item>
         </el-form>
-        <div style="float:right;margin:0 5% 0 0"><el-button type="primary" @click="newsInfor">新建消息</el-button></div>
         <div class="asp-table">
           <el-table
                 ref="multipleTable"
                 :data="tableData"
                 tooltip-effect="dark"
-                style="width: 100%"
+                style="width:1084px;margin:20px auto"
                 @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="100px"></el-table-column>
                 <el-table-column prop="id" label="消息ID"></el-table-column>
@@ -194,23 +197,24 @@ export default {
 <style scoped>
 .asp {
   width: 100%;
+  background: #F8F8F8;
+  border:1px solid #F8F8F8;
 }
 .asp-nav {
-  margin: 10px 0 0 0;
-  font-size: 17px;
-  font-weight: 550;
+  margin: 40px 0 0 20px;
+  font-size: 18px;
+  color:#2A2A2A;
+  text-align: left;
 }
 .asp-content {
   width: 100%;
-  margin: 20px 0 0 0;
-  border: 1px solid #efeff3;
-  background: #efeff3;
+  margin: 20px 0 20px 0;
+  background: #F8F8F8;
 }
 .asp-form {
-  width: 98%;
-  background: #ffffff;
-  margin: 10px 0 0 1%;
-  border: 1px solid #efeff3
+  width: 100%;
+  margin: 10px 0 0 0;
+  border:1px solid #F8F8F8
 }
 .el-form-item {
   padding: 10px 0 0 20px;
@@ -220,12 +224,12 @@ export default {
 }
 .el-pagination {
   text-align: center; 
-  margin: 20px auto;
+  margin:30px auto 0;
 }
 .asp-table {
   width: 98%;
   background: #ffffff;
-  margin: 10px 0 0 1%;
+  margin: -10px 0 0 1%;
 }
 .el-checkbox__label {
   font-size: 10px;

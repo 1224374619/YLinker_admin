@@ -1,7 +1,7 @@
 <template>
   <div class="asp">
     <div class="asp-nav">新建消息</div>
-    <el-dialog title="批量添加" :visible.sync="dialogVisible" width="50%">
+    <el-dialog title="批量添加" :visible.sync="dialogVisible" width="480px">
       <el-dialog width="30%" title="保存为标签" append-to-body :visible.sync="innerVisible">
         <el-input v-model="input" placeholder="请输入标签名称"></el-input>
         <div slot="footer" class="dialog-footer">
@@ -241,7 +241,7 @@
           label-width="100px"
           class="demo-ruleForm"
         >
-          <el-form-item label="消息标题" prop="name" style="padding-top:20px">
+          <el-form-item label="消息标题" prop="name" style="padding-top:40px">
             <el-input v-model="ruleForm.name" style="width:315px"></el-input>
           </el-form-item>
           <el-form-item label="接收对象" prop="region">
@@ -393,22 +393,24 @@ export default {
 <style scoped>
 .asp {
   width: 100%;
+  background: #F8F8F8;
+  border:1px solid #F8F8F8;
 }
 .asp-nav {
-  margin: 10px 0 0 0;
-  font-size: 17px;
-  font-weight: 550;
+  margin: 40px 0 0 20px;
+  font-size: 18px;
+  color:#2A2A2A;
+  text-align: left;
 }
 .asp-content {
-  width: 100%;
-  margin: 20px 0 0 0;
-  border: 1px solid #efeff3;
-  background: #efeff3;
+  width: 96%;
+  margin: 20px 20px 20px 20px;
+  background: #ffffff;
 }
 .asp-form {
-  width: 98%;
-  background: #ffffff;
-  margin: 10px 0 0 1%;
+  width: 100%;
+  margin: 10px 0 0 0;
+  border:1px solid #F8F8F8
 }
 .asp-table {
   width: 98%;

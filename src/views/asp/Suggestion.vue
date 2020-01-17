@@ -3,7 +3,8 @@
     <div class="asp-nav">投诉建议管理</div>
     <div class="asp-content">
       <div class="asp-form">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline" style="background:#ffffff;width:98%;margin:0 0 0 13px">
+          <div style="height:15px"></div>
           <el-form-item label="来源">
             <el-select placeholder="轮播状态">
               <el-option label="全部" value="全部"></el-option>
@@ -24,9 +25,9 @@
           <el-table
             :data="tableData"
             tooltip-effect="dark"
-            style="width: 100%"
+            style="width:1084px;margin:20px auto"
             @selection-change="handleSelectionChange"
-            @row-click="next"
+            @row-click="next" 
           >
             <el-table-column prop="name" label="ID"></el-table-column>
             <el-table-column prop="date" label="投诉建议内容"></el-table-column>
@@ -53,7 +54,7 @@
         </div>
       </div>
     </div>
-    <el-dialog :visible.sync="dialogVisibleOne" width="40%" :before-close="handleClose">
+    <el-dialog :visible.sync="dialogVisibleOne" width="750px" :before-close="handleClose">
       <div class="sugg">
         <div class="suggestion">
           <div>ID:123123</div>
@@ -88,7 +89,7 @@
             </el-form-item>
           </el-form>
         </div>
-        <div style="margin:-5px 0 0 10px;width:200px">
+        <div style="margin:-5px 0 0 20px;width:200px;height:500px;overflow-y:scroll;">
           <div>跟进记录：</div>
           <br />
           <div style="font-size:12px">
@@ -224,22 +225,24 @@ export default {
 <style scoped>
 .asp {
   width: 100%;
+  background: #F8F8F8;
+  border:1px solid #F8F8F8;
 }
 .asp-nav {
-  margin: 10px 0 0 0;
-  font-size: 17px;
-  font-weight: 550;
+  margin: 40px 0 0 20px;
+  font-size: 18px;
+  color:#2A2A2A;
+  text-align: left;
 }
 .asp-content {
   width: 100%;
-  margin: 20px 0 0 0;
-  border: 1px solid #efeff3;
-  background: #efeff3;
+  margin: 20px 0 20px 0;
+  background: #F8F8F8;
 }
 .asp-form {
-  width: 98%;
-  background: #ffffff;
-  margin: 10px 0 0 1%;
+  width: 100%;
+  margin: 10px 0 0 0;
+  border:1px solid #F8F8F8
 }
 .el-form-item {
   padding: 10px 0 0 20px;
@@ -253,8 +256,8 @@ export default {
   margin: 10px 0 0 1%;
 }
 .el-pagination {
-  margin: 20px 0 0 400px;
-  padding: 0 0 20px 0;
+  text-align: center; 
+  margin:30px auto 0;
 }
 .el-checkbox__label {
   font-size: 10px;

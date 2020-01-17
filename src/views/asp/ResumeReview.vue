@@ -3,7 +3,8 @@
     <div class="asp-nav">简历审核</div>
     <div class="asp-content">
       <div class="asp-form">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="120px" style="background:#ffffff;width:98%;margin:0 0 0 13px">
+          <div style="height:15px"></div>
           <el-form-item label="用户姓名">
             <el-input v-model="formInline.UserName" placeholder="用户姓名"></el-input>
           </el-form-item>
@@ -13,13 +14,13 @@
           <el-form-item label="简历ID">
             <el-input v-model="formInline.ResumeID" placeholder="简历ID"></el-input>
           </el-form-item>
-          <el-form-item style="float:right;margin:0 5% 0 0">
-            <el-button @click="Ressetting()">重置</el-button>
+          <el-form-item style="margin:0 90px 0 0;display: flex;justify-content:flex-end">
+            <el-button style="margin:0 0 30px 0" @click="Ressetting()">重置</el-button>
             <el-button type="primary" @click="Inquiry()">查询</el-button>
           </el-form-item>
         </el-form>
         <div class="asp-table">
-          <el-tabs v-model="activeName" type="card">
+          <el-tabs v-model="activeName" type="card" style="width:1084px;margin:20px auto">
             <el-tab-pane label="待审核" name="first">
               <el-table
                 ref="multipleTable"
@@ -260,22 +261,24 @@ export default {
 <style scoped>
 .asp {
   width: 100%;
+  background: #F8F8F8;
+  border:1px solid #F8F8F8;
 }
 .asp-nav {
-  margin: 10px 0 0 0;
-  font-size: 17px;
-  font-weight: 550;
+  margin: 40px 0 0 20px;
+  font-size: 18px;
+  color:#2A2A2A;
+  text-align: left;
 }
 .asp-content {
   width: 100%;
-  margin: 20px 0 0 0;
-  border: 1px solid #efeff3;
-  background: #efeff3;
+  margin: 20px 0 20px 0;
+  background: #F8F8F8;
 }
 .asp-form {
-  width: 98%;
-  background: #ffffff;
-  margin: 10px 0 0 1%;
+  width: 100%;
+  margin: 10px 0 0 0;
+  border:1px solid #F8F8F8
 }
 .el-form-item {
   padding: 10px 0 0 20px;
@@ -290,7 +293,7 @@ export default {
 }
 .el-pagination {
   text-align: center; 
-  margin:20px auto;
+  margin:30px auto 0;
 }
 .el-checkbox__label {
   font-size: 10px;

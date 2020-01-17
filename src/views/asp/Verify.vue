@@ -16,7 +16,7 @@
     </el-dialog>
     <div class="asp-content">
       <div class="verify">
-        <h3>企业资质审核</h3>
+        <h2>企业资质审核</h2>
         <div class="verify-nav">
           <div>
             企业名称：
@@ -70,13 +70,12 @@
                 <el-button
                   @click="Define"
                   style="width:50px;height:20px;font-size:10px;padding:0 0"
-                  type="primary"
                 >确认</el-button>
               </div>
             </div>
-            <el-button v-if="this.reviewedState === 3?false:true" type="primary" style="margin: 0 0 20px 10px">不通过</el-button>
+            <el-button v-if="this.reviewedState === 3?false:true" type="danger" style="margin: 0 0 20px 10px">不通过</el-button>
           </el-tooltip>
-          <el-button type="primary" v-if="this.reviewedState === 2?false:true" @click="DefineFirst" style="margin: 0 0 20px 10px">通过</el-button>
+          <el-button type="success" v-if="this.reviewedState === 2?false:true" @click="DefineFirst" style="margin: 0 0 20px 10px">通过</el-button>
         </div>
       </div>
     </div>
@@ -161,33 +160,36 @@ export default {
 <style scoped>
 .asp {
   width: 100%;
+  background: #F8F8F8;
+  border:1px solid #F8F8F8;
 }
 .asp-nav {
-  margin: 10px 0 0 0;
-  font-size: 17px;
-  font-weight: 550;
+  margin: 40px 0 0 20px;
+  font-size: 18px;
+  color:#2A2A2A;
+  text-align: left;
 }
 .asp-content {
   width: 100%;
-  margin: 20px 0 0 0;
-  border: 1px solid #efeff3;
-  background: #efeff3;
+  margin: 20px 0 20px 0;
+  background: #F8F8F8;
 }
 .verify {
   width: 98%;
   margin: 20px 1% 0 1%;
   background: #ffffff;
 }
-h3 {
-  margin: 0 0 0 100px;
-  padding: 70px 0 0 0;
+h2 {
+  margin: 0 0 0 35px;
+  padding: 30px 0 0 0;
 }
 .verify-nav {
   margin: 10px 0 0 0;
 }
 .verify-nav div {
-  margin: 0 0 0 100px;
+  margin: 0 0 0 35px;
   padding: 25px 0 0 0;
+  font-size:18px
 }
 .el-divider {
   width: 300px;
@@ -198,7 +200,7 @@ h3 {
   padding: 25px 0 0 0;
 }
 .verify-button {
-  padding: 70px 0 0 200px;
+  padding: 70px 0 50px 200px;
 }
 .el-checkbox {
   margin: 10px 0 0 0;

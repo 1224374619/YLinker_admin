@@ -1,7 +1,7 @@
 <template>
-  <div class="enterdetail">
+  <div class="enterdetails">
     <div class="resume-article">
-      <div style="width:80%;">
+      <div>
         <div class="resume-footer">
           <div class="section-nav">
             <span>简历审核详情页</span>
@@ -9,20 +9,25 @@
           <div class="resume-line"></div>
           <div class="resume">
             <div class="block">
-              <el-avatar shape="square" :size="100" :src="squareUrl"></el-avatar>
+              <el-avatar style="border-radius:50px" shape="square" :size="100" :src="squareUrl"></el-avatar>
             </div>
             <div class="infor">
-              <div style="font-size:18px">姓名</div>
+              <div style="font-size:25px;margin:0 0 0 10px">姓名</div>
               <div>
-                <span>无经验 | 硕士学历 | 23岁 | (1996/09/03)</span>
+                <span>现居上海</span>
+                <span>|</span>
+                <span>本科</span>
+                <span>|</span>
+                <span>3-5年工作经验</span>
+                <span>|</span>
+                <span>23岁（1995-09-01）</span>
               </div>
               <div>
-                <span>政治面貌：群众</span>
-                <span>1-3年海外工作经验</span>
-              </div>
-              <div>
-                <span>1232323323</span>
-                <span style="margin:0 0 0 10px">12312312@qq.com</span>
+                <span>团员</span>
+                <span>|</span>
+                <span>15569658695</span>
+                <span>|</span>
+                <span>122534@qq.com</span>
               </div>
             </div>
           </div>
@@ -95,7 +100,7 @@
             <div class="train-content">
               <div>培训课程</div>
               <div>培训机构</div>
-              <div>2018-01/至今</div>
+              <div style="margin:0 0 0 95px">2018-01/至今</div>
             </div>
           </div>
           <div class="jotension">
@@ -109,10 +114,7 @@
             <div class="train-content">
               <div>技能名称</div>
               <div>熟练</div>
-              <div><i class="el-icon-message"></i></div>
-            </div>
-            <div class="train-content">
-              <div>证书名称</div>
+              <div>证书附件，点击查看大图</div>
               <div>2018/12</div>
             </div>
           </div>
@@ -121,19 +123,14 @@
             <div class="train-content">
               <div>获奖名称</div>
               <div>熟练</div>
-              <div><i class="el-icon-message"></i></div>
+              <div>证书附件，点击查看大图</div>
+              <div>2018/12</div>
             </div>
           </div>
-          <div class="jotension">
-            <div class="title">自我评价</div>
-            <div class="train-content">
-              <div>暂未填写自我评价</div>
-            </div>
-          </div>
-          <div style="margin:0 0 0 70%">
+          <div style="margin:70px 0 50px 70%">
                <el-button>返回</el-button>
-               <el-button type="primary">不通过</el-button>
-               <el-button type="primary">通过</el-button>
+               <el-button type="danger">不通过</el-button>
+               <el-button type="success">通过</el-button>
           </div>
         </div>
       </div>
@@ -185,18 +182,17 @@ export default {
 };
 </script>
 <style scoped>
-.enterdetail {
+.enterdetails {
   width: 100%;
-  margin: 10px 0 0 0
+  margin: 10px 0 0 0;
 }
 .resume-article {
   width: 100%;
-  background: #efeff3;
   display: flex;
   flex-direction: row;
 }
 .resume-nav {
-  width: 98%;
+  width: 100%;
   border: 1px solid white;
   background: white;
   margin: 20px 0 0 20px;
@@ -253,10 +249,17 @@ export default {
   flex-direction: row;
 }
 .infor {
-  margin: 12px 0 0 50px;
+  margin: 12px 0 0 20px;
 }
 .infor div {
   padding: 8px 0 0 0;
+  font-size:20px
+}
+.infor div:nth-child(2) span {
+  padding:0 0 0 10px
+}
+.infor div:nth-child(3) span {
+  padding:0 0 0 10px
 }
 .line {
   width: 98%;
@@ -266,7 +269,7 @@ export default {
 .title {
   font-size: 20px;
   font-weight: bold;
-  margin: 10px 0 0 10px;
+  margin: 25px 0 0 35px;
 }
 .jotension {
   font-size: 15px;
@@ -275,31 +278,39 @@ export default {
   margin: 0 0 20px 0;
 }
 .jotension-content {
-  margin: 20px 0 0 50px;
+  margin: 20px 0 0 35px;
   display: flex;
   flex-direction: row;
 }
 .jotension-content div:nth-child(1) {
-  width: 400px;
+  font-size:20px;
+  width: 600px;
 }
 .jotension-content div:nth-child(2) {
-  margin: 0 0 0 300px;
-  width: 200px;
+  font-size:20px;
+  width: 300px;
 }
 .train-content {
-  margin: 20px 0 0 50px;
+  margin: 20px 0 0 35px;
   display: flex;
   flex-direction: row;
 }
 .train-content div:nth-child(1) {
-  width: 200px;
+  width: 150px;
+  font-size:20px;
 }
 .train-content div:nth-child(2) {
-  margin: 0 0 0 150px;
-  width: 200px;
+  margin: 0 0 0 0;
+  width: 150px;
+  font-size:20px;
 }
 .train-content div:nth-child(3) {
-  margin: 0 0 0 140px;
+  margin: 0 0 0 0;
+  font-size:20px;
+}
+.train-content div:nth-child(4) {
+  margin: 0 0 0 100px;
+  font-size:20px;
 }
 .aside {
   width: 28%;

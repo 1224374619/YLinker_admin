@@ -3,16 +3,16 @@
     <div class="asp-nav">热搜词管理</div>
     <div class="asp-content">
       <div class="asp-form">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item style="float:right;margin:0 90px 0 0">
-            <el-button type="primary" @click="dialogVisible = true">新建热搜词</el-button>
-          </el-form-item>
-        </el-form>
         <div class="asp-table">
+          <el-form :inline="true" :model="formInline" class="demo-form-inline">
+            <el-form-item>
+              <el-button style="margin:20px 0 0 10px" type="primary" @click="dialogVisible = true">新建热搜词</el-button>
+            </el-form-item>
+          </el-form>
           <el-table
             :data="tableData"
             tooltip-effect="dark"
-            style="width: 100%"
+            style="width:1084px;margin:20px auto"
             @selection-change="handleSelectionChange"
           >
             <el-table-column prop="name" label="ID" width="220"></el-table-column>
@@ -48,7 +48,7 @@
         </div>
       </div>
     </div>
-    <el-dialog title="新建热搜词" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+    <el-dialog title="新建热搜词" :visible.sync="dialogVisible" width="480px" :before-close="handleClose">
       <el-form ref="form" :model="form" label-width="80px" :rules="rules">
         <el-form-item label="热搜词：" prop="position">
           <el-input v-model="form.position" style="width:300px"></el-input>
@@ -62,7 +62,7 @@
     <el-dialog
       title="编辑热门企业"
       :visible.sync="dialogVisibleOne"
-      width="30%"
+      width="480px"
       :before-close="handleClose"
     >
       <el-form ref="form" :model="form" label-width="80px" :rules="rulesOne">
@@ -138,7 +138,67 @@ export default {
           date: "2016-05-07",
           name: "王小虎klk",
           address: "上海市普陀区金沙江路 1518 弄"
-        }
+        },
+         {
+          date: "2016-05-03",
+          name: "王小虎123",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-02",
+          name: "王小虎232",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎3343",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+         {
+          date: "2016-05-03",
+          name: "王小虎123",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-02",
+          name: "王小虎232",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎3343",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+         {
+          date: "2016-05-03",
+          name: "王小虎123",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-02",
+          name: "王小虎232",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎3343",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+         {
+          date: "2016-05-03",
+          name: "王小虎123",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-02",
+          name: "王小虎232",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎3343",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
       ],
       rules: {
         position: [{ required: true, message: "请填写热搜词", trigger: "blur" }]
@@ -393,25 +453,27 @@ export default {
   updated: function() {}
 };
 </script>
-<style scoped>
+<style>
 .asp {
   width: 100%;
+  background: #F8F8F8;
+  border:1px solid #F8F8F8;
 }
 .asp-nav {
-  margin: 10px 0 0 0;
-  font-size: 17px;
-  font-weight: 550;
+  margin: 40px 0 0 20px;
+  font-size: 18px;
+  color:#2A2A2A;
+  text-align: left
 }
 .asp-content {
   width: 100%;
   margin: 20px 0 0 0;
-  border: 1px solid #efeff3;
-  background: #efeff3;
+  background: #F8F8F8;
 }
 .asp-form {
   width: 98%;
-  background: #ffffff;
-  margin: 10px 0 10px 1%;
+  margin: 10px 0 0 1%;
+  border:1px solid #F8F8F8;
 }
 .el-form-item {
   padding: 10px 0 0 20px;
@@ -423,10 +485,6 @@ export default {
   width: 98%;
   background: #ffffff;
   margin: 10px 0 0 1%;
-}
-.el-pagination {
-  margin: 20px 0 0 400px;
-  padding: 0 0 20px 0;
 }
 .el-checkbox__label {
   font-size: 10px;

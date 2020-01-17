@@ -3,7 +3,8 @@
     <div class="asp-nav">职位审核</div>
     <div class="asp-content">
       <div class="asp-form">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline" style="background:#ffffff;width:98%;margin:0 0 0 13px">
+          <div style="height:15px"></div>
           <el-form-item label="职位名称">
             <el-input v-model="formInline.PositionName" placeholder="职位名称"></el-input>
           </el-form-item> 
@@ -19,7 +20,7 @@
           </el-form-item>
         </el-form>
         <div class="asp-table">
-          <el-tabs v-model="activeName" type="card" @tab-click="handleClicktab">
+          <el-tabs v-model="activeName" type="card" @tab-click="handleClicktab" style="width:1084px;margin:20px auto">
             <el-tab-pane label="待审核" name="first">
               <el-table
                 ref="multipleTable"
@@ -164,7 +165,13 @@ export default {
       dialogVisible: false,
       activeName: "first",
       currentPage: 4,
-      tableData: [],
+      tableData: [
+        {
+          positionId: "2016-05-03",
+          positionName: "王小虎123",
+          companyId: "上海市普陀区金沙江路 1518 弄"
+        },
+      ],
       multipleSelection: [],
       positionId:'',
       id:''
@@ -352,14 +359,13 @@ export default {
 }
 .asp-content {
   width: 100%;
-  margin: 20px 0 0 0;
-  border: 1px solid #efeff3;
-  background: #efeff3;
+  margin: 20px 0 20px 0;
+  background: #F8F8F8;
 }
 .asp-form {
-  width: 98%;
-  background: #ffffff;
-  margin: 10px 0 0 1%;
+  width: 100%;
+  margin: 10px 0 0 0;
+  border:1px solid #F8F8F8
 }
 .el-form-item {
   padding: 10px 0 0 20px;
@@ -374,7 +380,7 @@ export default {
 }
 .el-pagination {
   text-align: center; 
-  margin:20px auto;
+  margin:30px auto 0;
 }
 .el-checkbox__label {
   font-size: 10px;

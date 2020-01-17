@@ -20,7 +20,8 @@
     </el-dialog>
     <div class="asp-content">
       <div class="asp-form">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="130px"  style="background:#ffffff;">
+          <div style="height:20px"></div>
           <el-form-item label="企业名称">
             <el-input placeholder="企业名称"></el-input>
           </el-form-item>
@@ -34,24 +35,24 @@
             </el-select>
           </el-form-item>
           <el-form-item label="统一社会信用代码">
-            <el-select placeholder="统一社会信用代码">
+            <el-select placeholder="统一社会信用代码" >
               <el-option label="区域一" value="shanghai"></el-option>
               <el-option label="区域二" value="beijing"></el-option>
             </el-select>
-          </el-form-item>
-          <el-form-item style="float:right;margin:0 90px 0 0">
-            <el-button @click="resetForm('ruleForm')">重置</el-button>
+          </el-form-item><br>  
+          <el-form-item style="margin:0 90px 0 0;display: flex;justify-content:flex-end">
+            <el-button style="margin:0 0 30px 0" @click="resetForm('ruleForm')">重置</el-button>
             <el-button type="primary" @click="submitForm('ruleForm')">查询</el-button>
           </el-form-item>
         </el-form>
         <div class="asp-table">
-          <el-tabs v-model="activeName" type="card">
+          <el-tabs v-model="activeName" type="card" style="width:1084px;margin:20px auto">
             <el-tab-pane label="初审通过" name="first">
               <el-table
                 ref="multipleTable"
                 :data="tableData"
                 tooltip-effect="dark"
-                style="width: 100%"
+                style="width:1084px;margin:20px auto"
                 @selection-change="handleSelectionChange"
               >
                 <el-table-column type="selection" width="100"></el-table-column>
@@ -290,25 +291,27 @@ export default {
   updated: function() {}
 };
 </script>
-<style scoped>
+<style lang="scss">
 .asp {
   width: 100%;
+  background: #F8F8F8;
+  border:1px solid #F8F8F8;
 }
 .asp-nav {
-  margin: 10px 0 0 0;
-  font-size: 17px;
-  font-weight: 550;
+  margin: 40px 0 0 20px;
+  font-size: 18px;
+  color:#2A2A2A;
+  text-align: left;
 }
 .asp-content {
   width: 100%;
-  margin: 20px 0 0 0;
-  border: 1px solid #efeff3;
-  background: #efeff3;
+  margin: 20px 0 20px 0;
+  background: #F8F8F8;
 }
 .asp-form {
   width: 98%;
-  background: #ffffff;
   margin: 10px 0 0 1%;
+  border:1px solid #F8F8F8
 }
 .el-form-item {
   padding: 10px 0 0 20px;
@@ -319,7 +322,7 @@ export default {
 .asp-table {
   width: 98%;
   background: #ffffff;
-  margin: 10px 0 0 1%;
+  margin: 20px 0 0 1%;
 }
 .el-pagination {
   margin: 20px 0 0 400px;

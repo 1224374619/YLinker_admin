@@ -19,7 +19,8 @@
     </el-dialog>
     <div class="asp-content">
       <div class="asp-form">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline" style="background:#ffffff;width:98%;margin:0 0 0 13px">
+          <div style="height:15px"></div>
           <el-form-item label="企业名称">
             <el-input v-model="formInline.CompanyName" placeholder="企业名称"></el-input>
           </el-form-item>
@@ -32,7 +33,7 @@
           </el-form-item>
         </el-form>
         <div class="asp-table">
-          <el-tabs v-model="activeName" type="card" @tab-click="handleClicktab">
+          <el-tabs v-model="activeName" type="card" @tab-click="handleClicktab" style="width:1084px;margin:20px auto">
             <el-tab-pane label="待审核" name="first">
               <el-table
                 ref="multipleTable"
@@ -183,7 +184,13 @@ export default {
       dialogVisible: false,
       activeName: "first",
       currentPage: 4,
-      tableData: [],
+      tableData: [
+         {
+          companyId: "2016-05-03",
+          companyName: "王小虎123",
+          registeredAddress: "上海市普陀区金沙江路 1518 弄"
+        },
+      ],
       multipleSelection: [],
       companyId:'',
       id:''
@@ -375,22 +382,24 @@ export default {
 <style scoped>
 .asp {
   width: 100%;
+  background: #F8F8F8;
+  border:1px solid #F8F8F8;
 }
 .asp-nav {
-  margin: 10px 0 0 0;
-  font-size: 17px;
-  font-weight: 550;
+  margin: 40px 0 0 20px;
+  font-size: 18px;
+  color:#2A2A2A;
+  text-align: left;
 }
 .asp-content {
   width: 100%;
-  margin: 20px 0 0 0;
-  border: 1px solid #efeff3;
-  background: #efeff3;
+  margin: 20px 0 20px 0;
+  background: #F8F8F8;
 }
 .asp-form {
-  width: 98%;
-  background: #ffffff;
-  margin: 10px 0 0 1%;
+  width: 100%;
+  margin: 10px 0 0 0;
+  border:1px solid #F8F8F8
 }
 .el-form-item {
   padding: 10px 0 0 20px;
@@ -405,7 +414,7 @@ export default {
 }
 .el-pagination {
   text-align: center; 
-  margin:20px auto
+  margin:30px auto 0
 }
 .el-checkbox__label {
   font-size: 10px;

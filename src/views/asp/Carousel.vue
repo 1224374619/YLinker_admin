@@ -3,24 +3,24 @@
     <div class="asp-nav">首页轮播管理</div>
     <div class="asp-content">
       <div class="asp-form">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="轮播状态">
-            <el-select placeholder="轮播状态" v-model="state">
-              <el-option label="全部" value="全部"></el-option>
-              <el-option label="已下架" value="已下架"></el-option>
-              <el-option label="已上架" value="已上架"></el-option>
-              <el-option label="待上架" value="待上架"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item style="float:right;margin:0 90px 0 0">
-            <el-button type="primary" @click="dialogVisible = true">新建轮播</el-button>
-          </el-form-item>
-        </el-form>
         <div class="asp-table">
+          <el-form :inline="true" :model="formInline" class="demo-form-inline" style="margin:20px 0 0 10px">
+            <el-form-item label="轮播状态">
+              <el-select placeholder="轮播状态" v-model="state">
+                <el-option label="全部" value="全部"></el-option>
+                <el-option label="已下架" value="已下架"></el-option>
+                <el-option label="已上架" value="已上架"></el-option>
+                <el-option label="待上架" value="待上架"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item style="float:right;margin:0 30px 0 0">
+              <el-button  type="primary" @click="dialogVisible = true">新建轮播</el-button>
+            </el-form-item>
+          </el-form>
           <el-table
             :data="tableData"
             tooltip-effect="dark"
-            style="width: 100%"
+            style="width:1084px;margin:20px auto"
             @selection-change="handleSelectionChange"
           >
             <el-table-column prop="name" label="ID" width="120"></el-table-column>
@@ -65,7 +65,7 @@
         </div>
       </div>
     </div>
-    <el-dialog title="新建轮播" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+    <el-dialog title="新建轮播" :visible.sync="dialogVisible" width="480px" :before-close="handleClose">
       <el-form ref="form" :model="form" label-width="80px" :rules="rules">
         <el-form-item label="轮播标题" prop="name">
           <el-input v-model="form.name" style="width:300px"></el-input>
@@ -106,7 +106,7 @@
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-dialog title="编辑轮播" :visible.sync="dialogVisibleOne" width="30%" :before-close="handleClose">
+    <el-dialog title="编辑轮播" :visible.sync="dialogVisibleOne" width="480px" :before-close="handleClose">
       <el-form ref="form" :model="form" label-width="80px" :rules="rules">
         <el-form-item label="轮播标题" prop="name">
           <el-input v-model="form.name" style="width:300px"></el-input>
@@ -331,22 +331,24 @@ export default {
 <style scoped>
 .asp {
   width: 100%;
+  background: #F8F8F8;
+  border:1px solid #F8F8F8;
 }
 .asp-nav {
-  margin: 10px 0 0 0;
-  font-size: 17px;
-  font-weight: 550;
+  margin: 40px 0 0 20px;
+  font-size: 18px;
+  color:#2A2A2A;
+  text-align: left
 }
 .asp-content {
   width: 100%;
   margin: 20px 0 0 0;
-  border: 1px solid #efeff3;
-  background: #efeff3;
+  background: #F8F8F8;
 }
 .asp-form {
   width: 98%;
-  background: #ffffff;
   margin: 10px 0 0 1%;
+  border:1px solid #F8F8F8;
 }
 .el-form-item {
   padding: 10px 0 0 20px;
@@ -355,14 +357,11 @@ export default {
   width: 203px;
 }
 .asp-table {
-  width: 98%;
+  width: 100%;
   background: #ffffff;
-  margin: 10px 0 0 1%;
+  margin: 10px 0 0 0;
 }
-.el-pagination {
-  margin: 20px 0 0 400px;
-  padding: 0 0 20px 0;
-}
+
 .el-checkbox__label {
   font-size: 10px;
 }
@@ -391,5 +390,11 @@ export default {
   width: 100px;
   height: 100px;
   display: block;
+}
+</style>
+<style>
+.el-pagination {
+  padding: 0 0 20px 0;
+  text-align: center
 }
 </style>

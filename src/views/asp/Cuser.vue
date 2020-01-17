@@ -71,10 +71,10 @@
           </el-form-item>
         </el-form>
         <div class="asp-table">
-          <div style="margin:30px 0 0 30px">
+          <div style="margin:30px 0 30px 30px">
             <el-button @click="toggleSelection()">批量下载简历</el-button>
           </div>
-          <div style="margin:20px 0 0 0">
+          <div >
             <el-table
               ref="multipleTable"
               :data="tableData"
@@ -252,7 +252,7 @@ export default {
 }
 .asp-content {
   width: 100%;
-  margin: 20px 0 0 0;
+  margin: 20px 0 20px 0;
   background: #F8F8F8;
 }
 .asp-form {
