@@ -128,14 +128,43 @@
             </div>
           </div>
           <div style="margin:70px 0 50px 70%">
-               <el-button>返回</el-button>
-               <el-button type="danger">不通过</el-button>
-               <el-button type="success">通过</el-button>
+            <el-button>返回</el-button>
+            <el-tooltip class="item" effect="light" placement="bottom-start">
+              <div slot="content">
+                <span>
+                  <i style="color:#faad14;margin:0 5px 0 0" class="el-icon-warning-outline"></i>
+                </span>
+                <span>请选择不通过的原因</span>
+                <div style="font-size:10px">
+                  <el-checkbox-group v-model="checkList">
+                    <el-checkbox label="含虚假信息"></el-checkbox>
+                    <br />
+                    <el-checkbox label="含违法信息"></el-checkbox>
+                    <br />
+                    <el-checkbox label="非法传销"></el-checkbox>
+                    <br />
+                    <el-checkbox label="涉黄"></el-checkbox>
+                    <br />
+                    <el-checkbox label="涉嫌诈骗"></el-checkbox>
+                  </el-checkbox-group>
+                  <br />
+                  <el-input style="margin-bottom:20px" type="textarea" :rows="2" placeholder="(选填)请简要填写不通过原因，原因会反馈给客户，请注意措辞" v-model="textarea"></el-input>
+                  <el-button style="width:50px;height:20px;font-size:10px;padding:0 0">取消</el-button>
+                  <el-button
+                    style="width:50px;height:20px;font-size:10px;padding:0 0"
+                    type="primary"
+                  >确认</el-button>
+                </div>
+              </div>
+              <el-button type="danger">未通过</el-button>
+            </el-tooltip>
+
+            <el-button type="success">通过</el-button>
           </div>
         </div>
       </div>
       <div class="aside" style="width:20%;">
-        <!-- <div class="asp-nav">后台操作日志</div>
+        <div class="asp-nav">后台操作日志</div>
         <div class="resume-line" style="margin:20px 0 0 0"></div>
         <div class="block">
           <el-timeline :reverse="reverse">
@@ -144,10 +173,11 @@
               :key="index"
               :timestamp="activity.timestamp"
             >{{activity.content}}</el-timeline-item>
-          </el-timeline> -->
+        </el-timeline>
         </div>
       </div>
     </div>
+  </div>
 </template>
 <script>
 export default {
@@ -158,6 +188,7 @@ export default {
       activeName: "first",
       active: "first",
       value: "",
+      textarea:'',
       chartLine: null,
       activities: [
         {
@@ -253,13 +284,13 @@ export default {
 }
 .infor div {
   padding: 8px 0 0 0;
-  font-size:20px
+  font-size: 20px;
 }
 .infor div:nth-child(2) span {
-  padding:0 0 0 10px
+  padding: 0 0 0 10px;
 }
 .infor div:nth-child(3) span {
-  padding:0 0 0 10px
+  padding: 0 0 0 10px;
 }
 .line {
   width: 98%;
@@ -283,11 +314,11 @@ export default {
   flex-direction: row;
 }
 .jotension-content div:nth-child(1) {
-  font-size:20px;
+  font-size: 20px;
   width: 600px;
 }
 .jotension-content div:nth-child(2) {
-  font-size:20px;
+  font-size: 20px;
   width: 300px;
 }
 .train-content {
@@ -297,20 +328,20 @@ export default {
 }
 .train-content div:nth-child(1) {
   width: 150px;
-  font-size:20px;
+  font-size: 20px;
 }
 .train-content div:nth-child(2) {
   margin: 0 0 0 0;
   width: 150px;
-  font-size:20px;
+  font-size: 20px;
 }
 .train-content div:nth-child(3) {
   margin: 0 0 0 0;
-  font-size:20px;
+  font-size: 20px;
 }
 .train-content div:nth-child(4) {
   margin: 0 0 0 100px;
-  font-size:20px;
+  font-size: 20px;
 }
 .aside {
   width: 28%;

@@ -1,16 +1,12 @@
 <template>
   <div class="asp">
     <div class="asp-nav">职位审核详情页</div>
-    <el-dialog
-      title="请填写通过理由"
-      :visible.sync="dialogVisible"
-      width="480px"
-    >
+    <el-dialog title="请填写通过理由" :visible.sync="dialogVisible" width="480px">
       <div>
         <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
-        <span slot="footer" class="dialog-footer" >
+        <span slot="footer" class="dialog-footer">
           <el-button style="margin:40px 0 0 0" @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click='DialogAffirm()'>确 定</el-button>
+          <el-button type="primary" @click="DialogAffirm()">确 定</el-button>
         </span>
       </div>
     </el-dialog>
@@ -66,6 +62,38 @@
             投递邮箱：
             <span>{{detailinfo.addedEmailList}}</span>
           </div>
+          <div>
+            未通过原因：
+            <span>{{detailinfo.addedEmailList}}</span>
+          </div>
+          <div>
+            操作日志：
+            <div>
+              王小虎 提交于 2018/4/2 20:46
+              <div class="block">
+                <el-timeline>
+                  <el-timeline-item timestamp="2018/4/12" placement="top">
+                    <el-card>
+                      <h4>更新 Github 模板</h4>
+                      <p>王小虎 提交于 2018/4/12 20:46</p>
+                    </el-card>
+                  </el-timeline-item>
+                  <el-timeline-item timestamp="2018/4/3" placement="top">
+                    <el-card>
+                      <h4>更新 Github 模板</h4>
+                      <p>王小虎 提交于 2018/4/3 20:46</p>
+                    </el-card>
+                  </el-timeline-item>
+                  <el-timeline-item timestamp="2018/4/2" placement="top">
+                    <el-card>
+                      <h4>更新 Github 模板</h4>
+                      <p>王小虎 提交于 2018/4/2 20:46</p>
+                    </el-card>
+                  </el-timeline-item>
+                </el-timeline>
+              </div>
+            </div>
+          </div>
         </div>
         <el-divider content-position="left"></el-divider>
         <div class="verify-button">
@@ -98,7 +126,12 @@
             </div>
             <el-button v-if="this.reviewedState === 3?false:true" type="danger">不通过</el-button>
           </el-tooltip>
-          <el-button type="success" v-if="this.reviewedState === 2?false:true" @click="DefineFirst" style="margin: 0 0 20px 10px">通过</el-button>
+          <el-button
+            type="success"
+            v-if="this.reviewedState === 2?false:true"
+            @click="DefineFirst"
+            style="margin: 0 0 20px 10px"
+          >通过</el-button>
         </div>
       </div>
     </div>
@@ -108,26 +141,26 @@
 export default {
   data() {
     return {
-        checkList: [],
-        detailinfo: {
-          positionId:'',
-          positionName:'',
-          jobType:'',
-          positionCatalog:'',
-          salaryMin:'',
-          salaryMax:'',
-          degreeMin:'',
-          workAgeMin:'',
-          workAgeMax:'',
-          addressId:'',
-          description:'',
-          requirement:'',
-          managerUid:'',
-          addedEmailList:''
-        },
-        reviewedState:'',
-        dialogVisible: false,
-        textarea:''
+      checkList: [],
+      detailinfo: {
+        positionId: "",
+        positionName: "",
+        jobType: "",
+        positionCatalog: "",
+        salaryMin: "",
+        salaryMax: "",
+        degreeMin: "",
+        workAgeMin: "",
+        workAgeMax: "",
+        addressId: "",
+        description: "",
+        requirement: "",
+        managerUid: "",
+        addedEmailList: ""
+      },
+      reviewedState: "",
+      dialogVisible: false,
+      textarea: ""
     };
   },
   methods: {
@@ -136,11 +169,17 @@ export default {
     },
     //未通过
     Define() {
-      this.$http.put(`/reviewed/position/${this.thisId}/position/${this.companId}/notPass`,{reason:this.checkList[0]}).then(res => {
+      this.$http
+        .put(
+          `/reviewed/position/${this.thisId}/position/${this.companId}/notPass`,
+          { reason: this.checkList[0] }
+        )
+        .then(res => {
           if (res.data.code == 200) {
-            this.ReviewCompany()
+            this.ReviewCompany();
           }
-        }).catch(error =>{
+        })
+        .catch(error => {
           // this.$message({
           //       message:error.response.data.message,
           //       type: 'error'
@@ -149,13 +188,16 @@ export default {
     },
     //详细信息
     Detail() {
-      this.$http.get(`/reviewed/position/${this.thisId}/info/${this.companId}`).then(res => {
+      this.$http
+        .get(`/reviewed/position/${this.thisId}/info/${this.companId}`)
+        .then(res => {
           if (res.data.code == 200) {
-            let NewContent = res.data.data
-            this.detailinfo = NewContent
-            this.reviewedState = NewContent.reviewedState
+            let NewContent = res.data.data;
+            this.detailinfo = NewContent;
+            this.reviewedState = NewContent.reviewedState;
           }
-        }).catch(error =>{
+        })
+        .catch(error => {
           // this.$message({
           //       message:error.response.data.message,
           //       type: 'error'
@@ -168,18 +210,23 @@ export default {
     },
     //弹框确认
     DialogAffirm() {
-      this.$http.put(`/reviewed/position/${this.thisId}/position/${this.companId}/rePass`,{reason:this.textarea
-        }).then(res => {
+      this.$http
+        .put(
+          `/reviewed/position/${this.thisId}/position/${this.companId}/rePass`,
+          { reason: this.textarea }
+        )
+        .then(res => {
           if (res.data.code == 200) {
             this.dialogVisible = false;
           }
-        }).catch(error =>{
+        })
+        .catch(error => {
           // this.$message({
           //       message:error.response.data.message,
           //       type: 'error'
           //     })
         });
-    },
+    }
   },
   mounted: function() {},
   updated: function() {},
@@ -187,31 +234,31 @@ export default {
     jobType(jobType) {
       const map = ["全职", "兼职", "实习"];
       return map[jobType];
-    },
+    }
   },
   created() {
-    this.companId = this.$route.query.thisId
-    this.thisId = this.$route.query.thatId
-    this.Detail()
-  },
+    this.companId = this.$route.query.thisId;
+    this.thisId = this.$route.query.thatId;
+    this.Detail();
+  }
 };
 </script>
 <style scoped>
 .asp {
   width: 100%;
-  background: #F8F8F8;
-  border:1px solid #F8F8F8;
+  background: #f8f8f8;
+  border: 1px solid #f8f8f8;
 }
 .asp-nav {
   margin: 40px 0 0 20px;
   font-size: 18px;
-  color:#2A2A2A;
+  color: #2a2a2a;
   text-align: left;
 }
 .asp-content {
   width: 100%;
   margin: 20px 0 20px 0;
-  background: #F8F8F8;
+  background: #f8f8f8;
 }
 .verify {
   width: 98%;
@@ -228,7 +275,7 @@ h2 {
 .verify-nav div {
   margin: 0 0 0 35px;
   padding: 25px 0 0 0;
-  font-size:18px
+  font-size: 18px;
 }
 .el-divider {
   width: 300px;
@@ -240,9 +287,8 @@ h2 {
 }
 .verify-button {
   padding: 50px 0 50px 200px;
- 
 }
-.el-checkbox{
+.el-checkbox {
   margin: 10px 0 0 0;
 }
 </style>

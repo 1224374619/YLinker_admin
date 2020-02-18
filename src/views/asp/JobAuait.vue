@@ -3,7 +3,7 @@
     <div class="asp-nav">职位审核</div>
     <div class="asp-content">
       <div class="asp-form">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline" style="background:#ffffff;width:98%;margin:0 0 0 13px">
+        <el-form :inline="true"  label-width="120px" :model="formInline" class="demo-form-inline" style="background:#ffffff;width:98%;margin:0 0 0 13px">
           <div style="height:15px"></div>
           <el-form-item label="职位名称">
             <el-input v-model="formInline.PositionName" placeholder="职位名称"></el-input>
@@ -13,6 +13,12 @@
           </el-form-item>
           <el-form-item label="职位ID">
             <el-input v-model="formInline.CompanyId" placeholder="职位ID"></el-input>
+          </el-form-item>
+          <el-form-item label="未通过原因">
+            <el-input v-model="formInline.ResumeID" placeholder="简历ID"></el-input>
+          </el-form-item>
+          <el-form-item label="提交时间段">
+            <el-date-picker v-model="valueTime" type="date" placeholder="选择日期"></el-date-picker>
           </el-form-item>
           <el-form-item style="float:right;margin:0 5% 0 0">
             <el-button @click="Ressetting()">重置</el-button>
@@ -37,7 +43,7 @@
                 <el-table-column label="操作">
                   <template slot-scope="scope">
                     <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                    <el-button type="text"  @click="DefineFirst(scope.row)" size="small">通过</el-button>
+                    <!-- <el-button type="text"  @click="DefineFirst(scope.row)" size="small">通过</el-button>
                     <el-tooltip class="item" effect="light" placement="bottom-start">
                       <div slot="content">
                         <span>
@@ -66,7 +72,7 @@
                         </div>
                       </div>
                       <el-button type="text" size="small">未通过</el-button>
-                    </el-tooltip>
+                    </el-tooltip> -->
                   </template>
                 </el-table-column>
               </el-table>

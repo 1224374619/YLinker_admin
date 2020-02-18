@@ -3,7 +3,13 @@
     <div class="asp-nav">简历审核</div>
     <div class="asp-content">
       <div class="asp-form">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="120px" style="background:#ffffff;width:98%;margin:0 0 0 13px">
+        <el-form
+          :inline="true"
+          :model="formInline"
+          class="demo-form-inline"
+          label-width="120px"
+          style="background:#ffffff;width:98%;margin:0 0 0 13px"
+        >
           <div style="height:15px"></div>
           <el-form-item label="用户姓名">
             <el-input v-model="formInline.UserName" placeholder="用户姓名"></el-input>
@@ -13,6 +19,12 @@
           </el-form-item>
           <el-form-item label="简历ID">
             <el-input v-model="formInline.ResumeID" placeholder="简历ID"></el-input>
+          </el-form-item>
+          <el-form-item label="未通过原因">
+            <el-input v-model="formInline.ResumeID" placeholder="简历ID"></el-input>
+          </el-form-item>
+          <el-form-item label="提交时间段">
+            <el-date-picker v-model="valueTime" type="date" placeholder="选择日期"></el-date-picker>
           </el-form-item>
           <el-form-item style="margin:0 90px 0 0;display: flex;justify-content:flex-end">
             <el-button style="margin:0 0 30px 0" @click="Ressetting()">重置</el-button>
@@ -39,7 +51,7 @@
                 <el-table-column label="操作">
                   <template slot-scope="scope">
                     <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                    <el-button type="text" size="small">通过</el-button>
+                    <!-- <el-button type="text" size="small">通过</el-button>
                     <el-tooltip class="item" effect="light" placement="bottom-start">
                       <div slot="content">
                         <span>
@@ -67,7 +79,7 @@
                         </div>
                       </div>
                       <el-button type="text" size="small">未通过</el-button>
-                    </el-tooltip>
+                    </el-tooltip>-->
                   </template>
                 </el-table-column>
               </el-table>
@@ -153,15 +165,16 @@
 export default {
   data() {
     return {
-      formInline:{
-        UserName:'',
-        Phone:'',
-        ResumeID:''
+      formInline: {
+        UserName: "",
+        Phone: "",
+        ResumeID: ""
       },
       checkList: ["复选框 A"],
       dialogVisible: false,
       activeName: "first",
       currentPage: 4,
+      valueTime:'',
       tableData: [
         {
           date: "2016-05-03",
@@ -203,7 +216,7 @@ export default {
     };
   },
   methods: {
-     //重置
+    //重置
     Ressetting() {
       this.formInline.UserName = "";
       this.formInline.Phone = "";
@@ -212,9 +225,7 @@ export default {
     //查询
     Inquiry() {
       this.$http
-        .post("", {
-          
-        })
+        .post("", {})
         .then(res => {
           if (res.data.code == 200) {
           } else {
@@ -229,11 +240,11 @@ export default {
     },
     handleClick(tab, event) {
       console.log(tab, event);
-     this.$router.push({path:'/ResumeDetail'})
+      this.$router.push({ path: "/ResumeDetail" });
     },
     handle(tab, event) {
       console.log(tab, event);
-     this.$router.push({path:'/Bteam/Enterdetail'})
+      this.$router.push({ path: "/Bteam/Enterdetail" });
     },
     toggleSelection(rows) {
       if (rows) {
@@ -261,24 +272,24 @@ export default {
 <style scoped>
 .asp {
   width: 100%;
-  background: #F8F8F8;
-  border:1px solid #F8F8F8;
+  background: #f8f8f8;
+  border: 1px solid #f8f8f8;
 }
 .asp-nav {
   margin: 40px 0 0 20px;
   font-size: 18px;
-  color:#2A2A2A;
+  color: #2a2a2a;
   text-align: left;
 }
 .asp-content {
   width: 100%;
   margin: 20px 0 20px 0;
-  background: #F8F8F8;
+  background: #f8f8f8;
 }
 .asp-form {
   width: 100%;
   margin: 10px 0 0 0;
-  border:1px solid #F8F8F8
+  border: 1px solid #f8f8f8;
 }
 .el-form-item {
   padding: 10px 0 0 20px;
@@ -292,8 +303,8 @@ export default {
   margin: 10px 0 0 1%;
 }
 .el-pagination {
-  text-align: center; 
-  margin:30px auto 0;
+  text-align: center;
+  margin: 30px auto 0;
 }
 .el-checkbox__label {
   font-size: 10px;
