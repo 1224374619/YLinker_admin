@@ -1,15 +1,6 @@
 <template>
   <div class="asp">
     <div class="asp-nav">职位审核详情页</div>
-    <el-dialog title="请填写通过理由" :visible.sync="dialogVisible" width="480px">
-      <div>
-        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
-        <span slot="footer" class="dialog-footer">
-          <el-button style="margin:40px 0 0 0" @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="DialogAffirm()">确 定</el-button>
-        </span>
-      </div>
-    </el-dialog>
     <div class="asp-content">
       <div class="verify">
         <h2>职位审核</h2>
@@ -159,7 +150,6 @@ export default {
         addedEmailList: ""
       },
       reviewedState: "",
-      dialogVisible: false,
       textarea: ""
     };
   },
@@ -206,7 +196,7 @@ export default {
     },
     //通过
     DefineFirst() {
-      this.dialogVisible = true;
+      this.DialogAffirm()
     },
     //弹框确认
     DialogAffirm() {

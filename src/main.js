@@ -32,6 +32,13 @@ axios.defaults.baseURL = '/api'
 // axios.defaults.headers.common['Authorization'] = 'f4c902c9ae5a2a9d8f84868ad064e706';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
+const instance= axios.create({
+  baseURL: '/api',
+  headers:{'Content-Type':'application/x-www-form-urlencoded'},
+  transformRequest:[ (data) => queryString.stringify(data)]
+})
+Vue.prototype.$_http=instance;
+
 // 定义全局时间戳过滤器
 Vue.filter('formatDate', function(value) {
   var timestamp = (new Date()).getTime()-24*60*60*1000

@@ -14,14 +14,20 @@
     <el-form-item prop="checkPass">
       <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
-    <el-checkbox v-model="checked" checked class="remember">记住密码</el-checkbox>
+    <el-form-item prop="checkPass">
+      <div class="captcha">
+        <el-input class="input" type="captcha" v-model="captchaInput" placeholder="请输入验证码"></el-input>
+        <el-button class="btn" @click="getCaptcha" :disabled="frozen">{{ captchaStatusText }}</el-button>
+      </div>
+    </el-form-item>
+    <!-- <el-checkbox v-model="checked" checked class="remember">记住密码</el-checkbox> -->
     <el-form-item style="width:100%;">
       <el-button
         type="primary"
         style="width:100%;"
         @click.native.prevent="handleSubmit2"
         :loading="logining"
-      >登录</el-button>
+      >注册</el-button>
       <!--<el-button @click.native.prevent="handleReset2">重置</el-button>-->
     </el-form-item>
   </el-form>
@@ -29,11 +35,17 @@
 
 <script>
 import { requestLogin } from "../api/api";
+const captchaLabel = "获取验证码";
+const countNumber = 60;
 //import NProgress from 'nprogress'
 export default {
   data() {
     return {
       logining: false,
+      frozen: false,
+      counter: countNumber,
+      captchaInput: "",
+      captchaStatusText: captchaLabel,
       ruleForm2: {
         account: "",
         checkPass: ""
@@ -52,6 +64,21 @@ export default {
     };
   },
   methods: {
+    getCaptcha() {
+      this.frozen = true;
+      const handler = setInterval(() => {
+        this.captchaStatusText = `${captchaLabel}(${--this.counter}s)`;
+        if (this.counter === 0) {
+          clearInterval(handler);
+          this.counter = countNumber;
+          this.captchaStatusText = captchaLabel;
+          this.frozen = false;
+        }
+      }, 1000);
+      this.$http.post("/account/phone/vcode", {
+        phone: this.ruleForm2.account
+      });
+    },
     handleReset2() {
       this.$refs.ruleForm2.resetFields();
     },
@@ -62,44 +89,39 @@ export default {
         if (valid) {
           //_this.$router.replace('/table');
           this.$http
-            .post(`/login?returnUrl=http://localhost:8080/api/reviewed/company/cert`, {
-              username: '15516946795',
-              password: '123456'
+            .post("/account/register", {
+              phone: this.ruleForm2.account,
+              password: this.ruleForm2.checkPass,
+              vcode: this.captchaInput,
+              agree: true
             })
             .then(res => {
               if (res.data.code == 200) {
-                // this.$router.push({ path: '/login' });
-              } else {
+                this.$router.push({ path: '/login' });
               }
             })
             .catch(error => {
-              
-              let token = "asd1d5.0o9utrf7.12jjkht";
-              this.$store.commit("SET_TOKEN", token);
-              this.$router.push({ path: "/JobAuait" });
-              
-              // console.log(window.sessionStorage.getItem('token', data))
-              // this.$message({
-              //   message: error.response.data.message,
-              //   type: "error"
-              // });
+              this.$message({
+                message: error.response.data.message,
+                type: "error"
+              });
             });
-          //   this.logining = true;
-          //   //NProgress.start();
-          //   requestLogin(loginParams).then(data => {
-          //     this.logining = false;
-          //     //NProgress.done();
-          //     let { msg, code, user } = data;
-          //     if (code !== 200) {
-          //       this.$message({
-          //         message: msg,
-          //         type: "error"
-          //       });
-          //     } else {
-          //       sessionStorage.setItem("user", JSON.stringify(user));
-          //       this.$router.push({ path: "/RecordCenter" });
-          //     }
-          //   });
+        //   this.logining = true;
+        //   //NProgress.start();
+        //   requestLogin(loginParams).then(data => {
+        //     this.logining = false;
+        //     //NProgress.done();
+        //     let { msg, code, user } = data;
+        //     if (code !== 200) {
+        //       this.$message({
+        //         message: msg,
+        //         type: "error"
+        //       });
+        //     } else {
+        //       sessionStorage.setItem("user", JSON.stringify(user));
+        //       this.$router.push({ path: "/RecordCenter" });
+        //     }
+        //   });
         } else {
           console.log("error submit!!");
           return false;
@@ -123,6 +145,10 @@ export default {
   background: #fff;
   border: 1px solid #eaeaea;
   box-shadow: 0 0 25px #cac6c6;
+  .captcha {
+    display: flex;
+    flex-direction: row;
+  }
   .title {
     margin: 0px auto 40px auto;
     text-align: center;

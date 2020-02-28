@@ -21,10 +21,23 @@
             <el-input v-model="formInline.ResumeID" placeholder="简历ID"></el-input>
           </el-form-item>
           <el-form-item label="未通过原因">
-            <el-input v-model="formInline.ResumeID" placeholder="简历ID"></el-input>
+            <el-select v-model="formInline.Reason" placeholder="请选择简历ID">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="提交时间段">
-            <el-date-picker v-model="valueTime" type="date" placeholder="选择日期"></el-date-picker>
+            <el-date-picker
+              v-model="formInline.valueTime"
+              type="daterange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+            ></el-date-picker>
           </el-form-item>
           <el-form-item style="margin:0 90px 0 0;display: flex;justify-content:flex-end">
             <el-button style="margin:0 0 30px 0" @click="Ressetting()">重置</el-button>
@@ -168,8 +181,36 @@ export default {
       formInline: {
         UserName: "",
         Phone: "",
-        ResumeID: ""
+        ResumeID: "",
+        valueTime: "",
+        Reason: ""
       },
+      options: [
+        {
+          value: "选项1",
+          label: "含虚假信息"
+        },
+        {
+          value: "选项2",
+          label: "含违法信息"
+        },
+        {
+          value: "选项3",
+          label: "非法传销"
+        },
+        {
+          value: "选项4",
+          label: "涉黄"
+        },
+        {
+          value: "选项5",
+          label: "涉嫌诈骗"
+        },
+        {
+          value: "选项6",
+          label: "其他"
+        }
+      ],
       checkList: ["复选框 A"],
       dialogVisible: false,
       activeName: "first",
@@ -221,6 +262,8 @@ export default {
       this.formInline.UserName = "";
       this.formInline.Phone = "";
       this.formInline.ResumeID = "";
+      this.formInline.Reason = "";
+      this.formInline.valueTime = "";
     },
     //查询
     Inquiry() {

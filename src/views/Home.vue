@@ -183,8 +183,18 @@ export default {
         //type: 'warning'
       })
         .then(() => {
-          sessionStorage.removeItem("user");
-          _this.$router.push("/login");
+          // this.$http
+          //   .get('/logout')
+          //   .then(res => {
+          //     if (res.data.code == 200) {
+          //       // this.$router.push({ path: '/login' });
+          //     } else {
+          //     }
+          //   })
+          //   .catch(error => {
+          //   });
+          // sessionStorage.removeItem("user");
+          // _this.$router.push("/login");
         })
         .catch(() => {});
     },

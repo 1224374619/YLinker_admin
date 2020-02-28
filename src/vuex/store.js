@@ -17,7 +17,11 @@ const mutations = {
     },
     DECREMENT(state) {
         state.count--
-    }
+    },
+    SET_TOKEN: (state, data) => {
+        state.token = data
+        window.sessionStorage.setItem('token', data)
+    },
 }
 
 // 创建 store 实例
