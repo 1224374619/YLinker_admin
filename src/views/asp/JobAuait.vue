@@ -306,10 +306,10 @@ export default {
             }
           })
           .catch(error => {
-            this.$message({
-              message: error.response.data.message,
-              type: "error"
-            });
+            // this.$message({
+            //   message: error.response.data.message,
+            //   type: "error"
+            // });
           });
       } else {
         this.$http
@@ -331,7 +331,7 @@ export default {
     //职位审核
     ReviewCompany() {
       this.$http
-        .get("/reviewed/company/info")
+        .get("/reviewed/position/info",{ params: { reviewedState: 1 } })
         .then(res => {
           if (res.data.code == 200) {
             this.tableData = res.data.data.list;

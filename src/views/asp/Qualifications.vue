@@ -52,8 +52,8 @@
                 <el-table-column label="操作">
                   <template slot-scope="scope">
                     <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                    <el-button @click="DefineFirst(scope.row)" type="text" size="small">通过</el-button>
-                    <el-tooltip class="item" effect="light" placement="bottom-start">
+                    <!-- <el-button @click="DefineFirst(scope.row)" type="text" size="small">通过</el-button> -->
+                    <!-- <el-tooltip class="item" effect="light" placement="bottom-start">
                       <div slot="content">
                         <span>
                           <i style="color:#faad14;margin:0 5px 0 0" class="el-icon-warning-outline"></i>
@@ -81,7 +81,7 @@
                         </div>
                       </div>
                       <el-button type="text" size="small">未通过</el-button>
-                    </el-tooltip>
+                    </el-tooltip> -->
                   </template>
                 </el-table-column>
               </el-table>
@@ -144,7 +144,7 @@
                 <el-table-column label="操作">
                   <template slot-scope="scope">
                     <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                    <el-button type="text" @click="keep(scope.row)" size="small">通过</el-button>
+                    <!-- <el-button type="text" @click="keep(scope.row)" size="small">通过</el-button> -->
                   </template>
                 </el-table-column>
               </el-table>

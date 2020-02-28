@@ -1,18 +1,17 @@
 <template>
   <el-row class="container">
-    <el-col  class="header">
+    <el-col class="header">
       <div class="header-nav">
         <el-col
-          class="logo" 
+          class="logo"
           :class="collapsed?'logo-collapse-width':'logo-width'"
-        >{{collapsed?'':sysName}}
-        </el-col>
-        <el-col >
+        >{{collapsed?'':sysName}}</el-col>
+        <el-col>
           <div class="tools" @click.prevent="collapse">
             <i class="fa fa-align-justify"></i>
           </div>
         </el-col>
-        <el-col  class="userinfo">
+        <el-col class="userinfo">
           <el-dropdown trigger="hover">
             <span class="el-dropdown-link userinfo-inner" style="color:#373737">
               <img style="margin-left:20px" :src="this.sysUserAvatar" />
@@ -51,10 +50,10 @@
                   :index="itemChild.path"
                   :key="itemChild.path"
                 >
-                    <template slot="title">
-                      <i :class="itemChild.iconCls"></i>
-                      {{itemChild.name}}
-                    </template>
+                  <template slot="title">
+                    <i :class="itemChild.iconCls"></i>
+                    {{itemChild.name}}
+                  </template>
 
                   <!-- 三级菜单 -->
                   <el-menu-item
@@ -134,7 +133,7 @@
               <el-breadcrumb-item v-for="item in $route.matched" :key="item.path">{{ item.name }}</el-breadcrumb-item>
             </el-breadcrumb>
           </div>
-          <div  class="content-wrapper">
+          <div class="content-wrapper">
             <transition name="fade" mode="out-in">
               <router-view></router-view>
             </transition>
@@ -152,7 +151,8 @@ export default {
       sysName: "Yinlinkrc",
       isCollapse: false,
       sysUserName: "管理员",
-      sysUserAvatar: "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg",
+      sysUserAvatar:
+        "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg",
       form: {
         name: "",
         region: "",
@@ -178,25 +178,18 @@ export default {
     handleselect: function(a, b) {},
     //退出登录
     logout: function() {
-      var _this = this;
-      this.$confirm("确认退出吗?", "提示", {
-        //type: 'warning'
-      })
-        .then(() => {
-          // this.$http
-          //   .get('/logout')
-          //   .then(res => {
-          //     if (res.data.code == 200) {
-          //       // this.$router.push({ path: '/login' });
-          //     } else {
-          //     }
-          //   })
-          //   .catch(error => {
-          //   });
-          // sessionStorage.removeItem("user");
-          // _this.$router.push("/login");
+      this.$http
+        .get("/logout")
+        .then(res => {
+          if (res.data.code == 200) {
+            this.$router.push("/login");
+          } else {
+          }
         })
-        .catch(() => {});
+        .catch(error => {
+          this.$store.commit('LOGOUT');
+          this.$router.push("/login");
+        });
     },
     //折叠导航栏
     collapse: function() {
@@ -227,25 +220,25 @@ export default {
   top: 0px;
   bottom: 0px;
   width: 100%;
-  height:100%;
+  height: 100%;
   .header {
     height: 60px;
     line-height: 60px;
-    width:100%;
+    width: 100%;
     background: #ffffff;
     color: #fff;
-    margin:0 auto;
+    margin: 0 auto;
     .header-nav {
-      width:1440px;
-      display:flex;
-      flex-direction:row;
-      justify-content:space-between;
-      margin:0 auto;
+      width: 1440px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin: 0 auto;
       .userinfo {
         text-align: right;
         padding-right: 35px;
         background: #ffffff;
-        margin:0 0 0 0;
+        margin: 0 0 0 0;
         .userinfo-inner {
           cursor: pointer;
           color: #fff;
@@ -263,8 +256,8 @@ export default {
         font-size: 32px;
         padding-left: 50px;
         padding-right: 20px;
-        background: #20A0FF;
-        
+        background: #20a0ff;
+
         border-color: rgba(171, 172, 164, 0.3);
         border-right-width: 1px;
         border-right-style: solid;
@@ -277,7 +270,7 @@ export default {
         .txt {
           color: #fff;
         }
-      } 
+      }
       .logo-width {
         width: 460px;
       }
@@ -302,7 +295,7 @@ export default {
     bottom: 0px;
     overflow: hidden;
     width: 1440px;
-    margin:0 auto 0;
+    margin: 0 auto 0;
     aside {
       flex: 0 0 230px;
       width: 230px;
@@ -345,7 +338,7 @@ export default {
       // left: 230px;
       overflow-y: hidden;
       padding: 20px;
-      background: #F8F8F8;
+      background: #f8f8f8;
       .breadcrumb-container {
         //margin-bottom: 15px;
         .title {
@@ -355,7 +348,7 @@ export default {
         }
         .breadcrumb-inner {
           float: left;
-          margin:20px 0 0 20px;
+          margin: 20px 0 0 20px;
         }
       }
       .content-wrapper {

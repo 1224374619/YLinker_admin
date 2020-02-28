@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import axios from "axios";
 import App from './App'
+import queryString from 'querystring'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 //import './assets/theme/theme-green/index.css'
@@ -59,19 +60,29 @@ const router = new VueRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   //NProgress.start();
-//   if (to.path == '/login') {
-//     sessionStorage.removeItem('user');
-//   }
-//   let user = JSON.parse(sessionStorage.getItem('user'));
-//   if (!user && to.path != '/login') {
-//     next({ path: '/login' })
-//   } else {
-//     next()
-//   }
-// })
-
+// 注册全局钩子用来拦截导航
+router.beforeEach((to, from, next) => {
+   
+  const token = store.state.token
+  if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
+    if (token) { // 通过vuex state获取当前的token是否存在
+      next()
+    } else {
+      // Message({
+      //     message: '请先登录！',
+      //     type: 'error',
+      //     duration: 1 * 1000
+      // })
+      setTimeout(()=>next({
+          path: '/login'
+          // query: {redirect: to.fullPath} // 将跳转的路由path作为参数，登录成功后跳转到该路由
+        }),1000)
+      
+    }
+  } else {
+    next()
+  }
+})
 //router.afterEach(transition => {
 //NProgress.done();
 //});

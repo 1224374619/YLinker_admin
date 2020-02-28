@@ -61,23 +61,24 @@ export default {
       this.$refs.ruleForm2.validate(valid => {
         if (valid) {
           //_this.$router.replace('/table');
-          this.$http
-            .post(`/login?returnUrl=http://localhost:8080/api/reviewed/company/cert`, {
-              username: '15516946795',
-              password: '123456'
-            })
+          // http://localhost:8080/api/reviewed/company/cert
+          this.$_http
+            .post(
+              `/login?returnUrl=/reviewed/company/cert`,
+              {
+                username: 15516946795,
+                password: 123456
+              }
+            )
             .then(res => {
               if (res.data.code == 200) {
-                // this.$router.push({ path: '/login' });
+                let token = "asd1d5.0o9utrf7.12jjkht";
+                this.$store.commit("SET_TOKEN", token);
+                this.$router.push({ path: "/JobAuait" });
               } else {
               }
             })
             .catch(error => {
-              
-              let token = "asd1d5.0o9utrf7.12jjkht";
-              this.$store.commit("SET_TOKEN", token);
-              this.$router.push({ path: "/JobAuait" });
-              
               // console.log(window.sessionStorage.getItem('token', data))
               // this.$message({
               //   message: error.response.data.message,

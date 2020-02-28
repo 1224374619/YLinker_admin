@@ -31,11 +31,11 @@
           </div>
           <div>
             工作年限：
-            <span>{{detailinfo.workAgeMax}}-{{detailinfo.workAgeMin}}年</span>
+            <span>{{detailinfo.workAgeMin}}-{{detailinfo.workAgeMax}}年</span>
           </div>
           <div>
             工作地址：
-            <span>{{detailinfo.addressId}}</span>
+            <span>{{detailinfo.address}}</span>
           </div>
           <div>
             职位描述：
@@ -60,25 +60,13 @@
           <div>
             操作日志：
             <div>
-              王小虎 提交于 2018/4/2 20:46
+              
               <div class="block">
                 <el-timeline>
-                  <el-timeline-item timestamp="2018/4/12" placement="top">
+                  <el-timeline-item timestamp="" placement="top">
                     <el-card>
-                      <h4>更新 Github 模板</h4>
-                      <p>王小虎 提交于 2018/4/12 20:46</p>
-                    </el-card>
-                  </el-timeline-item>
-                  <el-timeline-item timestamp="2018/4/3" placement="top">
-                    <el-card>
-                      <h4>更新 Github 模板</h4>
-                      <p>王小虎 提交于 2018/4/3 20:46</p>
-                    </el-card>
-                  </el-timeline-item>
-                  <el-timeline-item timestamp="2018/4/2" placement="top">
-                    <el-card>
-                      <h4>更新 Github 模板</h4>
-                      <p>王小虎 提交于 2018/4/2 20:46</p>
+                      <h4></h4>
+                      <p></p>
                     </el-card>
                   </el-timeline-item>
                 </el-timeline>
@@ -161,7 +149,7 @@ export default {
     Define() {
       this.$http
         .put(
-          `/reviewed/position/${this.thisId}/position/${this.companId}/notPass`,
+          `/reviewed/position/${this.thisId}/info/${this.companId}/notPass`,
           { reason: this.checkList[0] }
         )
         .then(res => {
@@ -202,8 +190,7 @@ export default {
     DialogAffirm() {
       this.$http
         .put(
-          `/reviewed/position/${this.thisId}/position/${this.companId}/rePass`,
-          { reason: this.textarea }
+          `/reviewed/position/${this.thisId}/info/${this.companId}/pass`,
         )
         .then(res => {
           if (res.data.code == 200) {

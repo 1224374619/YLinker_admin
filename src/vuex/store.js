@@ -7,7 +7,8 @@ Vue.use(Vuex)
 
 // 应用初始状态
 const state = {
-    count: 10
+    count: 10,
+    token: window.sessionStorage.getItem('token'),
 }
 
 // 定义所需的 mutations
@@ -22,6 +23,12 @@ const mutations = {
         state.token = data
         window.sessionStorage.setItem('token', data)
     },
+    //登出
+    LOGOUT: (state) => {
+        // 登出的时候要清除token
+        window.sessionStorage.removeItem('token')
+        window.sessionStorage.removeItem('user')
+      }
 }
 
 // 创建 store 实例
