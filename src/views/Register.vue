@@ -7,7 +7,7 @@
     label-width="0px"
     class="demo-ruleForm login-container"
   >
-    <h3 class="title">系统登录</h3>
+    <h3 class="title">系统注册</h3>
     <el-form-item prop="account">
       <el-input type="text" v-model="ruleForm2.account" auto-complete="off" placeholder="账号"></el-input>
     </el-form-item>
@@ -16,7 +16,7 @@
     </el-form-item>
     <el-form-item prop="checkPass">
       <div class="captcha">
-        <el-input class="input" type="captcha" v-model="captchaInput" placeholder="请输入验证码"></el-input>
+        <el-input class="input" style="margin:0 5px 0 0" type="captcha" v-model="captchaInput" placeholder="请输入验证码"></el-input>
         <el-button class="btn" @click="getCaptcha" :disabled="frozen">{{ captchaStatusText }}</el-button>
       </div>
     </el-form-item>
@@ -24,11 +24,11 @@
     <el-form-item style="width:100%;">
       <el-button
         type="primary"
-        style="width:100%;"
+        style="width:95%;"
         @click.native.prevent="handleSubmit2"
         :loading="logining"
       >注册</el-button>
-      <!--<el-button @click.native.prevent="handleReset2">重置</el-button>-->
+      <el-button style="width:90%;" type="text" @click.native.prevent="handleReset2">登录</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -80,7 +80,7 @@ export default {
       });
     },
     handleReset2() {
-      this.$refs.ruleForm2.resetFields();
+      this.$router.push({ path: "/login" })
     },
     handleSubmit2(ev) {
       //   this.$router.push({ path: "/JobAuait" });

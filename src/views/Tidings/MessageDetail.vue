@@ -86,9 +86,10 @@ export default {
   width: 100%;
 }
 .asp-nav {
-  margin: 10px 0 0 0;
-  font-size: 17px;
-  font-weight: 550;
+  margin: 40px 0 0 20px;
+  font-size: 18px;
+  color: #2a2a2a;
+  text-align: left;
 }
 .asp-content {
   width: 100%;

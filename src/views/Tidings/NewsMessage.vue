@@ -262,7 +262,7 @@
             </el-checkbox-group>
           </el-form-item>
           <el-form-item label="有效期" prop="Validity">
-            <el-time-picker v-model="ruleForm.Validity" placeholder="任意时间点"></el-time-picker>
+            <el-date-picker format='yyyy-MM-dd HH:mm:ss' type="datetime" v-model="ruleForm.Validity" placeholder="任意时间点"></el-date-picker>
           </el-form-item>
           <el-form-item label="消息内容" prop="desc">
             <el-input type="textarea" style="width:315px" v-model="ruleForm.desc"></el-input>
@@ -360,14 +360,14 @@ export default {
                   parseInt(this.ruleForm.region),
                 indateTime:
                   this.ruleForm.Validity.getTime(),
-                remindway:
+                remindWay:
                   parseInt(this.ruleForm.types[0]),
                 content:
                   this.ruleForm.desc,
             })
             .then(res => {
               if (res.data.code == 200) {
-               console.log(res)
+
               }
             })
             .catch(error => {

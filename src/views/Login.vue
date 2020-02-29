@@ -18,11 +18,11 @@
     <el-form-item style="width:100%;">
       <el-button
         type="primary"
-        style="width:100%;"
+        style="width:95%;"
         @click.native.prevent="handleSubmit2"
         :loading="logining"
       >登录</el-button>
-      <!--<el-button @click.native.prevent="handleReset2">重置</el-button>-->
+      <el-button style="width:90%;" type="text" @click.native.prevent="handleReset2">注册</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     handleReset2() {
-      this.$refs.ruleForm2.resetFields();
+      this.$router.push({ path: "/register" })
     },
     handleSubmit2(ev) {
       //   this.$router.push({ path: "/JobAuait" });
@@ -66,8 +66,8 @@ export default {
             .post(
               `/login?returnUrl=/reviewed/company/cert`,
               {
-                username: 15516946795,
-                password: 123456
+                username: this.ruleForm2.account,
+                password: this.ruleForm2.checkPass
               }
             )
             .then(res => {

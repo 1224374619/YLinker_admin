@@ -105,6 +105,7 @@ export default {
         }).then(res => {
           if (res.data.code == 200) {
             this.dialogVisible = false;
+            this.back()
           }
         }).catch(error =>{
           // this.$message({
@@ -135,6 +136,7 @@ export default {
     Define() {
       this.$http.put(`/reviewed/company/${this.thisId}/cert/${this.companId}/notPass`,{reason:this.checkList[0]}).then(res => {
           if (res.data.code == 200) {
+            this.back()
           }
         }).catch(error =>{
           // this.$message({

@@ -154,7 +154,7 @@ export default {
         )
         .then(res => {
           if (res.data.code == 200) {
-            this.ReviewCompany();
+            this.back();
           }
         })
         .catch(error => {
@@ -195,6 +195,7 @@ export default {
         .then(res => {
           if (res.data.code == 200) {
             this.dialogVisible = false;
+            this.back()
           }
         })
         .catch(error => {
