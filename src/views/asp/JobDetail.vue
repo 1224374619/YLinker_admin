@@ -60,13 +60,12 @@
           <div>
             操作日志：
             <div>
-              
               <div class="block">
                 <el-timeline>
-                  <el-timeline-item timestamp="" placement="top">
+                  <el-timeline-item timestamp='2018/04/02' placement="top">
                     <el-card>
-                      <h4></h4>
-                      <p></p>
+                      <h4>更新 Github 模板</h4>
+                      <p>王小虎 提交于 2018/4/12 20:46</p>
                     </el-card>
                   </el-timeline-item>
                 </el-timeline>
@@ -96,6 +95,13 @@
                   <el-checkbox label="涉嫌诈骗"></el-checkbox>
                 </el-checkbox-group>
                 <br />
+                <el-input
+                  style="margin-bottom:20px"
+                  type="textarea"
+                  :rows="2"
+                  placeholder="(选填)请简要填写不通过原因，原因会反馈给客户，请注意措辞"
+                  v-model="textarea"
+                ></el-input>
                 <el-button style="width:50px;height:20px;font-size:10px;padding:0 0">取消</el-button>
                 <el-button
                   style="width:50px;height:20px;font-size:10px;padding:0 0"
@@ -184,18 +190,16 @@ export default {
     },
     //通过
     DefineFirst() {
-      this.DialogAffirm()
+      this.DialogAffirm();
     },
     //弹框确认
     DialogAffirm() {
       this.$http
-        .put(
-          `/reviewed/position/${this.thisId}/info/${this.companId}/pass`,
-        )
+        .put(`/reviewed/position/${this.thisId}/info/${this.companId}/pass`)
         .then(res => {
           if (res.data.code == 200) {
             this.dialogVisible = false;
-            this.back()
+            this.back();
           }
         })
         .catch(error => {

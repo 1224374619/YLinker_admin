@@ -129,38 +129,50 @@ let routes = [
                 children: [
                     {
                         path: '/CompanyInformation/Qualifications', iconCls: 'fa fa-address-card', component: Qualifications, meta: {
-                            requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+                            requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的
                         }, name: '企业资质审核'
                     },
                     {
                         path: '/CompanyInformation/BasicInformation', iconCls: 'fa fa-address-card', meta: {
                             requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-                        }, component: BasicInformation, name: '企业基础信息审核'
-                    },
-                    {
-                        path: '/CompanyInformation/Verify', iconCls: 'fa fa-address-card', meta: {
-                            requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-                        }, component: Verify, name: '企业资质审核详情页', hidden: true
+                        }, component: BasicInformation,
+                        name: '企业基础信息审核'
                     },
                     {
                         path: '/CompanyInformation/InformationVerify', iconCls: 'fa fa-address-card', meta: {
                             requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
                         }, component: InformationVerify, name: '企业基础信息审核详情页', hidden: true
                     },
+                    {
+                        path: '/CompanyInformation/Verify', iconCls: 'fa fa-address-card', meta: {
+                            requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+                        }, component: Verify, name: '企业资质审核详情页', hidden: true
+                    },
+
                 ]
             },
-            { path: '/JobAuait', iconCls: 'fa fa-id-card-o',meta: {
-                requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-            }, component: JobAuait, name: '职位审核' },
-            { path: '/ResumeReview', iconCls: 'fa fa-id-card-o',meta: {
-                requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-            }, component: ResumeReview, name: '简历审核' },
-            { path: '/ResumeDetail', iconCls: 'fa fa-id-card-o',meta: {
-                requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-            }, component: ResumeDetail, name: '简历审核详情页', hidden: true },
-            { path: '/JobDetail', iconCls: 'fa fa-id-card-o', meta: {
-                requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-            },component: JobDetail, name: '职位审核详情页', hidden: true },
+            {
+                path: '/JobAuait', iconCls: 'fa fa-id-card-o', meta: {
+                    requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+                }, component: JobAuait, name: '职位审核'
+            },
+            {
+                path: '/ResumeReview', iconCls: 'fa fa-id-card-o', meta: {
+                    requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+                }, component: ResumeReview, name: '简历审核', children: [
+
+                ]
+            },
+            {
+                path: '/ResumeDetail', iconCls: 'fa fa-id-card-o', meta: {
+                    requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+                }, component: ResumeDetail, name: '简历审核详情页', hidden: true
+            },
+            {
+                path: '/JobDetail', iconCls: 'fa fa-id-card-o', meta: {
+                    requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+                }, component: JobDetail, name: '职位审核详情页', hidden: true
+            },
         ]
     },
     {
@@ -182,9 +194,8 @@ let routes = [
             requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
         },
         children: [
-            { path: '/Tidings', iconCls: 'fa fa-id-card-o',meta: {
-                requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-            }, component: Tidings, name: '消息中心' },
+            {
+              path: '/Tidings', iconCls: 'fa fa-id-card-o', meta: { requireAuth: true }, component: Tidings, name: '消息中心'},
             { path: '/NewsMessage', iconCls: 'fa fa-id-card-o', component: NewsMessage, name: '新建消息', hidden: true },
             { path: '/MessageDetail', iconCls: 'fa fa-id-card-o', component: MessageDetail, name: '消息详情页', hidden: true },
         ]

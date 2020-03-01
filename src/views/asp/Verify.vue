@@ -66,6 +66,7 @@
                   <el-checkbox label="涉嫌诈骗"></el-checkbox>
                 </el-checkbox-group>
                 <br />
+                <el-input style="margin-bottom:20px" type="textarea" :rows="2" placeholder="(选填)请简要填写不通过原因，原因会反馈给客户，请注意措辞" v-model="textarea"></el-input>
                 <el-button style="width:50px;height:20px;font-size:10px;padding:0 0">取消</el-button>
                 <el-button
                   @click="Define"

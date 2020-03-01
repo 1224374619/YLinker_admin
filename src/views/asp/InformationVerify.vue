@@ -1,16 +1,12 @@
 <template>
   <div class="asp">
     <div class="asp-nav">企业基本信息审核详情页</div>
-    <el-dialog
-      title="请填写通过理由"
-      :visible.sync="dialogVisible"
-      width="30%"
-    >
+    <el-dialog title="请填写通过理由" :visible.sync="dialogVisible" width="30%">
       <div>
         <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
-        <span slot="footer" class="dialog-footer" >
+        <span slot="footer" class="dialog-footer">
           <el-button style="margin:40px 0 0 0" @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click='DialogAffirm()'>确 定</el-button>
+          <el-button type="primary" @click="DialogAffirm()">确 定</el-button>
         </span>
       </div>
     </el-dialog>
@@ -22,7 +18,7 @@
             企业名称：
             <span>{{this.companyName}}</span>
           </div>
-           <div>
+          <div>
             企业状态：
             <span>{{this.state}}</span>
           </div>
@@ -52,8 +48,10 @@
             </span>
           </div>
           <div class="flrx">
-           企业图片:
-            <div><img src="" style="height:65px;width:65px;margin:-25px 0 0 0"></div>
+            企业图片:
+            <div>
+              <img src style="height:65px;width:65px;margin:-25px 0 0 0" />
+            </div>
           </div>
         </div>
         <el-divider content-position="left"></el-divider>
@@ -78,6 +76,13 @@
                   <el-checkbox label="涉嫌诈骗"></el-checkbox>
                 </el-checkbox-group>
                 <br />
+                <el-input
+                  style="margin-bottom:20px"
+                  type="textarea"
+                  :rows="2"
+                  placeholder="(选填)请简要填写不通过原因，原因会反馈给客户，请注意措辞"
+                  v-model="textarea"
+                ></el-input>
                 <el-button style="width:50px;height:20px;font-size:10px;padding:0 0">取消</el-button>
                 <el-button
                   style="width:50px;height:20px;font-size:10px;padding:0 0"
@@ -85,9 +90,18 @@
                 >确认</el-button>
               </div>
             </div>
-            <el-button v-if="this.reviewedState === 3?false:true" style="margin: 0 0 20px 10px" type="danger">不通过</el-button>
+            <el-button
+              v-if="this.reviewedState === 3?false:true"
+              style="margin: 0 0 20px 10px"
+              type="danger"
+            >不通过</el-button>
           </el-tooltip>
-          <el-button type="success" v-if="this.reviewedState === 2?false:true" @click="DefineFirst" style="margin: 0 0 20px 10px">通过</el-button>
+          <el-button
+            type="success"
+            v-if="this.reviewedState === 2?false:true"
+            @click="DefineFirst"
+            style="margin: 0 0 20px 10px"
+          >通过</el-button>
         </div>
       </div>
     </div>
@@ -97,17 +111,17 @@
 export default {
   data() {
     return {
-        checkList: [],
-        companyName:'',
-        state:'',
-        shortName:'',
-        size:'',
-        nature:'',
-        industry:'',
-        logoUrl:'',
-        reviewedState:'',
-        dialogVisible: false,
-        textarea:''
+      checkList: [],
+      companyName: "",
+      state: "",
+      shortName: "",
+      size: "",
+      nature: "",
+      industry: "",
+      logoUrl: "",
+      reviewedState: "",
+      dialogVisible: false,
+      textarea: ""
     };
   },
   methods: {
@@ -116,19 +130,22 @@ export default {
     },
     //详细信息
     Detail() {
-      this.$http.get(`/reviewed/company/${this.thisId}/info/${this.companId}`).then(res => {
+      this.$http
+        .get(`/reviewed/company/${this.thisId}/info/${this.companId}`)
+        .then(res => {
           if (res.data.code == 200) {
-            let NewContent = res.data.data
-            this.companyName = NewContent.fullName
-            this.state = NewContent.state
-            this.shortName = NewContent.shortName
-            this.size = NewContent.size
-            this.nature = NewContent.nature
-            this.industry = NewContent.industry
-            this.logoUrl = NewContent.logoUrl
-            this.reviewedState = NewContent.reviewedState
+            let NewContent = res.data.data;
+            this.companyName = NewContent.fullName;
+            this.state = NewContent.state;
+            this.shortName = NewContent.shortName;
+            this.size = NewContent.size;
+            this.nature = NewContent.nature;
+            this.industry = NewContent.industry;
+            this.logoUrl = NewContent.logoUrl;
+            this.reviewedState = NewContent.reviewedState;
           }
-        }).catch(error =>{
+        })
+        .catch(error => {
           // this.$message({
           //       message:error.response.data.message,
           //       type: 'error'
@@ -137,11 +154,16 @@ export default {
     },
     //未审核未通过
     Define() {
-      this.$http.put(`/reviewed/company/${this.thisId}/info/${this.companId}/notPass`,{reason:this.checkList[0]}).then(res => {
+      this.$http
+        .put(`/reviewed/company/${this.thisId}/info/${this.companId}/notPass`, {
+          reason: this.checkList[0]
+        })
+        .then(res => {
           if (res.data.code == 200) {
-            this.back()
+            this.back();
           }
-        }).catch(error =>{
+        })
+        .catch(error => {
           // this.$message({
           //       message:error.response.data.message,
           //       type: 'error'
@@ -154,62 +176,66 @@ export default {
     },
     //弹框确认
     DialogAffirm() {
-      this.$http.put(`/reviewed/company/${this.thisId}/info/${this.companId}/rePass`,{reason:'132121212'
-        }).then(res => {
+      this.$http
+        .put(`/reviewed/company/${this.thisId}/info/${this.companId}/rePass`, {
+          reason: "132121212"
+        })
+        .then(res => {
           if (res.data.code == 200) {
             this.dialogVisible = false;
-            this.back()
+            this.back();
           }
-        }).catch(error =>{
+        })
+        .catch(error => {
           // this.$message({
           //       message:error.response.data.message,
           //       type: 'error'
           //     })
         });
-    },
+    }
   },
   mounted: function() {},
   updated: function() {},
   created() {
-    this.companId = this.$route.query.thisId
-    this.thisId = this.$route.query.thatId
-    this.Detail()
+    this.companId = this.$route.query.thisId;
+    this.thisId = this.$route.query.thatId;
+    this.Detail();
   },
   filters: {
     size(size) {
       const map = ["小于10人", "10-100人", "100-500人", "500人以上"];
       return map[size];
     },
-    level(level){
-      const map=["国有企业","外资企业","合资企业","民营企业",'事业单位']
-      return map[level]
-    },
-  },
+    level(level) {
+      const map = ["国有企业", "外资企业", "合资企业", "民营企业", "事业单位"];
+      return map[level];
+    }
+  }
 };
 </script>
 <style scoped>
 .asp {
   width: 100%;
-  background: #F8F8F8;
-  border:1px solid #F8F8F8;
+  background: #f8f8f8;
+  border: 1px solid #f8f8f8;
 }
 .asp-nav {
   margin: 40px 0 0 20px;
   font-size: 18px;
-  color:#2A2A2A;
+  color: #2a2a2a;
   text-align: left;
 }
 .asp-content {
   width: 100%;
   margin: 20px 0 20px 0;
-  background: #F8F8F8;
+  background: #f8f8f8;
 }
 .verify {
   width: 98%;
   margin: 20px 1% 0 1%;
   background: #ffffff;
 }
-.flrx{
+.flrx {
   display: flex;
   flex-direction: row;
 }
@@ -223,7 +249,7 @@ h2 {
 .verify-nav div {
   margin: 0 0 0 35px;
   padding: 25px 0 0 0;
-  font-size:18px
+  font-size: 18px;
 }
 .el-divider {
   width: 300px;
@@ -235,9 +261,8 @@ h2 {
 }
 .verify-button {
   padding: 70px 0 50px 200px;
- 
 }
-.el-checkbox{
+.el-checkbox {
   margin: 10px 0 0 0;
 }
 </style>

@@ -130,7 +130,7 @@ export default {
     color: #505458;
   }
   .remember {
-    margin: 0px 0px 35px 0px;
+    margin: 0px 0px 35px 20px;
   }
 }
 </style>

@@ -51,7 +51,7 @@
             @tab-click="handleClicktab"
             style="width:1084px;margin:20px auto"
           >
-            <el-tab-pane label="待审核" name="first">
+            <el-tab-pane :label="`待审核（${this.page.total}）`" name="first">
               <el-table
                 ref="multipleTable"
                 :data="tableData"
@@ -112,7 +112,7 @@
                 :total="page.total"
               ></el-pagination>
             </el-tab-pane>
-            <el-tab-pane label="通过" name="second">
+            <el-tab-pane :label="`通过（${this.page1.total}）`" name="second">
               <el-table
                 ref="multipleTable"
                 :data="tableData"
@@ -144,7 +144,7 @@
                 :total="page.total"
               ></el-pagination>
             </el-tab-pane>
-            <el-tab-pane label="不通过" name="third">
+            <el-tab-pane :label="`不通过（${this.page2.total}）`" name="third">
               <el-table
                 ref="multipleTable"
                 :data="tableData"
@@ -188,6 +188,18 @@ export default {
   data() {
     return {
       page: {
+        total: 0,
+        pageSize: 10,
+        current: 1,
+        pageSizeOpts: [10, 20, 30]
+      },
+      page1: {
+        total: 0,
+        pageSize: 10,
+        current: 1,
+        pageSizeOpts: [10, 20, 30]
+      },
+      page2: {
         total: 0,
         pageSize: 10,
         current: 1,
@@ -302,7 +314,7 @@ export default {
           .then(res => {
             if (res.data.code == 200) {
               this.tableData = res.data.data.list;
-              this.page.total = res.data.data.total;
+              this.page1.total = res.data.data.total;
             }
           })
           .catch(error => {
@@ -317,7 +329,7 @@ export default {
           .then(res => {
             if (res.data.code == 200) {
               this.tableData = res.data.data.list;
-              this.page.total = res.data.data.total;
+              this.page2.total = res.data.data.total;
             }
           })
           .catch(error => {
@@ -336,6 +348,34 @@ export default {
           if (res.data.code == 200) {
             this.tableData = res.data.data.list;
             this.page.total = res.data.data.total;
+          }
+        })
+        .catch(error => {
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
+        this.$http
+        .get("/reviewed/position/info",{ params: { reviewedState: 2 } })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.tableData = res.data.data.list;
+            this.page1.total = res.data.data.total;
+          }
+        })
+        .catch(error => {
+          // this.$message({
+          //       message:error.response.data.message,
+          //       type: 'error'
+          //     })
+        });
+        this.$http
+        .get("/reviewed/position/info",{ params: { reviewedState: 3 } })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.tableData = res.data.data.list;
+            this.page2.total = res.data.data.total;
           }
         })
         .catch(error => {

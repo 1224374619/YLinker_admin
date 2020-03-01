@@ -236,7 +236,7 @@
       <div class="asp-form">
         <el-form
           :model="ruleForm"
-          :rules="rules" 
+          :rules="rules"
           ref="ruleForm"
           label-width="100px"
           class="demo-ruleForm"
@@ -255,17 +255,32 @@
             </span>-->
           </el-form-item>
           <el-form-item label="提醒方式" prop="types">
-            <el-checkbox-group v-model="ruleForm.types" style="margin:-10px 20px 0 0">
+            <!-- <el-checkbox-group v-model="ruleForm.types" style="margin:-10px 20px 0 0">
               <el-checkbox label="1" style="margin-left:0px">站内信</el-checkbox>
-              <!-- <el-checkbox label="短信" name="type"></el-checkbox>
-              <el-checkbox label="邮件" name="type"></el-checkbox>-->
-            </el-checkbox-group>
+              <el-checkbox label="短信" name="type"></el-checkbox>
+              <el-checkbox label="邮件" name="type"></el-checkbox>
+            </el-checkbox-group>-->
+            站内信
           </el-form-item>
           <el-form-item label="有效期" prop="Validity">
-            <el-date-picker format='yyyy-MM-dd HH:mm:ss' type="datetime" v-model="ruleForm.Validity" placeholder="任意时间点"></el-date-picker>
+            <el-time-picker
+              is-range
+              arrow-control
+              v-model="ruleForm.Validity"
+              range-separator="至"
+              start-placeholder="开始时间"
+              end-placeholder="结束时间"
+              placeholder="选择时间范围"
+            ></el-time-picker>
+            <!-- <el-date-picker
+              format="yyyy-MM-dd HH:mm:ss"
+              type="datetime"
+              v-model="ruleForm.Validity"
+              placeholder="任意时间点"
+            ></el-date-picker> -->
           </el-form-item>
           <el-form-item label="消息内容" prop="desc">
-            <el-input type="textarea" style="width:315px" v-model="ruleForm.desc"></el-input>
+            <el-input type="textarea" style="width:315px;" v-model="ruleForm.desc"></el-input>
           </el-form-item>
           <el-form-item style="padding:0 0 20px 20px">
             <el-button @click="resetForm('ruleForm')">重置</el-button>
@@ -317,9 +332,9 @@ export default {
         name: "",
         region: [],
         delivery: false,
-        types: ['1'],
+        types: ["1"],
         desc: "",
-        Validity: ""
+        Validity: [new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)]
       },
       form: {},
       rules: {
@@ -354,20 +369,14 @@ export default {
         if (valid) {
           this.$http
             .post("/sysmsg", {
-                title:
-                  this.ruleForm.name,
-                accept:
-                  parseInt(this.ruleForm.region),
-                indateTime:
-                  this.ruleForm.Validity.getTime(),
-                remindWay:
-                  parseInt(this.ruleForm.types[0]),
-                content:
-                  this.ruleForm.desc,
+              title: this.ruleForm.name,
+              accept: parseInt(this.ruleForm.region),
+              indateTime: this.ruleForm.Validity[1].getTime()-this.ruleForm.Validity[0].getTime(),
+              remindWay: 1,
+              content: this.ruleForm.desc
             })
             .then(res => {
               if (res.data.code == 200) {
-
               }
             })
             .catch(error => {
@@ -390,16 +399,19 @@ export default {
   updated: function() {}
 };
 </script>
-<style scoped>
+<style >
 .asp {
   width: 100%;
-  background: #F8F8F8;
-  border:1px solid #F8F8F8;
+  background: #f8f8f8;
+  border: 1px solid #f8f8f8;
+}
+.el-textarea__inner {
+  height: 100px;
 }
 .asp-nav {
   margin: 40px 0 0 20px;
   font-size: 18px;
-  color:#2A2A2A;
+  color: #2a2a2a;
   text-align: left;
 }
 .asp-content {
@@ -410,7 +422,7 @@ export default {
 .asp-form {
   width: 100%;
   margin: 10px 0 0 0;
-  border:1px solid #F8F8F8
+  border: 1px solid #f8f8f8;
 }
 .asp-table {
   width: 98%;
