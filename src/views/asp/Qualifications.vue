@@ -287,7 +287,7 @@ export default {
         .get("/reviewed/company/cert", { params: { reviewedState: 2 } })
         .then(res => {
           if (res.data.code == 200) {
-            this.tableData = res.data.data.list;
+            // this.tableData = res.data.data.list;
             this.page1.total = res.data.data.total;
           }
         })
@@ -301,7 +301,7 @@ export default {
         .get("/reviewed/company/cert", { params: { reviewedState: 3 } })
         .then(res => {
           if (res.data.code == 200) {
-            this.tableData = res.data.data.list;
+            // this.tableData = res.data.data.list;
             this.page2.total = res.data.data.total;
           }
         })
