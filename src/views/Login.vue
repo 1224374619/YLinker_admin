@@ -22,7 +22,7 @@
         @click.native.prevent="handleSubmit2"
         :loading="logining"
       >登录</el-button>
-      <el-button style="width:90%;" type="text" @click.native.prevent="handleReset2">注册</el-button>
+      <!-- <el-button style="width:90%;" type="text" @click.native.prevent="handleReset2">注册</el-button> -->
     </el-form-item>
   </el-form>
 </template>
@@ -52,9 +52,9 @@ export default {
     };
   },
   methods: {
-    handleReset2() {
-      this.$router.push({ path: "/register" })
-    },
+    // handleReset2() {
+    //   this.$router.push({ path: "/register" })
+    // },
     handleSubmit2(ev) {
       //   this.$router.push({ path: "/JobAuait" });
       var _this = this;

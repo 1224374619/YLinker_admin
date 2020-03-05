@@ -28,7 +28,7 @@ Vue.prototype.$CodeToTag = {
 Vue.config.productionTip = false
 
 Vue.prototype.$http = axios //将axios挂载在Vue实例原型上
-
+// cmsapp
 axios.defaults.baseURL = '/cmsapp/'
 // axios.defaults.baseURL = '/api/'
 // axios.defaults.headers.common['Authorization'] = 'f4c902c9ae5a2a9d8f84868ad064e706';
