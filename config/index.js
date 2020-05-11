@@ -23,7 +23,7 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 8080,
+    port: 443,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
@@ -31,7 +31,7 @@ module.exports = {
       '/api': {
         // 测试环境
         // target: 'http://47.102.145.186' + '/consumertest/', // target host
-        target: 'http://47.102.145.186/cmsapp/', // target host
+        target: 'https://www.yinlinkrc.com/api/v1', // target host
         changeOrigin: true,  //是否跨域
         pathRewrite: {
             '^/api': ''   //需要rewrite重写的,

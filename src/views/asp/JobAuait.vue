@@ -259,7 +259,7 @@ export default {
     Define(tab, event) {
       this.$http
         .put(
-          `/reviewed/position/${tab.positionId}/position/${tab.id}/notPass`,
+          `/cms-app/reviewed/position/${tab.positionId}/position/${tab.id}/notPass`,
           { reason: this.checkList[0] }
         )
         .then(res => {
@@ -277,7 +277,7 @@ export default {
     //未审核通过
     DefineFirst(tab, event) {
       this.$http
-        .put(`/reviewed/position/${tab.positionId}/position/${tab.id}/pass`)
+        .put(`/cms-app/reviewed/position/${tab.positionId}/position/${tab.id}/pass`)
         .then(res => {
           if (res.data.code == 200) {
             this.ReviewCompany();
@@ -295,7 +295,7 @@ export default {
       let tabValue = tab.name;
       if (tabValue === "first") {
         this.$http
-          .get("/reviewed/position/info", { params: { reviewedState: 1 } })
+          .get("/cms-app/reviewed/position/info", { params: { reviewedState: 1 } })
           .then(res => {
             if (res.data.code == 200) {
               this.tableData = res.data.data.list;
@@ -310,7 +310,7 @@ export default {
           });
       } else if (tabValue === "second") {
         this.$http
-          .get("/reviewed/position/info", { params: { reviewedState: 2 } })
+          .get("/cms-app/reviewed/position/info", { params: { reviewedState: 2 } })
           .then(res => {
             if (res.data.code == 200) {
               this.tableData = res.data.data.list;
@@ -325,7 +325,7 @@ export default {
           });
       } else {
         this.$http
-          .get("/reviewed/position/info", { params: { reviewedState: 3 } })
+          .get("/cms-app/reviewed/position/info", { params: { reviewedState: 3 } })
           .then(res => {
             if (res.data.code == 200) {
               this.tableData = res.data.data.list;
@@ -343,7 +343,7 @@ export default {
     //职位审核
     ReviewCompany() {
       this.$http
-        .get("/reviewed/position/info",{ params: { reviewedState: 1 } })
+        .get("/cms-app/reviewed/position/info",{ params: { reviewedState: 1 } })
         .then(res => {
           if (res.data.code == 200) {
             this.tableData = res.data.data.list;
@@ -357,7 +357,7 @@ export default {
           //     })
         });
         this.$http
-        .get("/reviewed/position/info",{ params: { reviewedState: 2 } })
+        .get("/cms-app/reviewed/position/info",{ params: { reviewedState: 2 } })
         .then(res => {
           if (res.data.code == 200) {
             // this.tableData = res.data.data.list;
@@ -371,7 +371,7 @@ export default {
           //     })
         });
         this.$http
-        .get("/reviewed/position/info",{ params: { reviewedState: 3 } })
+        .get("/cms-app/reviewed/position/info",{ params: { reviewedState: 3 } })
         .then(res => {
           if (res.data.code == 200) {
             // this.tableData = res.data.data.list;
@@ -389,7 +389,7 @@ export default {
     DialogAffirm() {
       this.$http
         .put(
-          `/reviewed/position/${this.companyId}/position/${this.id}/rePass`,
+          `/cms-app/reviewed/position/${this.companyId}/position/${this.id}/rePass`,
           { reason: this.textarea }
         )
         .then(res => {

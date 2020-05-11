@@ -8,6 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 //import './assets/theme/theme-green/index.css'
 import VueRouter from 'vue-router'
 import store from './vuex/store'
+import Cookies from 'js-cookie'
 import Vuex from 'vuex'
 import Moment from 'moment'
 import {CodeToTag} from './cookie';
@@ -27,19 +28,78 @@ Vue.prototype.$CodeToTag = {
 }
 Vue.config.productionTip = false
 
-Vue.prototype.$http = axios //将axios挂载在Vue实例原型上
-// cmsapp
-axios.defaults.baseURL = '/cmsapp/'
-// axios.defaults.baseURL = '/api/'
-// axios.defaults.headers.common['Authorization'] = 'f4c902c9ae5a2a9d8f84868ad064e706';
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+let config = {
+  //判断当前开发环境，切换代理配置
+  // baseURL: process.env.NODE_ENV === 'production' ? '/api/v1/' : '/api/',
+  baseURL: '/api/v1/',
+  // headers: {
+  //     'Auth-Token': token
+  // },
+  timeout: 60 * 1000, // Timeout
+  withCredentials: true, // Check cross-site Access-Control
+};
+const _axios = axios.create(config);
+// 添加request拦截器 
+_axios.interceptors.request.use(
+  function (config) {
+      let token = Cookies.get('token')
+      if (token) {
+          config.headers['Auth-Token'] = token;
+      }else {
+        router.push({
+          path: "/login"
+        });
+      }
+      return config
+  },
+  function (error) {
+      Promise.reject(error)
+  })
 
-const instance= axios.create({
-  baseURL: '/cmsapp/',
-  headers:{'Content-Type':'application/x-www-form-urlencoded'},
-  transformRequest:[ (data) => queryString.stringify(data)]
+// /api/v1/consumer-user
+const instance = axios.create({
+  // baseURL: process.env.NODE_ENV === 'production' ? '/api/v1/consumer-user' : '/api/',
+  baseURL: '/api/v1/',
+  headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+  },
+  transformRequest: [(data) => queryString.stringify(data)]
 })
-Vue.prototype.$_http=instance;
+Vue.prototype.$_http = instance;
+const local = axios.create({
+  baseURL: '/api/v1/',
+  // headers:{'Auth-Token':store.state.token === ''?'':store.state.token},
+  timeout: 60 * 1000, // Timeout
+  withCredentials: true, // Check cross-site Access-Control
+})
+Vue.prototype.$local = local;
+_axios.interceptors.response.use(response => {
+  return response;
+}, error => {
+  // logger and notification;
+  // Notification.error({
+  //     title: '错误',
+  //     message: error.message
+  // });
+  return Promise.reject(error);
+});
+Plugin.install = function (Vue, options) {
+  Vue.axios = _axios;
+  window.axios = _axios;
+  Object.defineProperties(Vue.prototype, {
+      http: {
+          get() {
+              return _axios;
+          }
+      },
+      $http: {
+          get() {
+              return _axios;
+          }
+      },
+  });
+};
+Vue.use(Plugin)
 
 // 定义全局时间戳过滤器
 Vue.filter('formatDate', function(value) {
@@ -64,7 +124,7 @@ const router = new VueRouter({
 // 注册全局钩子用来拦截导航
 router.beforeEach((to, from, next) => {
    
-  const token = store.state.token
+  const token = Cookies.get('token')
   if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
     if (token) { // 通过vuex state获取当前的token是否存在
       next()

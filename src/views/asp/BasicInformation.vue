@@ -222,7 +222,7 @@ export default {
     //未审核未通过
     Define(tab, event) {
       this.$http
-        .put(`/reviewed/company/${tab.companyId}/info/${tab.id}/notPass`, {
+        .put(`/cms-app/reviewed/company/${tab.companyId}/info/${tab.id}/notPass`, {
           reason: this.checkList[0]
         })
         .then(res => {
@@ -241,7 +241,7 @@ export default {
     //未审核通过
     DefineFirst(tab, event) {
       this.$http
-        .put(`/reviewed/company/${tab.companyId}/info/${tab.id}/pass`)
+        .put(`/cms-app/reviewed/company/${tab.companyId}/info/${tab.id}/pass`)
         .then(res => {
           if (res.data.code == 200) {
             this.ReviewCompany();
@@ -257,7 +257,7 @@ export default {
     //企业基本信息审核
     ReviewCompany() {
       this.$http
-        .get("/reviewed/company/info", { params: { reviewedState: 1 } })
+        .get("/cms-app/reviewed/company/info", { params: { reviewedState: 1 } })
         .then(res => {
           if (res.data.code == 200) {
             this.tableData = res.data.data.list;
@@ -271,7 +271,7 @@ export default {
           //     })
         });
         this.$http
-        .get("/reviewed/company/info", { params: { reviewedState: 2 } })
+        .get("/cms-app/reviewed/company/info", { params: { reviewedState: 2 } })
         .then(res => {
           if (res.data.code == 200) {
             // this.tableData = res.data.data.list;
@@ -285,7 +285,7 @@ export default {
           //     })
         });
         this.$http
-        .get("/reviewed/company/info", { params: { reviewedState: 3 } })
+        .get("/cms-app/reviewed/company/info", { params: { reviewedState: 3 } })
         .then(res => {
           if (res.data.code == 200) {
             // this.tableData = res.data.data.list;
@@ -304,7 +304,7 @@ export default {
       let tabValue = tab.name;
       if (tabValue === "first") {
         this.$http
-          .get("/reviewed/company/info", { params: { reviewedState: 1 } })
+          .get("/cms-app/reviewed/company/info", { params: { reviewedState: 1 } })
           .then(res => {
             if (res.data.code == 200) {
               this.tableData = res.data.data.list;
@@ -319,7 +319,7 @@ export default {
           });
       } else if (tabValue === "second") {
         this.$http
-          .get("/reviewed/company/info", { params: { reviewedState: 2 } })
+          .get("/cms-app/reviewed/company/info", { params: { reviewedState: 2 } })
           .then(res => {
             if (res.data.code == 200) {
               this.tableData = res.data.data.list;
@@ -334,7 +334,7 @@ export default {
           });
       } else {
         this.$http
-          .get("/reviewed/company/info", { params: { reviewedState: 3 } })
+          .get("/cms-app/reviewed/company/info", { params: { reviewedState: 3 } })
           .then(res => {
             if (res.data.code == 200) {
               this.tableData = res.data.data.list;
@@ -370,7 +370,7 @@ export default {
     //弹框确认
     DialogAffirm() {
       this.$http
-        .put(`/reviewed/company/${this.companyId}/info/${this.id}/rePass`, {
+        .put(`/cms-app/reviewed/company/${this.companyId}/info/${this.id}/rePass`, {
           reason: this.textarea
         })
         .then(res => {

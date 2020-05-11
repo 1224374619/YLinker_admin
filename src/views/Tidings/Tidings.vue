@@ -116,7 +116,7 @@ export default {
     },
     //全部
     Message() {
-      this.$http.get('/sysmsg').then(res => {
+      this.$http.get('/cms-app/sysmsg').then(res => {
           if (res.data.code == 200) {
             this.tableData = res.data.data.list
             this.page.total = res.data.data.total
@@ -150,7 +150,7 @@ export default {
         pageNum:this.page.current,
         pageSize:this.page.pageSize
       }
-      this.$http.get('/sysmsg',{params:params}).then(res => {
+      this.$http.get('/cms-app/sysmsg',{params:params}).then(res => {
           if (res.data.code == 200) {
             this.tableData = res.data.data.list
             this.page.total = res.data.data.total
@@ -171,7 +171,7 @@ export default {
       });
     },
     submitForm() {
-         this.$http.get('/sysmsg',{params:{title:this.formInline.Infortitle === ''?null:this.formInline.Infortitle,accept:this.formInline.person === ''?null:this.formInline.person}}).then(res => {
+         this.$http.get('/cms-app/sysmsg',{params:{title:this.formInline.Infortitle === ''?null:this.formInline.Infortitle,accept:this.formInline.person === ''?null:this.formInline.person}}).then(res => {
           if (res.data.code == 200) {
             this.tableData = res.data.data.list
             this.page.total = res.data.data.total

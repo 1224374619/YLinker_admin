@@ -368,10 +368,10 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$http
-            .post("/sysmsg", {
+            .post("/cms-app/sysmsg", {
               title: this.ruleForm.name,
               accept: parseInt(this.ruleForm.region),
-              indateTime: this.ruleForm.Validity[1].getTime()-this.ruleForm.Validity[0].getTime(),
+              indateTime: "2020-05-11T03:40:59.818Z",
               remindWay: 1,
               content: this.ruleForm.desc
             })

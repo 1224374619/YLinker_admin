@@ -75,8 +75,8 @@ export default {
           this.frozen = false;
         }
       }, 1000);
-      this.$http.post("/account/phone/vcode", {
-        phone: this.ruleForm2.account
+      this.$http.post("cms-user/account/phone/vcode", {
+        phone: 15516946795
       });
     },
     handleReset2() {
@@ -89,9 +89,9 @@ export default {
         if (valid) {
           //_this.$router.replace('/table');
           this.$http
-            .post("/account/register", {
-              phone: this.ruleForm2.account,
-              password: this.ruleForm2.checkPass,
+            .post("cms-user/account/register", {
+              phone: 15516946795,
+              password: 123456,
               vcode: this.captchaInput,
               agree: true
             })

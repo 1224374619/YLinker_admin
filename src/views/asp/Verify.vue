@@ -102,7 +102,7 @@ export default {
     },
     //弹框确认
     DialogAffirm() {
-      this.$http.put(`/reviewed/company/${this.thisId}/cert/${this.companId}/rePass`,{reason:this.textarea
+      this.$http.put(`/cms-app/reviewed/company/${this.thisId}/cert/${this.companId}/rePass`,{reason:this.textarea
         }).then(res => {
           if (res.data.code == 200) {
             this.dialogVisible = false;
@@ -117,7 +117,7 @@ export default {
     },
     //详细信息
     Detail() {
-      this.$http.get(`/reviewed/company/${this.thisId}/cert/${this.companId}`).then(res => {
+      this.$http.get(`/cms-app/reviewed/company/${this.thisId}/cert/${this.companId}`).then(res => {
           if (res.data.code == 200) {
             let NewContent = res.data.data
             this.companyName = NewContent.companyName
@@ -135,7 +135,7 @@ export default {
     },
     //未审核未通过
     Define() {
-      this.$http.put(`/reviewed/company/${this.thisId}/cert/${this.companId}/notPass`,{reason:this.checkList[0]}).then(res => {
+      this.$http.put(`/cms-app/reviewed/company/${this.thisId}/cert/${this.companId}/notPass`,{reason:this.checkList[0]}).then(res => {
           if (res.data.code == 200) {
             this.back()
           }

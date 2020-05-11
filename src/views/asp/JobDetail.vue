@@ -39,11 +39,11 @@
           </div>
           <div>
             职位描述：
-            <span>{{detailinfo.description}}</span>
+            <span style="white-space:pre-line">{{detailinfo.description}}</span>
           </div>
           <div>
             任职要求：
-            <span style="white-space pre-line">{{detailinfo.requirement}}</span>
+            <span style="white-space:pre-line">{{detailinfo.requirement}}</span>
           </div>
           <div>
             负责HR：
@@ -155,7 +155,7 @@ export default {
     Define() {
       this.$http
         .put(
-          `/reviewed/position/${this.thisId}/info/${this.companId}/notPass`,
+          `/cms-app/reviewed/position/${this.thisId}/info/${this.companId}/notPass`,
           { reason: this.checkList[0] }
         )
         .then(res => {
@@ -173,7 +173,7 @@ export default {
     //详细信息
     Detail() {
       this.$http
-        .get(`/reviewed/position/${this.thisId}/info/${this.companId}`)
+        .get(`/cms-app/reviewed/position/${this.thisId}/info/${this.companId}`)
         .then(res => {
           if (res.data.code == 200) {
             let NewContent = res.data.data;
@@ -195,7 +195,7 @@ export default {
     //弹框确认
     DialogAffirm() {
       this.$http
-        .put(`/reviewed/position/${this.thisId}/info/${this.companId}/pass`)
+        .put(`/cms-app/reviewed/position/${this.thisId}/info/${this.companId}/pass`)
         .then(res => {
           if (res.data.code == 200) {
             this.dialogVisible = false;

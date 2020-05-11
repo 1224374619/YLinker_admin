@@ -41,7 +41,7 @@ export default {
     },
     //详细信息
     Detail() {
-      this.$http.get(`/sysmsg/${this.companId}`).then(res => {
+      this.$http.get(`/cms-app/sysmsg/${this.companId}`).then(res => {
           if (res.data.code == 200) {
             let NewContent = res.data.data
             this.title = NewContent.title

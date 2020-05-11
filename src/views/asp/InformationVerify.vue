@@ -131,7 +131,7 @@ export default {
     //详细信息
     Detail() {
       this.$http
-        .get(`/reviewed/company/${this.thisId}/info/${this.companId}`)
+        .get(`/cms-app/reviewed/company/${this.thisId}/info/${this.companId}`)
         .then(res => {
           if (res.data.code == 200) {
             let NewContent = res.data.data;
@@ -155,7 +155,7 @@ export default {
     //未审核未通过
     Define() {
       this.$http
-        .put(`/reviewed/company/${this.thisId}/info/${this.companId}/notPass`, {
+        .put(`/cms-app/reviewed/company/${this.thisId}/info/${this.companId}/notPass`, {
           reason: this.checkList[0]
         })
         .then(res => {
@@ -177,7 +177,7 @@ export default {
     //弹框确认
     DialogAffirm() {
       this.$http
-        .put(`/reviewed/company/${this.thisId}/info/${this.companId}/rePass`, {
+        .put(`/cms-app/reviewed/company/${this.thisId}/info/${this.companId}/rePass`, {
           reason: "132121212"
         })
         .then(res => {
