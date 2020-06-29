@@ -41,7 +41,14 @@ import roleEdit from './views/authority/roleEdit.vue'
 import NewSubscriber from './views/authority/NewSubscriber.vue'
 import subscriberDetail from './views/authority/subscriberDetail.vue'
 import subscriberEdit from './views/authority/subscriberEdit.vue'
-
+import resumeMg from './views/ResumeMg/ResumeMg.vue'
+import MeCompany from './views/MessageCompany/CompanyList.vue'
+import MePosition from './views/MessageCompany/PositionList.vue'
+import PositionList from './views/MessagePosition/PositionList.vue'
+import AddPosition from './views/MessageCompany/AddPosition.vue'
+import editPosition from './views/MessageCompany/editPosition.vue'
+import intercalate from './views/MessageCompany/intercalate.vue'
+import CompanyDetail from './views/MessageCompany/CompanyDetail.vue'
 let routes = [{
         path: '/login',
         component: Login,
@@ -82,8 +89,64 @@ let routes = [{
     {
         path: '/',
         component: Home,
+        name: '公司管理',
+        // hidden: true,
+        iconCls: 'fa fa-id-card-o',
+        children: [{
+            path: '/MeCompany',
+            iconCls: 'fa fa-id-card-o',
+            component: MeCompany,
+            name: '公司列表'
+        }, {
+            path: '/MePosition',
+            iconCls: 'fa fa-address-card',
+            component: MePosition,
+            name: '职位',
+            hidden: true
+        }, {
+            path: '/AddPosition',
+            iconCls: 'fa fa-address-card',
+            component: AddPosition,
+            name: '新增职位',
+            hidden: true
+        },{
+            path: '/editPosition',
+            iconCls: 'fa fa-address-card',
+            component: editPosition,
+            name: '编辑职位',
+            hidden: true
+        },{
+            path: '/intercalate',
+            iconCls: 'fa fa-address-card',
+            component: intercalate,
+            name: '设置',
+            hidden: true
+        },{
+            path: '/CompanyDetail',
+            iconCls: 'fa fa-id-card-o',
+            component: CompanyDetail,
+            name: '企业详情',
+            hidden: true
+        },]
+    },
+    {
+        path: '/',
+        component: Home,
+        name: '职位管理',
+        // hidden: true,
+        iconCls: 'fa fa-id-card-o',
+        children: [{
+            path: '/PositionList',
+            iconCls: 'fa fa-id-card-o',
+            component: PositionList,
+            name: '职位列表'
+        }]
+    },
+    {
+        path: '/',
+        component: Home,
         name: '用户管理',
-        hidden: true,
+        hidden: false,
         meta: {
             requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
         },
@@ -180,9 +243,22 @@ let routes = [{
     {
         path: '/',
         component: Home,
+        name: '简历管理',
+        iconCls: 'fa fa-id-card-o',
+        hidden: false,
+        children: [{
+            path: '/ResumeMg',
+            iconCls: 'fa fa-id-card-o',
+            component: resumeMg,
+            name: '简历库'
+        }, ]
+    },
+    {
+        path: '/',
+        component: Home,
         name: '权限管理',
         iconCls: 'fa fa-id-card-o',
-        
+
         children: [{
                 path: '/role',
                 iconCls: 'fa fa-id-card-o',

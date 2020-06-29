@@ -59,7 +59,7 @@ _axios.interceptors.request.use(
 // /api/v1/consumer-user
 const instance = axios.create({
   // baseURL: process.env.NODE_ENV === 'production' ? '/api/v1/consumer-user' : '/api/',
-  baseURL: '/api/v1/',
+  baseURL: '/api/v1/consumer-user',
   headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
   },
