@@ -83,15 +83,13 @@
         <div class="asp-table">
           <div style="margin:30px 0 30px 30px">
             <el-upload
-              class="upload-demo"
-              :action="uploadUrl"
-              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-              multiple
+              class="avatar-upload"
+              action="#"
+              style="margin-left:0px"
+              :show-file-list="false"
               :on-success="handleAvatarSuccess"
-              :headers="myHeaders"
-              :limit="1"
-              :on-exceed="handleExceed"
-              :file-list="fileList"
+              :http-request="uploadFile"
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
             >
               <el-button size="small" type="primary" @click="handlePreview">点击上传</el-button>
               <div slot="tip" class="el-upload__tip">只能上传Excel文件</div>
@@ -150,9 +148,7 @@ export default {
       dialogVisible: false,
       dialogVisibles: false,
       industryList: [],
-      myHeaders: {
-        token: token
-      },
+      myHeaders: { Authorization: token },
       propsOne: {
         value: "code",
         label: "tag",
@@ -261,16 +257,13 @@ export default {
     },
     // 自定义上传 导入数据
     uploadFile(item) {
-      const formData = new FormData();
-      // console.log(item.file)
-      // // form.append("token", this.token);
-      formData.append("file", item.file);
-      console.log(formData);
+      // const formData = new FormData();
+      // // console.log(item.file)
+      // // // form.append("token", this.token);
+      // formData.append("file", item.file);
+      // console.log(formData);
       this.$http
-        .post(
-          "http://47.102.145.186/api/v1/backend-manager/companies/import",
-          formData
-        )
+        .post("http://47.102.145.186/api/v1/backend-manager/companies/import")
         .then(res => {
           console.log(res);
           let data = res.data;
@@ -291,11 +284,11 @@ export default {
         .catch(err => {});
     }
   },
-  computed: {
-    uploadUrl() {
-      return "http://47.102.145.186/api/v1/backend-manager/companies/import";
-    }
-  },
+  // computed: {
+  //   uploadUrl() {
+  //     return "/api/backend-manager/companies/import";
+  //   }
+  // },
   mounted: function() {},
   updated: function() {},
   created() {
