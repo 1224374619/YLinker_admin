@@ -88,7 +88,7 @@
               accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
               multiple
               :on-success="handleAvatarSuccess"
-              :headers = "headers"
+              :headers = "myHeaders"
               :limit="1"
               :on-exceed="handleExceed"
               :file-list="fileList"
