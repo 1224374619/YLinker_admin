@@ -88,7 +88,7 @@
               accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
               multiple
               :on-success="handleAvatarSuccess"
-              :headers = "myHeaders"
+              :headers="myHeaders"
               :limit="1"
               :on-exceed="handleExceed"
               :file-list="fileList"
@@ -297,6 +297,7 @@ export default {
   created() {
     let token = Cookies.get("token");
     this.myHeaders.token = token;
+    console.log(this.myHeaders)
     this.industryList = industrys.data;
   }
 };
