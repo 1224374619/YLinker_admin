@@ -268,7 +268,7 @@ export default {
       formData.append("file",item.file);
       console.log(formData)
       this.$http
-        .post("https://www.yinlinkrc.com/api/v1/backend-manager/companies/import",formData)
+        .post("http://47.102.145.186/api/v1/backend-manager/companies/import",formData)
         .then(res => {
           console.log(res)
           let data = res.data;
