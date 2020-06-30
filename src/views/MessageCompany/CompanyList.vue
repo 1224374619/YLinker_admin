@@ -141,6 +141,7 @@
   </div>
 </template>
 <script>
+let token = Cookies.get("token");
 import industrys from "../../assets/industry.json";
 import Cookies from "js-cookie";
 export default {
@@ -150,7 +151,7 @@ export default {
       dialogVisibles: false,
       industryList: [],
       myHeaders: {
-        token: ""
+        token: token
       },
       propsOne: {
         value: "code",
@@ -263,12 +264,15 @@ export default {
       const formData = new FormData();
       // console.log(item.file)
       // // form.append("token", this.token);
-      formData.append("file",item.file);
-      console.log(formData)
+      formData.append("file", item.file);
+      console.log(formData);
       this.$http
-        .post("http://47.102.145.186/api/v1/backend-manager/companies/import",formData)
+        .post(
+          "http://47.102.145.186/api/v1/backend-manager/companies/import",
+          formData
+        )
         .then(res => {
-          console.log(res)
+          console.log(res);
           let data = res.data;
           if (data.code == 200) {
             this.$message({
@@ -287,17 +291,14 @@ export default {
         .catch(err => {});
     }
   },
-   computed: {
-      uploadUrl() {
-        return "http://47.102.145.186/api/v1/backend-manager/companies/import"
-      }
-    },
+  computed: {
+    uploadUrl() {
+      return "http://47.102.145.186/api/v1/backend-manager/companies/import";
+    }
+  },
   mounted: function() {},
   updated: function() {},
   created() {
-    let token = Cookies.get("token");
-    this.myHeaders.token = token;
-    console.log(this.myHeaders)
     this.industryList = industrys.data;
   }
 };
