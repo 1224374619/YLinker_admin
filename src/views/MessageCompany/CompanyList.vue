@@ -258,8 +258,6 @@ export default {
     // 自定义上传 导入数据
     uploadFile(item) {
       const formData = new FormData();
-      // console.log(item.file)
-      // // form.append("token", this.token);
       formData.append("file", item.file);
       console.log(formData);
       this.$http
