@@ -84,13 +84,10 @@
           <div style="margin:30px 0 30px 30px">
             <el-upload
               class="upload-demo"
-              action
+              :action="uploadUrl"
               accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
-              :before-remove="beforeRemove"
-              :http-request="uploadFile"
               multiple
+              :on-success="handleAvatarSuccess"
               :limit="1"
               :on-exceed="handleExceed"
               :file-list="fileList"
@@ -258,7 +255,7 @@ export default {
     handleAvatarSuccess(res, file) {
       // this.imageUrl = URL.createObjectURL(file.raw);
       console.log(res);
-      this.file = res.data;
+      // this.file = res.data;
     },
     // 自定义上传 导入数据
     uploadFile(item) {
@@ -289,11 +286,11 @@ export default {
         .catch(err => {});
     }
   },
-  computed: {
-    uploadUrl() {
-      return "/backend-manager/companies/import";
-    }
-  },
+   computed: {
+      uploadUrl() {
+        return "http://47.102.145.186/api/v1/backend-manager/companies/import"
+      }
+    },
   mounted: function() {},
   updated: function() {},
   created() {
