@@ -257,13 +257,13 @@ export default {
     },
     // 自定义上传 导入数据
     uploadFile(item) {
-      // const formData = new FormData();
-      // // console.log(item.file)
-      // // // form.append("token", this.token);
-      // formData.append("file", item.file);
-      // console.log(formData);
+      const formData = new FormData();
+      // console.log(item.file)
+      // // form.append("token", this.token);
+      formData.append("file", item.file);
+      console.log(formData);
       this.$http
-        .post("http://47.102.145.186/api/v1/backend-manager/companies/import")
+        .post("http://47.102.145.186/api/v1/backend-manager/companies/import",formData)
         .then(res => {
           console.log(res);
           let data = res.data;
