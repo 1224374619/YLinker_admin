@@ -82,7 +82,7 @@
         </el-form>
         <div class="asp-table">
           <div style="margin:30px 0 30px 30px">
-            <el-upload
+            <!-- <el-upload
               class="avatar-upload"
               action="#"
               style="margin-left:0px"
@@ -93,7 +93,8 @@
             >
               <el-button size="small" type="primary" @click="handlePreview">点击上传</el-button>
               <div slot="tip" class="el-upload__tip">只能上传Excel文件</div>
-            </el-upload>
+            </el-upload>-->
+            <!-- <el-upload action="/api/backend-manager/positions/import" :headers="myHeaders">导入公司</el-upload> -->
             <el-button type="primary" @click="toggleSelection()">导入公司</el-button>
           </div>
           <div>
@@ -108,12 +109,18 @@
                 <template slot-scope="scope">{{ scope.row.date }}</template>
               </el-table-column>-->
               <!-- <el-table-column prop="name" label="姓名"></el-table-column> -->
-              <el-table-column prop="address" label="企业ID" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="address" label="企业名称" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="address" label="统一社会信用代码" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="address" label="提交时间" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="address" label="投递简历" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="address" label="在招职位" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="id" label="企业ID" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="fullName" label="企业名称" show-overflow-tooltip></el-table-column>
+              <el-table-column
+                prop="uniformSocialCreditCode"
+                label="统一社会信用代码"
+                show-overflow-tooltip
+              ></el-table-column>
+              <el-table-column prop="updatedTime" label="提交时间" show-overflow-tooltip>
+                <template slot-scope="scope">{{ scope.row.updatedTime | formatDate}}</template>
+              </el-table-column>
+              <el-table-column prop="resumeNum" label="投递简历" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="positionNum" label="在招职位" show-overflow-tooltip></el-table-column>
               <el-table-column label="操作" width="180">
                 <template slot-scope="scope">
                   <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
@@ -126,11 +133,11 @@
             <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
-              :current-page="currentPage"
-              :page-sizes="[100, 200, 300, 400]"
-              :page-size="100"
+              :current-page="page.current"
+              :page-sizes="page.pageSizeOpts"
+              :page-size="page.pageSize"
               layout="total, sizes, prev, pager, next, jumper"
-              :total="400"
+              :total="page.total"
             ></el-pagination>
           </div>
         </div>
@@ -148,12 +155,18 @@ export default {
       dialogVisible: false,
       dialogVisibles: false,
       industryList: [],
-      myHeaders: { Authorization: token },
+      myHeaders: { "Auth-Token": token },
       propsOne: {
         value: "code",
         label: "tag",
         children: "children",
         emitPath: false
+      },
+      page: {
+        total: 0,
+        pageSize: 10,
+        current: 1,
+        pageSizeOpts: [10, 20, 30]
       },
       formInline: {
         Uniform: "",
@@ -165,43 +178,7 @@ export default {
         ]
       },
       currentPage: 4,
-      tableData: [
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-08",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-06",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-07",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ],
+      tableData: [],
       multipleSelection: []
     };
   },
@@ -218,15 +195,33 @@ export default {
     },
     //查询
     submitForm() {
+      console.log(this.formInline.industry[0].code);
+      let params = {
+        companyName: this.formInline.companyName
+          ? this.formInline.companyName
+          : null,
+        industryCode: this.formInline.industry[0].code
+          ? this.formInline.industry
+          : null,
+        pageNum: 1,
+        pageSize: 10,
+        sortBy: null,
+        sortOder: null,
+        uniformSocialCreditCode: this.formInline.Uniform
+          ? this.formInline.Uniform
+          : null
+      };
       this.$http
-        .post("", {})
+        .post("/backend-manager/companies/search", params)
         .then(res => {
           if (res.data.code == 200) {
+            this.tableData = res.data.data.list;
+            this.page.total = res.data.data.total;
           } else {
           }
         })
         .catch(error => {
-          this.$message(error.response.data.message);
+          console.log(error);
         });
     },
     toggleSelection() {
@@ -238,58 +233,104 @@ export default {
     },
     handleClick(tab, event) {
       console.log(tab, event);
-      this.$router.push({ path: "/CompanyDetail" });
+      this.$router.push({ path: "/CompanyDetail",query:{companyID:tab.id,resumeNum:tab.resumeNum}});
     },
     handleSelectionChange(val) {
       console.log(val);
       this.multipleSelection = val;
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      this.page.pageSize = val;
+      this.page.current = 1;
+      let params = {
+        companyName: null,
+        industryCode: null,
+        pageNum: this.page.current,
+        pageSize: this.page.pageSize,
+        sortBy: null,
+        sortOder: null,
+        uniformSocialCreditCode: null
+      };
+      this.$http
+        .post("/backend-manager/companies/search", params)
+        .then(res => {
+          if (res.data.code == 200) {
+            this.tableData = res.data.data.list;
+          } else {
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.page.current = val;
+      let params = {
+        companyName: null,
+        industryCode: null,
+        pageNum: this.page.current,
+        pageSize: this.page.pageSize,
+        sortBy: null,
+        sortOder: null,
+        uniformSocialCreditCode: null
+      };
+      this.$http
+        .post("/backend-manager/companies/search", params)
+        .then(res => {
+          if (res.data.code == 200) {
+            this.tableData = res.data.data.list;
+          } else {
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     handleAvatarSuccess(res, file) {
       // this.imageUrl = URL.createObjectURL(file.raw);
       console.log(res);
       // this.file = res.data;
-    },
+    }
     // 自定义上传 导入数据
-    uploadFile(item) {
-      const formData = new FormData();
-      formData.append("file", item.file);
-      console.log(formData);
-      this.$http
-        .post("http://47.102.145.186/api/v1/backend-manager/companies/import",formData)
-        .then(res => {
-          console.log(res);
-          let data = res.data;
-          if (data.code == 200) {
-            this.$message({
-              type: "success",
-              message: "导入成功!"
-            });
-            this.getUser(); //导入成功刷新列表
-            this.addFormVisible = false;
-          } else {
-            this.$message({
-              type: "error",
-              message: data.msg
-            });
-          }
-        })
-        .catch(err => {});
+    // uploadFile(item) {
+    //   const formData = new FormData();
+    //   formData.append("file",item.file);
+    //   console.log(item.file)
+    //   formData.append("sheetId",1);
+    //   formData.append("startNum",2);
+    //   console.log(formData);
+    //   this.$http
+    //     .post("/backend-manager/companies/import",formData)
+    //     .then(res => {
+    //       console.log(res);
+    //       let data = res.data;
+    //       if (data.code == 200) {
+    //         this.$message({
+    //           type: "success",
+    //           message: "导入成功!"
+    //         });
+    //         this.getUser(); //导入成功刷新列表
+    //         this.addFormVisible = false;
+    //       } else {
+    //         this.$message({
+    //           type: "error",
+    //           message: data.msg
+    //         });
+    //       }
+    //     })
+    //     .catch(err => {});
+    // }
+  },
+  computed: {
+    uploadUrlOne() {
+      // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
+      return "/api/backend-manager/positions/import";
     }
   },
-  // computed: {
-  //   uploadUrl() {
-  //     return "/api/backend-manager/companies/import";
-  //   }
-  // },
   mounted: function() {},
   updated: function() {},
   created() {
+    this.submitForm();
     this.industryList = industrys.data;
   }
 };

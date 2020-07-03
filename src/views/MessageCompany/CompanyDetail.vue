@@ -8,7 +8,6 @@
         :append-to-body="true"
         :visible.sync="dialogVisible"
         width="29%"
-        :before-close="handleClose"
       >
         <div>
           <el-form ref="form" :model="form" label-width="90px" class="formDatt">
@@ -44,7 +43,7 @@
             <el-form-item>
               <el-button
                 style="width:93px;height:33px;line-height:0px;margin:0 20px 0 40px"
-                @click="resetForm('ruleForm')"
+                @click="dialogVisible = false"
               >取消</el-button>
               <el-button
                 style="width:93px;height:33px;line-height:0px;margin:0 0 0 40px"
@@ -57,18 +56,18 @@
       </el-dialog>
       <div class="nav-image">
         <div>
-          <el-image :src="url" :fit="fit"></el-image>
+          <el-image style="margin: 0 0 30px 30px;" :src="url"></el-image>
         </div>
         <div class="enter">
           <div style="display: flex;flex-direction: row;">
-            <div>上海银领网络科技有限公司</div>
-            <div>企业规模：500</div>
-            <div>入驻时间：2010-02-15</div>
-            <div>今日投递：2000</div>
+            <div>{{companyDetaillist.fullName}}</div>
+            <div>企业规模：{{companyDetaillist.size}}</div>
+            <div>入驻时间：{{companyDetaillist.createdTime | formatDate}}</div>
+            <div>今日投递：{{this.resumeNum}}</div>
           </div>
           <div style="display: flex;flex-direction: row;margin:20px 0 0 0">
-            <div>企业ID：1556694482</div>
-            <div>公司类别：互联网</div>
+            <div>企业ID：{{companyDetaillist.id}}</div>
+            <div>公司类别：{{$CodeToTag.CodeToTag([parseInt(companyDetaillist.industryCode/100)*100,companyDetaillist.industryCode],industryList)[0]}}</div>
           </div>
         </div>
         <!-- <div style="margin:0 0 0 10px;">
@@ -150,16 +149,22 @@
         <div style="display: flex;
   flex-direction: row;">
           <div style="font-size:18px;font-weight:bold;margin:0 0 0 30px;color:#373737">基本信息</div>
-          <div style="font-size:16px;margin:0 0 0 30px;color:#373737;line-height:26px">编辑<i style="margin:0 0 0 5px" class="el-icon-edit"></i></div>
+          <div
+            style="font-size:16px;margin:0 0 0 30px;color:#373737;line-height:26px"
+            @click="edit()"
+          >
+            编辑
+            <i style="margin:0 0 0 5px" class="el-icon-edit"></i>
+          </div>
         </div>
         <div class="echart-nav">
           <div class="infor">
-            <span>企业简称：百度</span>
-            <span>企业规模：500以上</span>
-            <span>所属行业：建筑</span>
-            <span>企业地点：上海市徐汇区</span>
+            <span>企业简称：{{companyDetaillist.shortName}}</span>
+            <span>企业规模：{{companyDetaillist.size}}</span>
+            <span>所属行业：{{$CodeToTag.CodeToTag([parseInt(companyDetaillist.industryCode/100)*100,companyDetaillist.industryCode],industryList)[0]}}</span>
+            <span>企业地点：{{companyDetaillist.address.detail}}</span>
             <span>企业logo：</span>
-            <span style="margin-bottom:50px">企业简介：上海市徐汇区人民广场888号上海市徐汇区人民广场888号</span>
+            <span style="margin-bottom:50px">企业简介：{{companyDetaillist.description}}</span>
           </div>
         </div>
       </div>
@@ -198,14 +203,15 @@
 <script>
 import echarts from "echarts";
 import industrys from "../../assets/industry.json";
+import { CodeToTag } from "../../cookie.js";
 export default {
   data() {
     return {
       form: {
         name: "",
         scale: "",
-        industry: "",
-        city: "",
+        industry: [],
+        city: [],
         desc: ""
       },
       propsOne: {
@@ -217,23 +223,26 @@ export default {
       industryList: [],
       options: [
         {
-          value: "0",
-          label: "小于10人"
+          value: 0,
+          label: "500人以上"
         },
         {
-          value: "1",
-          label: "10-100人"
-        },
-        {
-          value: "2",
+          value: 1,
           label: "100-500人"
         },
         {
-          value: "3",
-          label: "500人以上"
+          value: 2,
+          label: "10-100人"
+        },
+        {
+          value: 3,
+          label: "小于10人"
         }
       ],
-      dialogVisible: true,
+      dialogVisible: false,
+      companyDetaillist: "",
+      companyID: "",
+      resumeNum: "",
       url:
         "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
       activeName: "first",
@@ -290,6 +299,95 @@ export default {
     },
     drawCharts() {
       this.drawLineChart();
+    },
+    edit() {
+      this.dialogVisible = true;
+    },
+    submitForm() {
+      let sizeName;
+      switch (this.form.scale) {
+        case 0:
+          sizeName = "500人以上";
+          break;
+        case 1:
+          sizeName = "100-500人";
+          break;
+        case 2:
+          sizeName = "10-100人";
+          break;
+        case 3:
+          sizeName = "小于10人";
+          break;
+      }
+      let industryCode = this.form.industry;
+      console.log(this.form.industry[1]);
+      if ((this.form.industry[1] === undefined)) {
+        industryCode = this.form.industry;
+      } else {
+        industryCode = this.form.industry[1];
+      }
+      let params = {
+        addressId: null,
+        cert: null,
+        description: this.form.desc,
+        fullName: this.form.name,
+        industryCode: industryCode,
+        industryFirst: CodeToTag(
+          [parseInt(this.form.industry / 100) * 100, this.form.industry],
+          this.industryList
+        )[0],
+        industrySecondary: CodeToTag(
+          [parseInt(this.form.industry / 100) * 100, this.form.industry],
+          this.industryList
+        )[1],
+        logo: null,
+        nature: null,
+        natureCode: null,
+        shortName: this.form.name,
+        size: sizeName,
+        sizeCode: this.form.scale
+      };
+      this.$http
+        .put(`/backend-manager/companies/${this.companyID}`, params)
+        .then(res => {
+          let data = res.data;
+          if (data.code == 200) {
+            this.dialogVisible = false;
+            this.companyDetail();
+          } else {
+            this.$message({
+              type: "error",
+              message: data.msg
+            });
+          }
+        })
+        .catch(err => {});
+    },
+    companyDetail() {
+      this.$http
+        .get(`/backend-manager/companies/${this.companyID}`)
+        .then(res => {
+          let data = res.data;
+          if (data.code == 200) {
+            this.companyDetaillist = data.data;
+            this.form = {
+              name: data.data.shortName,
+              scale: data.data.sizeCode,
+              industry: [
+                parseInt(data.data.industryCode / 100) * 100,
+                data.data.industryCode
+              ],
+              city: [data.data.provinceCode, data.data.cityCode],
+              desc: data.data.description
+            };
+          } else {
+            this.$message({
+              type: "error",
+              message: data.msg
+            });
+          }
+        })
+        .catch(err => {});
     }
   },
   mounted: function() {
@@ -299,7 +397,10 @@ export default {
     this.drawCharts();
   },
   created() {
+    this.companyID = this.$route.query.companyID;
+    this.resumeNum = this.$route.query.resumeNum;
     this.industryList = industrys.data;
+    this.companyDetail();
   }
 };
 </script>
@@ -332,12 +433,11 @@ export default {
   width: 120px;
   height: 120px;
   border-radius: 60px;
-  margin: 30px 0 30px 30px;
 }
 .enter {
   display: flex;
   flex-direction: column;
-  margin: 62px 0 0 0;
+  margin: 32px 0 0 0;
 }
 .enter div {
   padding: 0 0 0 40px;
